@@ -9,6 +9,7 @@ import Bills from "./pages/Bills"
 import Customers from "./pages/Customers"
 import Invoices from "./pages/Invoices"
 import NewVendor from "./pages/NewVendor"
+import NewBill from "./pages/NewBill"
 
 const router = createBrowserRouter([
   {
@@ -39,15 +40,19 @@ const router = createBrowserRouter([
         path: "/vendors/new",
         element: <NewVendor />
       },
+      {
+        path: "/bills/new",
+        element: <NewBill />
+      },
     ],
   },
   {
     path: "/login",
-    element : <Login />
+    element: <Login />
   },
   {
     path: "/signup",
-    element : <Signup />
+    element: <Signup />
   },
 ])
 

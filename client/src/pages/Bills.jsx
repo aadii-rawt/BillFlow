@@ -1,5 +1,6 @@
 import React from 'react'
 import { FiPlus } from 'react-icons/fi'
+import { Link } from 'react-router-dom'
 
 function Bills() {
    return (
@@ -9,7 +10,7 @@ function Bills() {
                       <button className='text-2xl font-medium'>All Bills</button>
                   </div>
                   <div>
-                      <button className='bg-blue-500 px-3 py-1.5 rounded-md text-white flex items-center justify-center gap-1'> <FiPlus />New</button>
+                  <Link to="/bills/new" className='bg-blue-500 px-3 py-1.5 rounded-md text-white flex items-center justify-center gap-1'> <FiPlus />New</Link>
                   </div>
               </div>
               <div>
