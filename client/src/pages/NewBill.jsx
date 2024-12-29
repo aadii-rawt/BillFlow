@@ -366,9 +366,7 @@ function NewBill() {
 
 
             {addVendor && <Modal>
-                <div className='bg-black/50 absolute top-0 left-0 w-full flex items-center justify-center'>
-                    {/* <VendorForm /> */}
-                </div>
+                <VendorForm  type="modal" setAddVendor={setAddVendor}/>
             </Modal>
             }
 
