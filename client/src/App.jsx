@@ -8,6 +8,7 @@ import Vendors from "./pages/Vendors"
 import Bills from "./pages/Bills"
 import Customers from "./pages/Customers"
 import Invoices from "./pages/Invoices"
+import NewVendor from "./pages/NewVendor"
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/invoices",
         element: <Invoices />
+      },
+      {
+        path: "/vendors/new",
+        element: <NewVendor />
       },
     ],
   },
