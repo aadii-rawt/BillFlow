@@ -4,7 +4,7 @@ import VednorForm from '../components/VendorForm'
 function NewVendor() {
     return (
        <>
-       <VednorForm />
+       <VednorForm type="page"/>
        </>
     )
 }
