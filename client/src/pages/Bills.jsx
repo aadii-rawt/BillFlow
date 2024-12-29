@@ -18,7 +18,7 @@ function Bills() {
                       <thead>
                           <tr className='text-gray-500 !font-normal'>
                               <th className='font-medium text-sm py-2'>DATE</th>
-                              <th className='font-medium text-sm py-2'>BILL# NAME</th>
+                              <th className='font-medium text-sm py-2'>BILL# </th>
                               <th className='font-medium text-sm py-2'>VENDOR NAME</th>
                               <th className='font-medium text-sm py-2'>STATUS</th>
                               <th className='font-medium text-sm py-2'>DUE DATE</th>
@@ -26,6 +26,17 @@ function Bills() {
                               <th className='font-medium text-sm py-2'>BALANCE DUE</th>
                           </tr>
                       </thead>
+                      {/* <tbody>
+                        <tr>
+                        <th className='font-medium text-sm py-2'>DATE</th>
+                              <td className='py-2'>BILL# </td>
+                              <td className='py-2'>VENDOR NAME</td>
+                              <td className='py-2'>STATUS</td>
+                              <td className='py-2'>DUE DATE</td>
+                              <td className='py-2'>AMOUNT</td>
+                              <td className='py-2'>BALANCE DUE</td>
+                        </tr>
+                      </tbody> */}
                   </table>
               </div>
           </div>
