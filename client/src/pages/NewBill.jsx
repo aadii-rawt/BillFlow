@@ -6,6 +6,8 @@ import { MdDeleteOutline } from "react-icons/md";
 import { RxCross1, RxCross2 } from "react-icons/rx";
 import { TbInvoice } from 'react-icons/tb';
 import { Link, useNavigate } from 'react-router-dom';
+import VendorForm from '../components/VendorForm'
+import Modal from '../components/Modal';
 
 function NewBill() {
 
@@ -26,6 +28,7 @@ function NewBill() {
     });
     const [showdropdown, setShowdropdown] = useState(false)
     const navigate = useNavigate()
+    const [addVendor, setAddVendor] = useState(false)
 
     // add more item into table
     const addItem = () => {
@@ -199,7 +202,7 @@ function NewBill() {
                                                     </ul> */}
                                             <div
                                                 className="p-2 bg-gray-200 px-3 hover:bg-gray-200 rounded text-blue-600 text-sm flex items-center gap-3 font-medium border-t"
-                                            // onClick={() => setAddVendor(true)}
+                                                onClick={() => setAddVendor(true)}
                                             >
                                                 <GoPlusCircle size={20} /> New Vendor
                                             </div>
@@ -358,6 +361,17 @@ function NewBill() {
                 <button className='bg-blue-500 text-white px-2.5 py-1  rounded-md' >Save</button>
                 <button className='bg-gray-100 px-2.5 py-1  rounded-md border' onClick={() => navigate(-1)}>Cancel</button>
             </div>
+
+            {/* modals */}
+
+
+            {addVendor && <Modal>
+                <div className='bg-black/50 absolute top-0 left-0 w-full flex items-center justify-center'>
+                    {/* <VendorForm /> */}
+                </div>
+            </Modal>
+            }
+
 
         </div>
     )
