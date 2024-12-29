@@ -1,10 +1,14 @@
 import React from 'react'
+import { RxCross1 } from 'react-icons/rx'
+import { useNavigate } from 'react-router-dom'
 
 function NewVendor() {
+    const navigate = useNavigate()
     return (
         <div className='relative'>
-            <div className='p-4 border-b'>
-                <h1 className='text-2xl'>New Vendor</h1>
+            <div className='p-4 border-b flex items-center justify-between'>
+                <h1 className='text-2xl '>New Vendor</h1>
+                <button onClick={() => navigate(-1)}><RxCross1 size={20} className='text-gray-600' /></button>
             </div>
             {/* ------- new vendor form------------ */}
             <div className='py-5 px-4 space-y-5 text-[15.5px]'>
@@ -51,7 +55,7 @@ function NewVendor() {
 
             <div className='border-t p-4 flex  gap-3 fixed bottom-0 w-full'>
                 <button className='bg-blue-500 text-white px-2.5 py-1  rounded-md'>Save</button>
-                <button className='bg-gray-100 px-2.5 py-1  rounded-md border'>Cancel</button>
+                <button className='bg-gray-100 px-2.5 py-1  rounded-md border'  onClick={() => navigate(-1)}>Cancel</button>
             </div>
         </div>
     )

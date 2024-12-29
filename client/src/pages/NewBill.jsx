@@ -4,11 +4,14 @@ import { GoPlusCircle } from "react-icons/go";
 import { VscMail } from "react-icons/vsc";
 import { MdDeleteOutline } from "react-icons/md";
 import { RxCross1, RxCross2 } from "react-icons/rx";
+import { TbInvoice } from 'react-icons/tb';
+import { Link, useNavigate } from 'react-router-dom';
 
 function NewBill() {
+
     const [billData, setBillData] = useState({
         items: [{ description: "", quantity: 1, rate: 0, amount: 0 }],
-        billNumber: "",  // Add invoice number here if needed
+        billNumber: "",
         from: "",
         senderPhone: "",
         senderEmail: "",
@@ -21,19 +24,99 @@ function NewBill() {
         isPaid: "unpaid",
         billId: crypto.randomUUID(),
     });
+    const [showdropdown, setShowdropdown] = useState(false)
+    const navigate = useNavigate()
 
+    // add more item into table
+    const addItem = () => {
+        setBillData(prevData => ({
+            ...prevData,
+            items: [...prevData.items, { description: "", quantity: 1, rate: 0, amount: 0 }]
+        }));
+    };
+
+    const handleItemChange = (index, field, value) => {
+        const updatedItems = [...billData.items];
+
+        // Allow empty values
+        if (value === "") {
+            updatedItems[index][field] = "";
+        } else {
+            // Convert to number for numeric fields
+            updatedItems[index][field] = field === "rate" || field === "quantity" ? Number(value) : value;
+        }
+
+        // Calculate amount only if both quantity and rate are valid numbers
+        updatedItems[index].amount =
+            updatedItems[index].quantity && updatedItems[index].rate
+                ? updatedItems[index].quantity * updatedItems[index].rate
+                : 0;
+
+        setBillData(prevData => ({
+            ...prevData,
+            items: updatedItems
+        }));
+    };
+    // delete the row from the item table
+    const handleDeleteItem = (index) => {
+        // Prevent deletion if there's only one item
+        if (billData.items.length === 1) {
+            // alert("At least one item is required.");
+            return;
+        }
+
+        const updatedItems = billData.items.filter((_, i) => i !== index);
+        setBillData(prevData => ({
+            ...prevData,
+            items: updatedItems
+        }));
+    };
+
+    const handleInputChange = (field, value) => {
+        setBillData(prevData => ({
+            ...prevData,
+            [field]: value
+        }));
+    };
+    // to upload company logo
+    const handleLogoUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setBillData(prevData => ({ ...prevData, uploadedLogo: reader.result }));
+            };
+            reader.readAsDataURL(file);
+        }
+        setLogoError("")
+    };
+    // calculate the subtoal of item add into the table
+    const calculateSubtotal = () => {
+        return billData.items.reduce((subtotal, item) => subtotal + parseInt(item.amount), 0).toFixed(2);
+    };
+    // total amount of bill after adding tax if available
+    const calculateTotalWithTax = () => {
+        const subtotal = parseFloat(calculateSubtotal());
+        const taxPercent = parseFloat(billData.tax) || 0; // Ensure tax is a number
+        const taxAmount = (subtotal * taxPercent) / 100;
+        return (subtotal + taxAmount).toFixed(2);
+    };
+    // format currency into the indian format
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('en-IN').format(amount);
     };
+
     return (
-        <div className="p-6 md:p-10 bg-gray-100 min-h-screen  w-full py-5">
-            <div className='p-4 border-b'>
-                <h1 className='text-2xl'>New Vendor</h1>
+        <div className="relative min-h-screen w-full">
+            <div className='p-4 border-b flex justify-between items-center '>
+                <h1 className='text-2xl flex items-center gap-3'> <TbInvoice size={30} /> New Bill</h1>
+                <button onClick={() => navigate(-1)}><RxCross1 size={20} className='text-gray-600' /></button>
             </div>
+
             <form action="">
-                <div className="max-w-4xl  bg-gray-50 p-6 pb-60 rounded-md">
-                    {/* Header */}
+                <div className="max-w-4xl p-6 pb-60 rounded-md">
                     <div className="flex justify-between items-center mb-6">
+                        {/* company logo */}
                         <div>
                             {billData?.uploadedLogo ?
                                 <div className="w-24 h-24 max-w-60 relative">
@@ -50,51 +133,45 @@ function NewBill() {
                                         type="file"
                                         accept="image/*"
                                         className="absolute inset-0 opacity-0 z-10 cursor-pointer"
-                                    // onChange={handleLogoUpload}
+                                        onChange={handleLogoUpload}
                                     />
-
                                 </div>
                             }
-                            {/* {logoError && <p className="bg-red-100 p-1 rounded text-red-600 mb-0.5 mt-2">{logoError}</p>} */}
-
                         </div>
+                        {/* bill number */}
                         <div className="text-right">
-                            <h1 className="text-2xl font-bold">Bill</h1>
+                            <label className="block text-gray-500 mb-1">Bill Number</label>
                             <div className="border rounded my-2">
                                 <input
                                     type="text"
                                     required
                                     placeholder="Bill Number #29383"
-                                    // value={billData.billNumber}
-                                    // onChange={(e) => handleInputChange('billNumber', e.target.value)}
+                                    value={billData.billNumber}
+                                    onChange={(e) => handleInputChange('billNumber', e.target.value)}
                                     className="text-right outline-none rounded py-1.5 px-2"
                                     maxLength={25}
                                 />
                             </div>
-                            {/* {billNumberExist && <p className="w-60 text-sm bg-red-100 px-2 py-1 rounded">{billNumberExist}</p>} */}
                         </div>
                     </div>
-                    <div >
-                        <div>
-                            <div className="flex justify-between items-end">
-                                <div className="gap-6 mb-6">
-                                    <div className=" relative w-[300px]">
-                                        {/* {error && <p className="text-red-500">{error}</p>} */}
-                                        <label className="block text-gray-500 mb-1">Bill To <span className="text-red-600">*</span></label>
-                                        {/* {error && <p className="bg-red-100 p-1 rounded text-red-600 mb-0.5">{error}</p>} */}
-                                        <div className="w-full relative flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 cursor-pointer" onClick={() => setShowdropdown(!showdropdown)}>
-                                            <span className="text-gray-500">{billData?.vendorName ? billData?.vendorName : "Select or Add Vendor"}</span>
-                                            {/* <IoIosArrowDown /> */}
-                                            {/* {showdropdown && */}
-                                            <div className="absolute rounded overflow-hidden bg shadow-md w-full left-0 top-[50px] bg-gray-100 px-1 py-1">
-                                                <div>
-                                                    <input type="text" className="rounded px-2.5 py-1.5 w-full outline-none" placeholder="Search" style={{ border: "0.5px solid  rgba(229, 231, 235,1)" }}
-                                                        // value={searchQuery}
-                                                        // onChange={(e) => setSearchQuery(e.target.value)}
-                                                        // onClick={(e) => e.stopPropagation()}
-                                                        maxLength={25} />
-                                                </div>
-                                                {/* <ul className="mt-1 max-h-44 overflow-y-scroll user-scrollbar">
+                    <div className="flex justify-between items-end">
+                        {/* whom to send bill */}
+                        <div className="gap-6 mb-6">
+                            <div className=" relative w-[300px]">
+                                <label className="block text-gray-500 mb-1">Bill To <span className="text-red-600">*</span></label>
+                                <div className="w-full relative flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 cursor-pointer" onClick={() => setShowdropdown(!showdropdown)}>
+                                    <span className="text-gray-500">{billData?.vendorName ? billData?.vendorName : "Select or Add Vendor"}</span>
+                                    <IoIosArrowDown />
+                                    {showdropdown &&
+                                        <div className="absolute rounded overflow-hidden bg shadow-md w-full left-0 top-[50px] bg-gray-100 px-1 py-1">
+                                            <div>
+                                                <input type="text" className="rounded px-2.5 py-1.5 w-full outline-none" placeholder="Search" style={{ border: "0.5px solid  rgba(229, 231, 235,1)" }}
+                                                    // value={searchQuery}
+                                                    // onChange={(e) => setSearchQuery(e.target.value)}
+                                                    // onClick={(e) => e.stopPropagation()}
+                                                    maxLength={25} />
+                                            </div>
+                                            {/* <ul className="mt-1 max-h-44 overflow-y-scroll user-scrollbar">
                                                         {filteredVendors.length > 0 ? (
                                                             filteredVendors.map((data) => (
                                                                 <li
@@ -120,61 +197,56 @@ function NewBill() {
                                                             <li className="p-2 px-3 text-gray-500 text-sm">No results found</li>
                                                         )}
                                                     </ul> */}
-                                                <div
-                                                    className="p-2 bg-gray-200 px-3 hover:bg-gray-200 rounded text-blue-600 text-sm flex items-center gap-3 font-medium border-t"
-                                                // onClick={() => setAddVendor(true)}
-                                                >
-                                                    {/* <GoPlusCircle size={20} /> New Vendor */}
-                                                </div>
+                                            <div
+                                                className="p-2 bg-gray-200 px-3 hover:bg-gray-200 rounded text-blue-600 text-sm flex items-center gap-3 font-medium border-t"
+                                            // onClick={() => setAddVendor(true)}
+                                            >
+                                                <GoPlusCircle size={20} /> New Vendor
                                             </div>
-                                            {/* } */}
                                         </div>
-                                    </div>
-
-                                </div>
-                                {/* Date, Payment Terms, Due Date */}
-                                <div className="grid grid-cols-1  gap-2 justify-end justify-items-end mb-6">
-                                    <div className="flex items-center gap-3">
-                                        <label className="block text-gray-500  ">Date: </label>
-                                        <input
-                                            type="date"
-                                            value={billData.date}
-                                            required
-                                            onChange={(e) => handleInputChange('date', e.target.value)}
-                                            className="max-w-[150px] border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
-                                        />
-                                    </div>
-                                    <div className="flex items-center gap-3">
-
-                                        <label className="block text-gray-500 mb-1 ">Due Date:</label>
-                                        <input
-                                            type="date"
-                                            value={billData.dueDate}
-                                            required
-                                            onChange={(e) => handleInputChange('dueDate', e.target.value)}
-                                            className="max-w-[150px] border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
-                                        />
-                                    </div>
-                                    <div>
-                                        {/* {dateError && <p className="bg-red-100 p-1 rounded text-red-600">{dateError}</p>} */}
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
+                        {/* Date, Due Date */}
+                        <div className="grid grid-cols-1  gap-2 justify-end justify-items-end mb-6">
+                            <div className="flex items-center gap-3">
+                                <label className="block text-gray-500  ">Date: </label>
+                                <input
+                                    type="date"
+                                    value={billData.date}
+                                    required
+                                    onChange={(e) => handleInputChange('date', e.target.value)}
+                                    className="max-w-[150px] border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                                />
+                            </div>
+                            <div className="flex items-center gap-3">
 
-
+                                <label className="block text-gray-500 mb-1 ">Due Date:</label>
+                                <input
+                                    type="date"
+                                    value={billData.dueDate}
+                                    required
+                                    onChange={(e) => handleInputChange('dueDate', e.target.value)}
+                                    className="max-w-[150px] border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                                />
+                            </div>
+                            <div>
+                                {/* {dateError && <p className="bg-red-100 p-1 rounded text-red-600">{dateError}</p>} */}
+                            </div>
+                        </div>
                     </div>
 
                     {/* Items Table */}
                     <div className="mb-6">
                         <table className="w-full border-collapse">
                             <thead>
-                                <tr className="bg-blue-700 text-white">
-                                    <th className=" px-4 py-2 min-w-80">Item</th>
-                                    <th className=" px-4 py-2">Quantity</th>
-                                    <th className=" px-4 py-2">Rate</th>
-                                    <th className=" px-4 py-2">Amount</th>
-                                    <th className=""></th>
+                                <tr className="bg-gray-100">
+                                    <th className=" px-4 py-2 min-w-80 font-medium rounded-tl-lg">Item</th>
+                                    <th className=" px-4 py-2 font-medium ">Quantity</th>
+                                    <th className=" px-4 py-2 font-medium ">Rate</th>
+                                    <th className=" px-4 py-2 font-medium ">Amount</th>
+                                    <th className="rounded-tr-lg"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -198,7 +270,7 @@ function NewBill() {
                                                 type="number"
                                                 value={item.quantity}
                                                 onChange={(e) => {
-                                                    setRateError("")
+                                                    // setRateError("")
                                                     handleItemChange(index, "quantity", e.target.value)
                                                 }}
                                                 required
@@ -211,7 +283,7 @@ function NewBill() {
                                                 type="number"
                                                 value={item.rate}
                                                 onChange={(e) => {
-                                                    setRateError("")
+                                                    // setRateError("")
                                                     handleItemChange(index, "rate", e.target.value)
                                                 }
                                                 }
@@ -234,7 +306,7 @@ function NewBill() {
                         {/* {rateError && <p className="text-red-500">{rateError}</p>} */}
                         <button
                             type="button"
-                            // onClick={addItem}
+                            onClick={addItem}
                             className="text-blue-600 mt-4 px-3 py-2 rounded" style={{ "border": "1px solid rgba(29, 78, 216, 0.5)" }}
                         >
                             + Add Item
@@ -250,21 +322,20 @@ function NewBill() {
                                 placeholder="Notes: any relevant information (100 Characters)" id=""
                                 className="w-full border outline-none rounded resize-none p-2" maxLength={100}></textarea>
                         </div>
-                        {/* Totals */}
 
+                        {/* Totals */}
                         <div className="text-right space-y-2">
                             <div className="flex justify-end">
                                 <p className=" text-left text-gray-500"> Subtotal:</p>
-                                {/* <div className="min-w-20">{formatCurrency(calculateSubtotal())}</div> */}
+                                <div className="min-w-20">{formatCurrency(calculateSubtotal())}</div>
                             </div>
                             <div className="flex justify-end relative">
                                 <p className="text-left text-gray-500">Tax (%):</p>
-                                {/* <span>238</span> */}
                                 <div className="min-w-20">
                                     <input type="text" value={billData?.tax}
                                         onChange={(e) => {
                                             const value = e.target.value;
-                                            if (/^\d*$/.test(value)) { // Allow only digits
+                                            if (/^\d*$/.test(value)) {
                                                 handleInputChange('tax', value);
                                             }
                                         }}
@@ -274,29 +345,21 @@ function NewBill() {
                             </div>
                             <div className="flex justify-end">
                                 <p className=" text-left text-xl font-bold text-gray-500">Total:</p>
-                                {/* <span className="min-w-20 text-xl font-bold">{formatCurrency(calculateTotalWithTax())}</span> */}
+                                <span className="min-w-20 text-xl font-bold">{formatCurrency(calculateTotalWithTax())}</span>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <div className="my-4 flex items-center justify-center">
-                    <button
-                        type="submit"
-                        // disabled={isSubmiting}
-                        className="bg-blue-700 text-white rounded px-3 py-2"
-                    >
-                        {/* {isSubmiting ? 'Loading...' : "Save"} */}
-                    </button>
-                </div>
             </form >
-            <div className="absolute right-10 top-10" onClick={() => setSelectedUser(false)}>
-                <button><RxCross1 size={24} /></button>
+
+            {/* save or cancel the form */}
+            <div className='border-t p-4 bg-white flex  gap-3 fixed bottom-0 w-full'>
+                <button className='bg-blue-500 text-white px-2.5 py-1  rounded-md' >Save</button>
+                <button className='bg-gray-100 px-2.5 py-1  rounded-md border' onClick={() => navigate(-1)}>Cancel</button>
             </div>
 
-            {/* {addVendor && <AddVendor setAddVendor={setAddVendor} />}
-            {isPreview && <InvoicePreviewModal setIsPreview={setIsPreview} data={billData} />} */}
-        </div >
+        </div>
     )
 }
 
