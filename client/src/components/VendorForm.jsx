@@ -2,13 +2,16 @@ import React from 'react'
 import { RxCross1 } from 'react-icons/rx'
 import { useNavigate } from 'react-router-dom'
 
-function VednorForm() {
+function VednorForm({ setAddVendor, type = "page" }) {
     const navigate = useNavigate()
     return (
-        <div className='relative bg-white min-h-screen'>
+        <div className={`relative bg-white min-h-screen ${type == "modal" && "animate-slide-down duration-500 "}`}>
             <div className='p-4 border-b flex items-center justify-between'>
                 <h1 className='text-2xl '>New Vendor</h1>
-                <button onClick={() => navigate(-1)}><RxCross1 size={20} className='text-gray-600' /></button>
+                {type == "page" ?
+                    <button onClick={() => navigate(-1)}><RxCross1 size={20} className='text-gray-600' /></button> :
+                    <button onClick={() => setAddVendor(false)}><RxCross1 size={20} className='text-red-500' /></button>
+                }
             </div>
             {/* ------- new vendor form------------ */}
             <div className='py-5 px-4 space-y-5 text-[15.5px]'>
@@ -53,9 +56,12 @@ function VednorForm() {
                 </div>
             </div>
 
-            <div className='border-t p-4 flex  gap-3 fixed bottom-0 w-full '>
+            <div className={`border-t p-4 flex gap-3 bottom-0 w-full ${type == "page" ? "fixed" : "absolute"} `}>
                 <button className='bg-blue-500 text-white px-2.5 py-1  rounded-md'>Save</button>
-                <button className='bg-gray-100 px-2.5 py-1  rounded-md border' onClick={() => navigate(-1)}>Cancel</button>
+                {type == "page" ?
+                    <button className='bg-gray-100 px-2.5 py-1  rounded-md border' onClick={() => navigate(-1)}>Cancel</button> :
+                    <button className='bg-gray-100 px-2.5 py-1  rounded-md border' onClick={() => setAddVendor(false)}>Cancel</button>
+                }
             </div>
         </div>
     )

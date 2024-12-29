@@ -11,7 +11,7 @@ function Sidebar() {
                     <h1 className='font-semibold text-xl text-white'>BillFlow</h1>
                 </div>
             </div>
-            <div className='bg-[#f7f7fe] p-3 h-full'>
+            <div className='bg-[#f7f7fe] p-3 h-full border-r'>
                 <ul>
                     <li className='w-full rounded-md  hover:bg-[#ededf7] cursor-pointer'><NavLink to="/" className={({ isActive }) => `p-2 flex items-center gap-2.5   rounded-md ${isActive && 'bg-blue-500 text-white'}`}><GoHome /> Home</NavLink></li>
                     <li className=' w-full hover:bg-[#ededf7] rounded-md cursor-pointer '>
