@@ -1,5 +1,6 @@
 import React from 'react'
 import { FiPlus, FiPlusCircle } from "react-icons/fi";
+import AreaChart from '../components/AreaChart';
 
 function Dashboard() {
   return (
@@ -57,8 +58,9 @@ function Dashboard() {
             <h1 className='text-xl'>Cash Flow</h1>
             <button>Last 6 months</button>
           </div>
-          <div className='flex justify-end p-4 px-6'>
-            <div className='text-right space-y-3'>
+          <div className='flex p-4 px-6'>
+            <AreaChart />
+            <div className='text-right space-y-5 w-[20%] border-l'>
               <div>
                 <p className='text-gray-400 text-[15px]'>Cash on 01/04/2024</p>
                 <h1 className='text-2xl'>₹0.00</h1>
