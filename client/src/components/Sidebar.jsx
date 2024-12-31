@@ -5,7 +5,7 @@ import { GoHome } from "react-icons/go";
 import { HiOutlineUserGroup } from "react-icons/hi";
 function Sidebar() {
     return (
-        <div className='min-w-[220px] max-h-fit '>
+        <div className='min-w-[220px] max-h-fit  '>
             <div className='bg-[#21263c] px-5 py-[18px] flex items-center justify-between'>
                 <div>
                     <h1 className='font-semibold text-xl text-white'>BillFlow</h1>
