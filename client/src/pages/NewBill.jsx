@@ -29,6 +29,7 @@ function NewBill() {
     const [showdropdown, setShowdropdown] = useState(false)
     const navigate = useNavigate()
     const [addVendor, setAddVendor] = useState(false)
+    const [error, setError] = useState("")
 
     // add more item into table
     const addItem = () => {
@@ -115,6 +116,13 @@ function NewBill() {
                 <h1 className='text-2xl flex items-center gap-3'> <TbInvoice size={30} /> New Bill</h1>
                 <button onClick={() => navigate(-1)}><RxCross1 size={20} className='text-gray-600' /></button>
             </div>
+
+            {error && <div className='m-4 p-4 bg-red-100 rounded-lg flex items-center justify-between'>
+                <ul className=''>
+                    <li>{error}</li>
+                </ul>
+                <button type='button' onClick={() => setError("")}><RxCross1 strokeWidth={1} size={16} className='text-red-500 font-bold' /></button>
+            </div>}
 
             <form action="">
                 <div className="max-w-4xl p-6 pb-60 rounded-md">
@@ -366,7 +374,7 @@ function NewBill() {
 
 
             {addVendor && <Modal>
-                <VendorForm  type="modal" setAddVendor={setAddVendor}/>
+                <VendorForm type="modal" setAddVendor={setAddVendor} />
             </Modal>
             }
 
