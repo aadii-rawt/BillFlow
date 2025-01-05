@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import VendorProfile from '../components/VendorProfile'
 
 function Vendors() {
-    const [vendorProfile,setVendorProfile] = useState(true)
+    const [vendorProfile,setVendorProfile] = useState(false)
     return (
         <div className='relative'>
             <div className=' p-4 flex items-center justify-between'>
