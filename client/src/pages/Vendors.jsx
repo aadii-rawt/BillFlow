@@ -1,10 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import VendorProfile from '../components/VendorProfile'
 
 function Vendors() {
-    const [vendorProfile,setVendorProfile] = useState(false)
+    const [vendorProfile, setVendorProfile] = useState(false)
+    const [vendors, setVendors] = useState([]);
+
+    const getAllVendors = async () => {
+        try {
+            const res = await fetch("http://localhost:3000/vendor/vendors");
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json();
+            console.log(data);
+            setVendors((prev) => ([...prev,...data?.vendors])); // Set the fetched data to state
+        } catch (error) {
+            console.error("Error fetching vendors:", error);
+        }
+
+    }
+
+    useEffect(() => {
+        getAllVendors()
+    }, [])
+
+    useEffect(() =>{
+        console.log(vendors);
+        
+    })
     return (
         <div className='relative'>
             <div className=' p-4 flex items-center justify-between'>
@@ -28,14 +53,16 @@ function Vendors() {
                         </tr>
                     </thead>
                     <tbody>
+                        {vendors?.map((ven) => (
                         <tr className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(true)}>
-                            <td className='text-sm py-2.5 font-medium text-blue-500'>Aditya</td>
-                            <td className='text-sm py-2.5'>Tech Tree Pvt. Ltd.</td>
-                            <td className='text-sm py-2.5'>aditya@email.com</td>
-                            <td className='text-sm py-2.5'>+91 7849474933</td>
+                            <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.DisplayName}</td>
+                            <td className='text-sm py-2.5'>{ven?.companyName}</td>
+                            <td className='text-sm py-2.5'>{ven?.email}</td>
+                            <td className='text-sm py-2.5'>{ven?.Phone}</td>
                             <td className='text-sm py-2.5 font-medium'>₹0.00</td>
                             <td className='text-sm py-2.5 font-medium'>₹0.00</td>
                         </tr>
+                        ))}
                         <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'>
                             <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
                             <td className='text-sm py-2.5'>google</td>
