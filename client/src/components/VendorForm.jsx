@@ -10,7 +10,7 @@ function VednorForm({ setAddVendor, type = "page" }) {
         firstName: "",
         lastName: "",
         companyName: "",
-        DisplayName: "",
+        displayName: "",
         email: "",
         Phone: "",
     })
@@ -22,7 +22,7 @@ function VednorForm({ setAddVendor, type = "page" }) {
     }
 
     const handleSubmit = async () => {
-        if (!userDetails?.DisplayName) {
+        if (!userDetails?.displayName) {
             setError("Please Enter the Vendor Name")
             return
         }
@@ -35,7 +35,11 @@ function VednorForm({ setAddVendor, type = "page" }) {
             console.log(error);
         }
         console.log(userDetails);
-        navigate("/vendors")
+       if( type = "page"){
+           navigate("/vendors")
+        }else{
+           navigate("/bills/new")  
+       }
 
     }
     return (
@@ -100,8 +104,8 @@ function VednorForm({ setAddVendor, type = "page" }) {
                     <label htmlFor="" className='text-[15.5px]'>Display Name <span className='text-red-500'>*</span></label>
                     <div className='flex gap-3'>
                         <input type="text" placeholder=''
-                            name="DisplayName"
-                            value={userDetails?.DisplayName}
+                            name="displayName"
+                            value={userDetails?.displayName}
                             onChange={(e) => handleData(e)}
                             className='border rounded-md outline-none px-2 py-1 hover:border hover:border-blue-500 duration-500 min-w-[300px]' />
                     </div>
