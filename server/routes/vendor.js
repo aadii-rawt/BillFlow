@@ -8,7 +8,7 @@ router.post("/newvendor", async (req, res) => {
     lastName,
     firstName,
     companyName,
-    DisplayName,
+    displayName,
     email,
     Phone,
   } = req.body;
@@ -18,7 +18,7 @@ router.post("/newvendor", async (req, res) => {
     lastName,
     firstName,
     companyName,
-    DisplayName,
+    displayName,
     email,
     Phone,
   });
