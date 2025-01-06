@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import { GoPlusCircle } from "react-icons/go";
 import { VscMail } from "react-icons/vsc";
@@ -31,6 +31,7 @@ function NewBill() {
     const navigate = useNavigate()
     const [addVendor, setAddVendor] = useState(false)
     const [error, setError] = useState("")
+    const [vendors, setVendors] = useState([]);
 
     // add more item into table
     const addItem = () => {
@@ -112,11 +113,36 @@ function NewBill() {
     };
 
     const handleSubmit = () => {
-        if(!billData?.vendorName){
+        if (!billData?.vendorName) {
             setError("Please select Vendor")
             return
         }
     }
+
+    const getAllVendors = async () => {
+        try {
+            const res = await fetch("http://localhost:3000/vendor/vendors");
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json();
+            console.log(data);
+            setVendors((prev) => ([...prev, ...data?.vendors])); // Set the fetched data to state
+        } catch (error) {
+            console.error("Error fetching vendors:", error);
+        }
+
+    }
+
+    useEffect(() => {
+        getAllVendors()
+    }, [])
+
+    const [searchQuery, setSearchQuery] = useState("");
+    const filteredVendors = vendors.filter((data) =>
+        data?.displayName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="relative min-h-screen w-full">
             <div className='p-4 border-b flex justify-between items-center '>
@@ -177,43 +203,43 @@ function NewBill() {
                         <div className=" relative w-[300px]">
                             <label className="block text-gray-500 mb-1">Bill To <span className="text-red-600">*</span></label>
                             <div className="w-full relative flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 cursor-pointer" onClick={() => setShowdropdown(!showdropdown)}>
-                                <span className="text-gray-500">{billData?.vendorName ? billData?.vendorName : "Select or Add Vendor"}</span>
+                                <span className="text-gray-500">{billData?.displayName ? billData?.displayName : "Select or Add Vendor"}</span>
                                 <IoIosArrowDown />
                                 {showdropdown &&
                                     <div className="absolute rounded overflow-hidden bg shadow-md w-full left-0 top-[50px] bg-gray-100 px-1 py-1">
                                         <div>
                                             <input type="text" className="rounded px-2.5 py-1.5 w-full outline-none" placeholder="Search" style={{ border: "0.5px solid  rgba(229, 231, 235,1)" }}
-                                                // value={searchQuery}
-                                                // onChange={(e) => setSearchQuery(e.target.value)}
-                                                // onClick={(e) => e.stopPropagation()}
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
+                                                onClick={(e) => e.stopPropagation()}
                                                 maxLength={25} />
                                         </div>
-                                        {/* <ul className="mt-1 max-h-44 overflow-y-scroll user-scrollbar">
-                                                        {filteredVendors.length > 0 ? (
-                                                            filteredVendors.map((data) => (
-                                                                <li
-                                                                    key={data.vendorName}
-                                                                    className="p-2 px-3 hover:bg-blue-500 hover:text-white rounded group flex gap-3"
-                                                                    onClick={() => {
-                                                                        handleVendorChange(data)
-                                                                        setError("")
-                                                                    }}
-                                                                >
-                                                                    <div className="w-10 h-10 bg-gray-200 capitalize rounded-full flex items-center text-gray-600 justify-center group-hover:text-gray-600 font-semibold">
-                                                                        {data.vendorName?.[0]}
-                                                                    </div>
-                                                                    <div>
-                                                                        <p className="text-sm">{data.vendorName}</p>
-                                                                        <p className="text-[13px] flex items-center gap-1 group-hover:text-white text-gray-600">
-                                                                            <VscMail />  {data.email}
-                                                                        </p>
-                                                                    </div>
-                                                                </li>
-                                                            ))
-                                                        ) : (
-                                                            <li className="p-2 px-3 text-gray-500 text-sm">No results found</li>
-                                                        )}
-                                                    </ul> */}
+                                        <ul className="mt-1 max-h-44 overflow-y-scroll user-scrollbar">
+                                            {filteredVendors?.length > 0 ? (
+                                                filteredVendors?.map((data) => (
+                                                    <li
+                                                        key={data.displayName}
+                                                        className="p-2 px-3 hover:bg-blue-500 hover:text-white rounded group flex gap-3"
+                                                        onClick={() => {
+                                                            handleVendorChange(data)
+                                                            setError("")
+                                                        }}
+                                                    >
+                                                        <div className="w-10 h-10 bg-gray-200 capitalize rounded-full flex items-center text-gray-600 justify-center group-hover:text-gray-600 font-semibold">
+                                                            {data.displayName?.[0]}
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-sm">{data?.displayName}</p>
+                                                            <p className="text-[13px] flex items-center gap-1 group-hover:text-white text-gray-600">
+                                                                <VscMail />  {data.email}
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                <li className="p-2 px-3 text-gray-500 text-sm">No results found</li>
+                                            )}
+                                        </ul>
                                         <div
                                             className="p-2 bg-gray-200 px-3 hover:bg-gray-200 rounded text-blue-600 text-sm flex items-center gap-3 font-medium border-t"
                                             onClick={() => setAddVendor(true)}

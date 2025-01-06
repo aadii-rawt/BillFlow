@@ -26,10 +26,6 @@ function Vendors() {
         getAllVendors()
     }, [])
 
-    useEffect(() =>{
-        console.log(vendors);
-        
-    })
     return (
         <div className='relative'>
             <div className=' p-4 flex items-center justify-between'>
@@ -55,7 +51,7 @@ function Vendors() {
                     <tbody>
                         {vendors?.map((ven) => (
                         <tr className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(true)}>
-                            <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.DisplayName}</td>
+                            <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
                             <td className='text-sm py-2.5'>{ven?.companyName}</td>
                             <td className='text-sm py-2.5'>{ven?.email}</td>
                             <td className='text-sm py-2.5'>{ven?.Phone}</td>

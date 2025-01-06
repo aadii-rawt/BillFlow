@@ -7,7 +7,7 @@ const vendorsSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     companyName: String,
-    DisplayName: String,
+    displayName: String,
     email: String,
     Phone: String,
 });
