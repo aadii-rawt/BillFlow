@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { RxCross1 } from 'react-icons/rx'
 import { useNavigate } from 'react-router-dom'
+import axios from "axios"
 
 function VednorForm({ setAddVendor, type = "page" }) {
     const navigate = useNavigate();
@@ -20,10 +21,18 @@ function VednorForm({ setAddVendor, type = "page" }) {
         setUserDetails((prev) => ({ ...prev, [name]: value }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async () => {
         if (!userDetails?.DisplayName) {
             setError("Please Enter the Vendor Name")
             return
+        }
+         try {
+            const res = await axios.post("http://localhost:3000/vendor/newvendor", {
+                ...userDetails
+            })
+            console.log(res);
+        } catch (error) {
+            console.log(error);
         }
         console.log(userDetails);
         navigate("/vendors")
