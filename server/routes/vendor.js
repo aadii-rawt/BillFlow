@@ -61,12 +61,19 @@ router.post("/newvendor", async (req, res) => {
   // });
 });
 
-router.get("/vendors", (req, res) => {
-  vendors.find({}).then((resp) => {
-    res.json({
-      vendors: resp,
-    });
-  });
+router.get("/vendors", async (req, res) => {
+  const { authorization : userId} = req.headers;
+  const userVendors = await vendors.findOne({ userId });
+
+  try {
+    if (!userVendors) {
+      return res.json({ msg: "No vendors found for this user" });
+    }
+    console.log(userVendors);   
+    res.json({ vendors: userVendors.vendors });
+  } catch (error) {
+    res.status(500).json({ msg: "Error fetching vendors" });
+  }
 });
 
 module.exports = router;

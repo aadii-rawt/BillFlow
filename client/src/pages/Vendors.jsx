@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import VendorProfile from '../components/VendorProfile'
+import axios from 'axios'
 
 function Vendors() {
     const [vendorProfile, setVendorProfile] = useState(false)
@@ -9,7 +10,12 @@ function Vendors() {
 
     const getAllVendors = async () => {
         try {
-            const res = await fetch("http://localhost:3000/vendor/vendors");
+            // const res = await fetch("http://localhost:3000/vendor/vendors");
+            const res = await axios.get("http://localhost:3000/vendor/vendors", {
+                headers : {
+                    Authorization : "12345"
+                }
+            })
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
