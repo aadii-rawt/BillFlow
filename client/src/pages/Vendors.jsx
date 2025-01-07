@@ -5,7 +5,7 @@ import VendorProfile from '../components/VendorProfile'
 import axios from 'axios'
 
 function Vendors() {
-    const [vendorProfile, setVendorProfile] = useState(false)
+    const [vendorProfile, setVendorProfile] = useState(null)
     const [vendors, setVendors] = useState([]);
 
     const getAllVendors = async () => {
@@ -13,14 +13,10 @@ function Vendors() {
             // const res = await fetch("http://localhost:3000/vendor/vendors");
             const res = await axios.get("http://localhost:3000/vendor/vendors", {
                 headers : {
-                    Authorization : "12345"
+                    Authorization : "1278798764"
                 }
             })
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json();
-            console.log(data);
+            const data = res.data
             setVendors((prev) => ([...prev,...data?.vendors])); // Set the fetched data to state
         } catch (error) {
             console.error("Error fetching vendors:", error);
@@ -56,7 +52,7 @@ function Vendors() {
                     </thead>
                     <tbody>
                         {vendors?.map((ven) => (
-                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(true)}>
+                        <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(ven)}>
                             <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
                             <td className='text-sm py-2.5'>{ven?.companyName}</td>
                             <td className='text-sm py-2.5'>{ven?.email}</td>
@@ -85,7 +81,7 @@ function Vendors() {
                 </table>
             </div>
 
-            {vendorProfile && <VendorProfile setVendorProfile={setVendorProfile} />}
+            {vendorProfile && <VendorProfile setVendorProfile={setVendorProfile} vendorProfile={vendorProfile} />}
         </div>
     )
 }

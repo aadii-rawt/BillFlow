@@ -1,16 +1,20 @@
 import React, { useState } from 'react'
 import Accordion from './Accordion'
 import { HiOutlineChatBubbleOvalLeftEllipsis } from 'react-icons/hi2'
-import { MdKeyboardArrowRight } from 'react-icons/md'
+import { MdKeyboardArrowRight, MdOutlineKeyboardArrowUp } from 'react-icons/md'
 import { FiPlus } from 'react-icons/fi'
 
-function VendorProfile({ setVendorProfile }) {
-    const [tabs, setTabs] = useState("Transaction")
+function VendorProfile({ setVendorProfile, vendorProfile }) {
+    console.log(vendorProfile);
+
+
+
+    const [tabs, setTabs] = useState("Overview")
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%]'>
             <div className='flex justify-between items-center p-4'>
                 <div>
-                    <h1 className='text-2xl'>Aditya</h1>
+                    <h1 className='text-2xl'>{vendorProfile?.displayName}</h1>
                 </div>
                 <div className='space-x-2'>
                     <button className='px-2.5 py-1 text-[15px] border bg-gray-100 rounded'>Edit</button>
@@ -20,9 +24,9 @@ function VendorProfile({ setVendorProfile }) {
             </div>
             <div className='px-4 pt-3 pb-2 border-b'>
                 <ul className='flex gap-7 text-[15px] text-gray-500'>
-                    <li className={`${tabs == "Overview" && "font-medium text-gray-800" } cursor-pointer`} onClick={()=> setTabs("Overview")}>Overview</li>
+                    <li className={`${tabs == "Overview" && "font-medium text-gray-800"} cursor-pointer`} onClick={() => setTabs("Overview")}>Overview</li>
                     <li>Comments</li>
-                    <li className={`${tabs == "Transaction" && "font-medium text-gray-800" } cursor-pointer`} onClick={()=> setTabs("Transactions")}>Transactions</li>
+                    <li className={`${tabs == "Transaction" && "font-medium text-gray-800"} cursor-pointer`} onClick={() => setTabs("Transactions")}>Transactions</li>
                     <li>Mails</li>
                 </ul>
             </div>
@@ -33,7 +37,100 @@ function VendorProfile({ setVendorProfile }) {
                             <div className='w-12 h-12 rounded-md bg-gray-200'></div>
                             <h1 className='font-medium'>Aditya</h1>
                         </div>
-                        <Accordion />
+                        {/* <Accordion /> */}
+                        {/* <div className="space-y-2 my-5">
+                            <div className="">
+                                <button
+                                    className="w-full flex border-b py-0.5 justify-between items-center  text-left text-[14px]"
+                                >
+                                    <span >Record Info</span>
+                                    <span className='text-blue-500'> <MdOutlineKeyboardArrowUp /></span>
+                                </button>
+                                <div className="transition-all duration-300 ease-in-out">
+                                    <div className="py-2 bg-white text-gray-600 text-sm space-y-2">
+                                        <div className='flex items-center justify-between'>
+                                            <span className='text-gray-500'>Vendor ID</span>
+                                            <span className='text-black'>{vendorProfile?._id}</span>
+                                        </div>
+                                        <div className='flex items-center justify-between'>
+                                            <span className='text-gray-500'>Created on</span>
+                                            <span className='text-black'>02/34/2933</span>
+                                        </div>
+                                        <div className='flex items-center justify-between'>
+                                            <span className='text-gray-500'>Created By</span>
+                                            <span className='text-black'>Aditya Rawat</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
+                        {/* Address */}
+                         {/* <div className="space-y-2 my-5">
+                            <div className="">
+                                <input type="checkbox" id="toggle-record-info" className="hidden peer" />
+                                <label
+                                    htmlFor="toggle-record-info"
+                                    className="w-full flex border-b py-0.5 justify-between items-center text-left text-[14px] cursor-pointer"
+                                >
+                                    <span>Address</span>
+                                    <span className="text-blue-500 peer-checked:rotate-180 transition-transform duration-300">
+                                        <MdOutlineKeyboardArrowUp />
+                                    </span>
+                                </label>
+                                <div
+                                    className="transition-all duration-500 min-h-0 h-0 overflow-hidden peer-checked:min-h-44"
+                                >
+                                    <div className="py-2 bg-white text-gray-600 text-sm space-y-2">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500">Vendor ID</span>
+                                            <span className="text-black">{vendorProfile?._id}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500">Created on</span>
+                                            <span className="text-black">02/34/2933</span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500">Created By</span>
+                                            <span className="text-black">Aditya Rawat</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
+                        <div className="space-y-2 my-5">
+                            <div className="">
+                                <input type="checkbox" id="toggle-record-info" className="hidden peer" />
+                                <label
+                                    htmlFor="toggle-record-info"
+                                    className="w-full flex border-b py-0.5 justify-between items-center text-left text-[14px] cursor-pointer"
+                                >
+                                    <span>RECORD INFO</span>
+                                    <span className="text-blue-500 peer-checked:rotate-180 transition-transform duration-300">
+                                        <MdOutlineKeyboardArrowUp />
+                                    </span>
+                                </label>
+                                <div
+                                    className="transition-all duration-500 min-h-0 h-0 overflow-hidden peer-checked:min-h-44"
+                                >
+                                    <div className="py-2 bg-white text-gray-600 text-sm space-y-2">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500">Vendor ID</span>
+                                            <span className="text-black">{vendorProfile?._id}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500">Created on</span>
+                                            <span className="text-black">02/34/2933</span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-500">Created By</span>
+                                            <span className="text-black">Aditya Rawat</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+
+                        
                     </div>
                     <div className='p-4 w-full'>
                         <div>

@@ -28,7 +28,7 @@ function VednorForm({ setAddVendor, type = "page" }) {
         }
          try {
             const res = await axios.post("http://localhost:3000/vendor/newvendor", {
-                ...userDetails, userId : "123123"
+                ...userDetails, userId : "1278798764"
             })
             console.log(res);
         } catch (error) {

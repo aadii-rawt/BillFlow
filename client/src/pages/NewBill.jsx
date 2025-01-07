@@ -8,6 +8,7 @@ import { TbInvoice } from 'react-icons/tb';
 import { Link, useNavigate } from 'react-router-dom';
 import VendorForm from '../components/VendorForm'
 import Modal from '../components/Modal';
+import axios from 'axios';
 
 function NewBill() {
 
@@ -121,11 +122,12 @@ function NewBill() {
 
     const getAllVendors = async () => {
         try {
-            const res = await fetch("http://localhost:3000/vendor/vendors");
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            const data = await res.json();
+            const res = await axios.get("http://localhost:3000/vendor/vendors", {
+                headers : {
+                    Authorization : "1278798764"
+                }
+            })
+            const data = res.data
             console.log(data);
             setVendors((prev) => ([...prev, ...data?.vendors])); // Set the fetched data to state
         } catch (error) {

@@ -15,6 +15,7 @@ const vendorsSchema = new mongoose.Schema({
       displayName: String,
       email: String,
       Phone: String,
+      createdAt: { type: Date, default: Date.now },
     },
   ],
 });
