@@ -20,6 +20,7 @@ function NewBill() {
         senderEmail: "",
         uploadedLogo: "",
         FromAddress: "",
+        vendorName: "",
         date: "",
         dueDate: "",
         tax: 0,
@@ -118,13 +119,16 @@ function NewBill() {
             setError("Please select Vendor")
             return
         }
+
+        console.log(billData);
+        
     }
 
     const getAllVendors = async () => {
         try {
             const res = await axios.get("http://localhost:3000/vendor/vendors", {
-                headers : {
-                    Authorization : "1278798764"
+                headers: {
+                    Authorization: "1278798764"
                 }
             })
             const data = res.data
@@ -135,10 +139,14 @@ function NewBill() {
         }
 
     }
-
     useEffect(() => {
         getAllVendors()
     }, [])
+
+    const handleVendorChange = (data) => {
+        setBillData((prev) => ({ ...prev, ...data , vendorName : data?.displayName }));
+        setError(""); // Clear any existing errors
+    };
 
     const [searchQuery, setSearchQuery] = useState("");
     const filteredVendors = vendors.filter((data) =>
@@ -205,7 +213,7 @@ function NewBill() {
                         <div className=" relative w-[300px]">
                             <label className="block text-gray-500 mb-1">Bill To <span className="text-red-600">*</span></label>
                             <div className="w-full relative flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 cursor-pointer" onClick={() => setShowdropdown(!showdropdown)}>
-                                <span className="text-gray-500">{billData?.displayName ? billData?.displayName : "Select or Add Vendor"}</span>
+                                <span className="text-gray-500">{billData?.vendorName ? billData?.vendorName : "Select or Add Vendor"}</span>
                                 <IoIosArrowDown />
                                 {showdropdown &&
                                     <div className="absolute rounded overflow-hidden bg shadow-md w-full left-0 top-[50px] bg-gray-100 px-1 py-1">
