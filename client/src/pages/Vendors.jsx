@@ -61,7 +61,7 @@ function Vendors() {
                             <td className='text-sm py-2.5 font-medium'>₹0.00</td>
                         </tr>
                         ))}
-                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'>
+                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(true)}>
                             <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
                             <td className='text-sm py-2.5'>google</td>
                             <td className='text-sm py-2.5'>vinay@mt.com</td>

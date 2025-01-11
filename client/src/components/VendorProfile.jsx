@@ -37,7 +37,7 @@ function VendorProfile({ setVendorProfile, vendorProfile }) {
                             <div className='w-12 h-12 rounded-md bg-gray-200'></div>
                             <h1 className='font-medium'>Aditya</h1>
                         </div>
-                        {/* <Accordion /> */}
+                        <Accordion />
                         {/* <div className="space-y-2 my-5">
                             <div className="">
                                 <button
@@ -97,7 +97,7 @@ function VendorProfile({ setVendorProfile, vendorProfile }) {
                                 </div>
                             </div>
                         </div> */}
-                        <div className="space-y-2 my-5">
+                        {/* <div className="space-y-2 my-5">
                             <div className="">
                                 <input type="checkbox" id="toggle-record-info" className="hidden peer" />
                                 <label
@@ -128,7 +128,7 @@ function VendorProfile({ setVendorProfile, vendorProfile }) {
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>  */}
 
                         
                     </div>
