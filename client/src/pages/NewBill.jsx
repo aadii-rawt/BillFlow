@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import VendorForm from '../components/VendorForm'
 import Modal from '../components/Modal';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function NewBill() {
 
@@ -27,6 +28,7 @@ function NewBill() {
         note: "",
         isPaid: "unpaid",
         billId: crypto.randomUUID(),
+        userId : "1278798764"
     });
 
     const [showdropdown, setShowdropdown] = useState(false)
@@ -34,6 +36,7 @@ function NewBill() {
     const [addVendor, setAddVendor] = useState(false)
     const [error, setError] = useState("")
     const [vendors, setVendors] = useState([]);
+    // const vendors = useSelector(state => state.vendorSlice.vendors)
 
     // add more item into table
     const addItem = () => {
@@ -114,14 +117,21 @@ function NewBill() {
         return new Intl.NumberFormat('en-IN').format(amount);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!billData?.vendorName) {
             setError("Please select Vendor")
             return
         }
 
-        console.log(billData);
-        
+        try {
+            const res = await axios.post("http://localhost:3000/bills/newbill", {
+                ...billData
+            })
+            console.log(res);
+            navigate("/bills")
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const getAllVendors = async () => {
@@ -144,7 +154,7 @@ function NewBill() {
     }, [])
 
     const handleVendorChange = (data) => {
-        setBillData((prev) => ({ ...prev, ...data , vendorName : data?.displayName }));
+        setBillData((prev) => ({ ...prev, ...data, vendorName: data?.displayName }));
         setError(""); // Clear any existing errors
     };
 
