@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 
 const vendorRoutes = require("../routes/vendor");
+const billsRoutes = require("../routes/bills")
 app.use(
   cors({
     origin: "http://localhost:5174", // Allow requests from your frontend
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use(bodyParser.json());
 app.use("/vendor", vendorRoutes);
+app.use("/bills", billsRoutes);
 
 const PORT = 3000;
 
