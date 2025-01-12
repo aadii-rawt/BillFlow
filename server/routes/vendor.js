@@ -1,5 +1,5 @@
 const express = require("express");
-const { vendors } = require("../db");
+const { Vendors } = require("../db");
 const router = express.Router();
 
 router.post("/newvendor", async (req, res) => {
@@ -15,10 +15,10 @@ router.post("/newvendor", async (req, res) => {
   } = req.body;
 
   try {
-    const userVendors = await vendors.findOne({ userId });
+    const userVendors = await Vendors.findOne({ userId });
 
     if (!userVendors) {
-      userVendors = await vendors.create({
+      userVendors = await Vendors.create({
         userId,
         vendors: [],
       });
@@ -63,7 +63,7 @@ router.post("/newvendor", async (req, res) => {
 
 router.get("/vendors", async (req, res) => {
   const { authorization : userId} = req.headers;
-  const userVendors = await vendors.findOne({ userId });
+  const userVendors = await Vendors.findOne({ userId });
 
   try {
     if (!userVendors) {
