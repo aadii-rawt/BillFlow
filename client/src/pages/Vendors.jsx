@@ -7,9 +7,7 @@ import { useSelector } from 'react-redux'
 
 function Vendors() {
     const [vendorProfile, setVendorProfile] = useState(null)
-    // const [vendors, setVendors] = useState([]);
-    const vendors = useSelector(state => state.vendorSlice.vendors)
-
+    const [vendors, setVendors] = useState([]);
     const getAllVendors = async () => {
         try {
             // const res = await fetch("http://localhost:3000/vendor/vendors");
