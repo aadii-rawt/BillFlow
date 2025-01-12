@@ -20,6 +20,31 @@ const vendorsSchema = new mongoose.Schema({
   ],
 });
 
-const vendors = mongoose.model("vendors", vendorsSchema);
+const billsSchema = new mongoose.Schema({
+  userId: String,
+  bills: [
+    {
+      items: [
+        { description: String, quantity: Number, rate: Number, amount: Number },
+      ],
+      billNumber: String,
+      from: String,
+      senderPhone: String,
+      senderEmail: String,
+      uploadedLogo: String,
+      FromAddress: String,
+      vendorName: String,
+      date: String,
+      dueDate: String,
+      tax: Number,
+      note: String,
+      isPaid: String,
+      billId: String,
+    },
+  ],
+});
 
-module.exports = { vendors };
+const Vendors = mongoose.model("vendors", vendorsSchema);
+const Bills = mongoose.model("bills",billsSchema)
+
+module.exports = { Vendors,Bills };
