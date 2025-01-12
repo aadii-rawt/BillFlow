@@ -1,6 +1,7 @@
 import React from 'react'
 import { FiPlus, FiPlusCircle } from "react-icons/fi";
 import AreaChart from '../components/AreaChart';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
   return (
@@ -36,7 +37,7 @@ function Dashboard() {
         <div className='w-full border rounded-lg overflow-hidden'>
           <div className='flex items-center justify-between bg-gray-100 py-3 px-5 border-b'>
             <h1 className='text-xl'>Total Payables</h1>
-            <button className='flex items-center gap-1.5'><FiPlus className='text-white bg-blue-500 rounded-full' /> New</button>
+            <Link to='/bills/new' className='flex items-center gap-1.5'><FiPlus className='text-white bg-blue-500 rounded-full' /> New</Link>
           </div>
           <div className='flex px-5 py-4'>
             <div className='w-1/2 border-r'>
