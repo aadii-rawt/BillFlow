@@ -4,7 +4,7 @@ import AreaChart from '../components/AreaChart';
 
 function Dashboard() {
   return (
-    <div>
+    <div className=''>
       <div className='px-4 py-8 border-b' style={{ backgroundImage: "url('./img/dashboard-banner.svg')" }}>
         <div className='flex gap-2'>
           <div className='w-14 h-14 bg-gray-300 rounded-lg'></div>
