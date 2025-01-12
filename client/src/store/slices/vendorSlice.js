@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const vendorSlice = createSlice({
-    name : "vendosr",
+    name : "vendors",
     initialState : {
         vendors : [
             {
