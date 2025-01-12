@@ -3,21 +3,23 @@ import { FiPlus } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import VendorProfile from '../components/VendorProfile'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 function Vendors() {
     const [vendorProfile, setVendorProfile] = useState(null)
-    const [vendors, setVendors] = useState([]);
+    // const [vendors, setVendors] = useState([]);
+    const vendors = useSelector(state => state.vendorSlice.vendors)
 
     const getAllVendors = async () => {
         try {
             // const res = await fetch("http://localhost:3000/vendor/vendors");
             const res = await axios.get("http://localhost:3000/vendor/vendors", {
-                headers : {
-                    Authorization : "1278798764"
+                headers: {
+                    Authorization: "1278798764"
                 }
             })
             const data = res.data
-            setVendors((prev) => ([...prev,...data?.vendors])); // Set the fetched data to state
+            setVendors((prev) => ([...prev, ...data?.vendors])); // Set the fetched data to state
         } catch (error) {
             console.error("Error fetching vendors:", error);
         }
@@ -52,14 +54,14 @@ function Vendors() {
                     </thead>
                     <tbody>
                         {vendors?.map((ven) => (
-                        <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(ven)}>
-                            <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
-                            <td className='text-sm py-2.5'>{ven?.companyName}</td>
-                            <td className='text-sm py-2.5'>{ven?.email}</td>
-                            <td className='text-sm py-2.5'>{ven?.Phone}</td>
-                            <td className='text-sm py-2.5 font-medium'>₹0.00</td>
-                            <td className='text-sm py-2.5 font-medium'>₹0.00</td>
-                        </tr>
+                            <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(ven)}>
+                                <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
+                                <td className='text-sm py-2.5'>{ven?.companyName}</td>
+                                <td className='text-sm py-2.5'>{ven?.email}</td>
+                                <td className='text-sm py-2.5'>{ven?.Phone}</td>
+                                <td className='text-sm py-2.5 font-medium'>₹0.00</td>
+                                <td className='text-sm py-2.5 font-medium'>₹0.00</td>
+                            </tr>
                         ))}
                         <tr className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(true)}>
                             <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
