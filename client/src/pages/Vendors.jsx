@@ -3,11 +3,14 @@ import { FiPlus } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import VendorProfile from '../components/VendorProfile'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setVendorProfile } from '../store/slices/stateSlice'
 
 function Vendors() {
-    const [vendorProfile, setVendorProfile] = useState(null)
+    // const [vendorProfile, setVendorProfile] = useState(null)
+    const vendorProfile = useSelector(state => state.stateSlice.vendorProfile)
     const [vendors, setVendors] = useState([]);
+    const dispatch = useDispatch()
     const getAllVendors = async () => {
         try {
             // const res = await fetch("http://localhost:3000/vendor/vendors");
@@ -52,7 +55,10 @@ function Vendors() {
                     </thead>
                     <tbody>
                         {vendors?.map((ven) => (
-                            <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(ven)}>
+                            <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b' 
+                            // onClick={() => setVendorProfile(ven)}
+                           onClick={() => dispatch(setVendorProfile(true))}
+                            >
                                 <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
                                 <td className='text-sm py-2.5'>{ven?.companyName}</td>
                                 <td className='text-sm py-2.5'>{ven?.email}</td>
@@ -61,7 +67,10 @@ function Vendors() {
                                 <td className='text-sm py-2.5 font-medium'>₹0.00</td>
                             </tr>
                         ))}
-                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b' onClick={() => setVendorProfile(true)}>
+                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b' 
+                        // onClick={() => setVendorProfile(true)}
+                        onClick={() => dispatch(setVendorProfile(true))}
+                        >
                             <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
                             <td className='text-sm py-2.5'>google</td>
                             <td className='text-sm py-2.5'>vinay@mt.com</td>
@@ -81,7 +90,7 @@ function Vendors() {
                 </table>
             </div>
 
-            {vendorProfile && <VendorProfile setVendorProfile={setVendorProfile} vendorProfile={vendorProfile} />}
+            {vendorProfile && <VendorProfile />}
         </div>
     )
 }

@@ -35,8 +35,8 @@ function NewBill() {
     const navigate = useNavigate()
     const [addVendor, setAddVendor] = useState(false)
     const [error, setError] = useState("")
-    const [vendors, setVendors] = useState([]);
-    // const vendors = useSelector(state => state.vendorSlice.vendors)
+    // const [vendors, setVendors] = useState([]);
+    const vendors = useSelector(state => state.vendorSlice.vendors)
 
     // add more item into table
     const addItem = () => {
@@ -112,6 +112,7 @@ function NewBill() {
         const taxAmount = (subtotal * taxPercent) / 100;
         return (subtotal + taxAmount).toFixed(2);
     };
+    
     // format currency into the indian format
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('en-IN').format(amount);
@@ -123,15 +124,17 @@ function NewBill() {
             return
         }
 
-        try {
-            const res = await axios.post("http://localhost:3000/bills/newbill", {
-                ...billData
-            })
-            console.log(res);
-            navigate("/bills")
-        } catch (error) {
-            console.log(error);
-        }
+        console.log(billData);
+        
+        // try {
+        //     const res = await axios.post("http://localhost:3000/bills/newbill", {
+        //         ...billData
+        //     })
+        //     console.log(res);
+        //     navigate("/bills")
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
 
     const getAllVendors = async () => {
