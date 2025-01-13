@@ -1,14 +1,17 @@
 import React from 'react'
 import { FiPlus } from 'react-icons/fi'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { setBillPreview } from '../store/slices/stateSlice'
+import BillPreview from '../components/BillPreview'
 
 function Bills() {
     const bills = useSelector((state) => state.billSlice.bills)
-    console.log(bills);
-
+    const billPreview = useSelector((state) => state.stateSlice.billPreview)
+    const dispatch = useDispatch()
+    
     return (
-        <div className=''>
+        <div className='relative'>
             <div className=' p-4 flex items-center justify-between'>
                 <div>
                     <button className='text-2xl font-medium'>All Bills</button>
@@ -32,9 +35,9 @@ function Bills() {
                     </thead>
                     <tbody>
                         {bills?.map((data) => (
-                            <tr className='text-sm text-center border-b'>
+                            <tr className='text-sm text-center border-b cursor-pointer' onClick={() => dispatch(setBillPreview(true))}>
                                 <td className='py-2'>{data?.date}</td>
-                                <td className='py-2'>{data?.billNumber}</td>
+                                <td className='py-2 text-blue-500'>{data?.billNumber}</td>
                                 <td className='py-2'>{data?.vendorName}</td>
                                 <td className='py-2'>{data?.isPaid}</td>
                                 <td className='py-2'>{data?.dueDate}</td>
@@ -45,6 +48,8 @@ function Bills() {
                     </tbody>
                 </table>
             </div>
+
+            {billPreview && <BillPreview />}
         </div>
     )
 }
