@@ -14,3 +14,5 @@
     transform: translateY(0);
   }
 }
+
+@layer base { img { display: initial; } }
