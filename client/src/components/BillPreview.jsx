@@ -38,7 +38,7 @@ function BillPreview() {
             </div>
 
             {/* pdf section */}
-            <div className='p-5'>
+            <div className='m-5'>
                 <BillInvoicePDF />
             </div>
         </div>

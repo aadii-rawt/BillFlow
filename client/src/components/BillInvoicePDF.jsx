@@ -2,36 +2,44 @@ import React from 'react'
 
 function BillInvoicePDF() {
     return (
-        <div id='invoiceBill' className='w-full h-full shadow '>
-            <div className="max-w-4xl mx-auto border p-6 shadow-lg">
+        <div id='invoiceBill' className='w-full h-full shadow'>
+            <div className="max-w-4xl mx-auto border p-6">
                 {/* Header Section */}
                 <div className="flex justify-between items-center mb-4">
                     {/* Logo */}
                     <div>
-                        {/* <img
-                            src="https://via.placeholder.com/50" // Replace with your logo URL
+                        <img
+                            src="/img/image.png" // Replace with your logo URL
                             alt="Logo"
-                            className="w-16 h-16"
-                        /> */}
+                            className="w-full max-w-[100px]"
+                        />
                     </div>
                     {/* Invoice Details */}
                     <div className="text-right">
-                        <h1 className="text-2xl font-bold">BILL</h1>
-                        <p className="text-sm">Bill# #4567890</p>
-                        <p className="text-xl font-bold text-pink-600">Balance Due</p>
-                        <p className="text-xl font-bold text-pink-600">₹2,000.00</p>
+                        <h1 className="text-3xl font-semibold">BILL</h1>
+                        <p className="font-medium my-1">Bill# #4567890</p>
+                        {/* <p className="text-xl font-bold text-pink-600">Balance Due</p>
+                        <p className="text-xl font-bold text-pink-600">₹2,000.00</p> */}
                     </div>
                 </div>
 
                 {/* Address Section */}
-                <div className="grid grid-cols-2 gap-4 text-sm mb-6">
+
+
+                {/* Billing From Section */}
+                <div className="mb-6">
+                    <h2 className="font-semibold text-lg">Aditya</h2>
+                    <p>Delhi</p>
+                    <p>India</p>
+                    <p>rawataditi600@gmail.com</p>
+
+                </div>
+                <div className="grid grid-cols-2 items-end gap-4 mb-6">
                     <div>
-                        <h2 className="font-bold">Aditya</h2>
-                        <p>Delhi</p>
-                        <p>India</p>
-                        <p>rawataditi600@gmail.com</p>
+                        <h2 className="font-semibold">Bill From</h2>
+                        <p className='font-semibold text-blue-500'>Aditya</p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right space-y-2 text-sm">
                         <p>
                             <span className="font-bold">Bill Date:</span> 31/12/2024
                         </p>
@@ -44,27 +52,6 @@ function BillInvoicePDF() {
                     </div>
                 </div>
 
-                {/* Billing From Section */}
-                <div className="mb-6">
-                    <h2 className="font-bold">Bill From</h2>
-                    <p>Aditya</p>
-                </div>
-
-                {/* Item Table */}
-                {/* <div className="border rounded-lg overflow-hidden">
-                    <div className="grid grid-cols-4 bg-gray-800 text-white p-2">
-                        <div className="col-span-2">Item</div>
-                        <div className="text-right">Item</div>
-                        <div className="text-right">Rate</div>
-                        <div className="text-right">Amount</div>
-                    </div>
-                    <div className="grid grid-cols-4 p-2 border-b">
-                        <div className="col-span-2">j</div>
-                        <div>1.00</div>
-                        <div className="text-right">₹2,000.00</div>
-                        <div className="text-right">₹2,000.00</div>
-                    </div>
-                </div> */}
                 <div>
                     <table className='w-full'>
                         <thead>
@@ -87,23 +74,23 @@ function BillInvoicePDF() {
                 </div>
 
                 {/* Subtotal Section */}
-                <div className="text-right mt-4">
-                    <div className="flex justify-between items-center">
+                <div className="text-right space-y-3 mt-10">
+                    <div className="flex justify-end gap-10 items-center">
                         <span>Sub Total</span>
                         <span>₹2,000.00</span>
                     </div>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-end gap-10 items-center">
                         <span>Total</span>
                         <span>₹2,000.00</span>
                     </div>
-                    <div className="flex justify-between items-center text-pink-600 font-bold mt-2">
+                    <div className="flex justify-end gap-10 items-center  text-pink-600 font-bold mt-2">
                         <span>Balance Due</span>
                         <span>₹2,000.00</span>
                     </div>
                 </div>
 
                 {/* Footer Section */}
-                <div className="mt-8">
+                <div className="mt-14">
                     <p>Authorized Signature ___________________________</p>
                 </div>
             </div>
