@@ -1,7 +1,9 @@
 
 import React from "react";
 import { HiOutlineMail } from "react-icons/hi";
-import { LuKeyRound } from "react-icons/lu";
+import { LuBriefcaseBusiness, LuKeyRound } from "react-icons/lu";
+import { MdOutlineLocalPhone } from "react-icons/md";
+import { IoLocationOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 const Signup = () => {
   return (
@@ -19,7 +21,7 @@ const Signup = () => {
                    Company Name*
                  </label>
                  <div className=" flex gap-2 items-center px-4 rounded-3xl border border-gray-400">
-                   <HiOutlineMail className="text-gray-500" />
+                 <LuBriefcaseBusiness className="text-gray-500" />
                    <input
                      type="text"
                      id="text"
@@ -49,7 +51,7 @@ const Signup = () => {
                    Mobile Number*
                  </label>
                  <div className=" flex gap-2 items-center px-4 rounded-3xl border border-gray-400">
-                   <HiOutlineMail className="text-gray-500" />
+                   <MdOutlineLocalPhone className="text-gray-500" />
                    <input
                      type="number"
                      id="number"
@@ -74,6 +76,21 @@ const Signup = () => {
    
                  </div>
                </div>
+               <div className="mb-4">
+                 <label className="block text-gray-700 font-medium text-sm mb-1" htmlFor="password">
+                   Address*
+                 </label>
+                 <div className=" flex gap-2 items-center px-4 rounded-3xl border border-gray-400">
+                   <IoLocationOutline className="text-gray-500" />
+                   <input
+                     type="text"
+                     id="text"
+                     className="w-full bg-transparent px-1 py-2 outline-none"
+                     placeholder="company address"
+                   />
+   
+                 </div>
+               </div>
                <button
                  type="submit"
                  className="w-full bg-[#5138EE] text-white font-bold py-2 px-4 my-3 rounded-3xl"
@@ -82,11 +99,11 @@ const Signup = () => {
                </button>
              </form>
              <div className="text-center mt-6 text-gray-600">
-               <p className="mb-4">OR</p>
+               <p className="">OR</p>
              </div>
              <div className="mt-3 text-center">
                <p className="text-gray-600">
-                 Don’t have an account? <Link to='/signup' className="text-[#5138EE] cursor-pointer">Sign up</Link>
+                 Already have an account? <Link to='/login' className="text-[#5138EE] cursor-pointer">Log in</Link>
                </p>
              </div>
            </div>

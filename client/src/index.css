@@ -16,3 +16,15 @@
 }
 
 @layer base { img { display: initial; } }
+
+
+/* remove the increment and decrement button from number input */
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Hide spinner in Firefox */
+}
