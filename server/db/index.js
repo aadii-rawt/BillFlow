@@ -44,7 +44,17 @@ const billsSchema = new mongoose.Schema({
   ],
 });
 
-const Vendors = mongoose.model("vendors", vendorsSchema);
-const Bills = mongoose.model("bills",billsSchema)
 
-module.exports = { Vendors,Bills };
+const usersSchema = new mongoose.Schema({
+  companyName: String,
+  email: String,
+  phoneNumber : String,
+  password: String,
+  companyAddress : String
+})
+
+const Vendors = mongoose.model("vendors", vendorsSchema);
+const Bills = mongoose.model("bills",billsSchema);
+const Users = mongoose.model("users",usersSchema)
+
+module.exports = { Vendors,Bills,Users };
