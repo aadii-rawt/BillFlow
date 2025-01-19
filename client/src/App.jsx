@@ -12,7 +12,7 @@ import NewVendor from "./pages/NewVendor"
 import NewBill from "./pages/NewBill"
 import {Provider} from 'react-redux'
 import store from "./store/store"
-
+//using redux
 const router = createBrowserRouter([
   {
     path: "",
