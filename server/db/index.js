@@ -5,7 +5,7 @@ mongoose.connect(
 );
 
 const vendorsSchema = new mongoose.Schema({
-  userId: String,
+  _id: { type: mongoose.Schema.Types.ObjectId, required: true }, // Define _id explicitly if needed
   vendors: [
     {
       salutation: String,
@@ -44,17 +44,16 @@ const billsSchema = new mongoose.Schema({
   ],
 });
 
-
 const usersSchema = new mongoose.Schema({
   companyName: String,
   email: String,
-  phoneNumber : String,
+  phoneNumber: String,
   password: String,
-  companyAddress : String
-})
+  companyAddress: String,
+});
 
 const Vendors = mongoose.model("vendors", vendorsSchema);
-const Bills = mongoose.model("bills",billsSchema);
-const Users = mongoose.model("users",usersSchema)
+const Bills = mongoose.model("bills", billsSchema);
+const Users = mongoose.model("users", usersSchema);
 
-module.exports = { Vendors,Bills,Users };
+module.exports = { Vendors, Bills, Users };
