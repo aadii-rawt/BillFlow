@@ -16,7 +16,7 @@ function Vendors() {
             // const res = await fetch("http://localhost:3000/vendor/vendors");
             const res = await axios.get("http://localhost:3000/vendor/vendors", {
                 headers: {
-                    Authorization: "1278798764"
+                    Authorization: "678e36da2a1b9a0a11433014"
                 }
             })
             const data = res.data
@@ -35,7 +35,7 @@ function Vendors() {
         <div className='relative'>
             <div className=' p-4 flex items-center justify-between'>
                 <div>
-                    <button className='text-2xl font-medium'>All Vendors</button>
+                    {/* <button className='text-2xl font-medium'>All Vendors</button> */}
                 </div>
                 <div>
                     <Link to="/vendors/new" className='bg-blue-500 px-3 py-1.5 rounded-md text-white flex items-center justify-center gap-1'> <FiPlus />New</Link>
@@ -54,7 +54,7 @@ function Vendors() {
                         </tr>
                     </thead>
                     <tbody>
-                        {vendors?.map((ven) => (
+                        { vendors && vendors?.map((ven) => (
                             <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b' 
                             // onClick={() => setVendorProfile(ven)}
                            onClick={() => dispatch(setVendorProfile(true))}
