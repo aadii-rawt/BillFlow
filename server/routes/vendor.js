@@ -15,11 +15,11 @@ router.post("/newvendor", async (req, res) => {
   } = req.body;
 
   try {
-    const userVendors = await Vendors.findOne({ userId });
+    let userVendors = await Vendors.findOne({ _id: userId });
 
     if (!userVendors) {
       userVendors = await Vendors.create({
-        userId,
+        _id: userId,
         vendors: [],
       });
     }
@@ -38,32 +38,14 @@ router.post("/newvendor", async (req, res) => {
 
     res.json({ msg: "Vendor created successfully" });
   } catch (error) {
-    res.json({ msg: "Error creating vendor" });
+    console.error("Error:", error.message);
+    res.status(500).json({ msg: "Error creating vendor", error: error.message });
   }
-
-  // await vendors.create({
-  //   userId,
-  //   vendors : [
-  //     {
-  //       salutation,
-  //       lastName,
-  //       firstName,
-  //       companyName,
-  //       displayName,
-  //       email,
-  //       Phone,
-  //     }
-  //   ]
-  // });
-
-  // res.json({
-  //   msg: "Vendor Created Successfully",
-  // });
 });
 
 router.get("/vendors", async (req, res) => {
-  const { authorization : userId} = req.headers;
-  const userVendors = await Vendors.findOne({ userId });
+  const { authorization : _id} = req.headers;
+  const userVendors = await Vendors.findOne({ _id });
 
   try {
     if (!userVendors) {
