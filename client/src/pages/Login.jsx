@@ -12,6 +12,10 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if(!email && !password){
+      setError("Please Enter all values")
+      return
+    }
     try {
       const res = await axios.post("http://localhost:3000/users/login", {
         email,
