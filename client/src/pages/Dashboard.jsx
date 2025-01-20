@@ -2,16 +2,20 @@ import React from 'react'
 import { FiPlus, FiPlusCircle } from "react-icons/fi";
 import AreaChart from '../components/AreaChart';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Dashboard() {
+  const user = useSelector((state) => state?.stateSlice?.user);
+  console.log(user);
+  
   return (
     <div className=''>
       <div className='px-4 py-8 border-b' style={{ backgroundImage: "url('./img/dashboard-banner.svg')" }}>
         <div className='flex gap-2'>
           <div className='w-14 h-14 bg-gray-300 rounded-lg'></div>
           <div>
-            <h1 className='font-medium text-xl'>Hello, Aditya Rawat</h1>
-            <h1 className='text-gray-600'>Aditya</h1>
+            <h1 className='font-medium text-xl'>Hello, {user?.companyName}</h1>
+            <h1 className='text-gray-600'>{user?.companyName}</h1>
           </div>
         </div>
       </div>

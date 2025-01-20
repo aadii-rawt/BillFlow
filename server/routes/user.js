@@ -37,9 +37,12 @@ router.post("/login", async (req, res) => {
       email: email,
       password: password,
     });
+    console.log("user exits :", isUserExist);
+
     if (isUserExist) {
       return res.status(200).send({
         msg: "user login successfully",
+        user : isUserExist,
       });
     }
     return res.status(401).send({

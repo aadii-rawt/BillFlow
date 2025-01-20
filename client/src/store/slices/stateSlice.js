@@ -4,10 +4,14 @@ const stateSlice = createSlice({
   name: "state",
   initialState: {
     state: [],
+    user : null,
     vendorProfile: null,
     billPreview : null
   },
   reducers: {
+    setUser(state,action) {
+      state.user = action.payload
+    },
     setVendorProfile(state, action) {
       state.vendorProfile = action.payload;
     },
@@ -23,5 +27,5 @@ const stateSlice = createSlice({
   },
 });
 
-export const { setVendorProfile, closeVendorProfile,setBillPreview,closeBillPreview } = stateSlice.actions;
+export const { setVendorProfile, closeVendorProfile,setBillPreview,closeBillPreview, setUser } = stateSlice.actions;
 export default stateSlice.reducer;

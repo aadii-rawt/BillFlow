@@ -4,11 +4,14 @@ import { HiOutlineMail } from "react-icons/hi";
 import { LuKeyRound } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/slices/stateSlice";
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,13 +19,16 @@ const Login = () => {
       setError("Please Enter all values")
       return
     }
-    
+
     try {
       const res = await axios.post("http://localhost:3000/users/login", {
         email,
         password
       })
+      
+      
       if (res?.status == 200) {
+        dispatch(setUser(res.data?.user))
         navigate("/")
       }
     } catch (error) {
