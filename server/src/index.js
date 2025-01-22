@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
-
+const cookieParser = require("cookie-parser")
 
 const vendorRoutes = require("../routes/vendor");
 const billsRoutes = require("../routes/bills")
@@ -17,8 +17,9 @@ app.use(
 );
 
 app.use(express.json());
-
 app.use(bodyParser.json());
+app.use(cookieParser())
+
 app.use("/vendor", vendorRoutes);
 app.use("/bills", billsRoutes);
 app.use('/users',userRoutes)
