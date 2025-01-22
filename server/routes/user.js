@@ -1,15 +1,16 @@
 const express = require("express");
 const { Users } = require("../db");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 
 router.post("/signup", async (req, res) => {
   console.log(req.body);
   const email = req.body.email;
   try {
-    const isUserExist = await Users.findOne({ email });
-    console.log(isUserExist);
+    const user = await Users.findOne({ email });
+    console.log(user);
 
-    if (isUserExist) {
+    if (user) {
       return res.status(409).send({
         msg: "User with this email already exists.",
       });
@@ -33,21 +34,33 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const isUserExist = await Users.findOne({
+    const user = await Users.findOne({
       email: email,
       password: password,
     });
-    console.log("user exits :", isUserExist);
+    console.log("user exits :", user);
+    
+    if (user) {
+      const token = jwt.sign({ _id: user._id }, "ukfhnsdfkjh", {
+        expiresIn: "1h",
+      });
 
-    if (isUserExist) {
-      return res.status(200).send({
+      console.log(token);
+
+      return res.cookie("Authorization",token , {
+        httpOnly: true,
+        secure: false, // Set to true in production (requires HTTPS)
+        sameSite: 'strict',
+        maxAge: 3600000, // 1 hour
+      }).status(200).send({
         msg: "user login successfully",
-        user : isUserExist,
+        user: user,
       });
     }
     return res.status(401).send({
       msg: "Invalid email and password",
     });
+    
   } catch (error) {
     console.log(error);
     res.send({
