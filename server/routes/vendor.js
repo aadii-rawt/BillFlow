@@ -40,19 +40,21 @@ router.post("/newvendor", async (req, res) => {
     res.json({ msg: "Vendor created successfully" });
   } catch (error) {
     console.error("Error:", error.message);
-    res.status(500).json({ msg: "Error creating vendor", error: error.message });
+    res
+      .status(500)
+      .json({ msg: "Error creating vendor", error: error.message });
   }
 });
 
-router.get("/vendors", authMiddleware,async (req, res) => {
-  const { authorization : _id} = req.headers;
+router.get("/vendors",authMiddleware, async (req, res) => {
+  const { authorization: _id } = req.headers;
+
   const userVendors = await Vendors.findOne({ _id });
 
   try {
     if (!userVendors) {
       return res.json({ msg: "No vendors found for this user" });
     }
-    console.log(userVendors);   
     res.json({ vendors: userVendors.vendors });
   } catch (error) {
     res.status(500).json({ msg: "Error fetching vendors" });
