@@ -1,5 +1,6 @@
 const express = require("express");
 const { Vendors } = require("../db");
+const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.post("/newvendor", async (req, res) => {
@@ -43,7 +44,7 @@ router.post("/newvendor", async (req, res) => {
   }
 });
 
-router.get("/vendors", async (req, res) => {
+router.get("/vendors", authMiddleware,async (req, res) => {
   const { authorization : _id} = req.headers;
   const userVendors = await Vendors.findOne({ _id });
 
