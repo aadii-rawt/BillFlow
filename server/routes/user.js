@@ -2,7 +2,6 @@ const express = require("express");
 const { Users } = require("../db");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-
 router.post("/signup", async (req, res) => {
   console.log(req.body);
   const email = req.body.email;
@@ -31,7 +30,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login" , async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await Users.findOne({
@@ -39,7 +38,6 @@ router.post("/login", async (req, res) => {
       password: password,
     });
     console.log("user exits :", user);
-    
     if (user) {
       const token = jwt.sign({ _id: user._id }, "ukfhnsdfkjh", {
         expiresIn: "1h",
