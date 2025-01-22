@@ -25,10 +25,12 @@ const Login = () => {
         email,
         password
       })
-      
-      
+
+
       if (res?.status == 200) {
-        dispatch(setUser(res.data?.user))
+        const user = res.data?.user;
+        localStorage.setItem("user", JSON.stringify(user));
+        dispatch(setUser(user)); 
         navigate("/")
       }
     } catch (error) {
