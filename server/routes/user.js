@@ -39,7 +39,7 @@ router.post("/login" , async (req, res) => {
     });
     console.log("user exits :", user);
     if (user) {
-      const token = jwt.sign({ _id: user._id }, "ukfhnsdfkjh", {
+      const token = jwt.sign({ _id: user._id, email,password }, "ukfhnsdfkjh", {
         expiresIn: "1h",
       });
       console.log(token);
