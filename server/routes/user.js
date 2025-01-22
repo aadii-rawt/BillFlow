@@ -44,7 +44,6 @@ router.post("/login", async (req, res) => {
       const token = jwt.sign({ _id: user._id }, "ukfhnsdfkjh", {
         expiresIn: "1h",
       });
-
       console.log(token);
 
       return res.cookie("Authorization",token , {
