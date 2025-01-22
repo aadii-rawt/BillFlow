@@ -4,15 +4,15 @@ const vendorSlice = createSlice({
     name : "vendors",
     initialState : {
         vendors : [
-            {
-                salutation: "Mr.",
-                firstName: "sumit",
-                lastName: "Rawat",
-                companyName: "google",
-                displayName: "sumit",
-                email: "sumit@l.com",
-                Phone: "+91 1234567890",
-            }
+            // {
+            //     salutation: "Mr.",
+            //     firstName: "sumit",
+            //     lastName: "Rawat",
+            //     companyName: "google",
+            //     displayName: "sumit",
+            //     email: "sumit@l.com",
+            //     Phone: "+91 1234567890",
+            // }
         ]
     },
     reducers : {

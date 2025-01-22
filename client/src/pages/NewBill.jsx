@@ -28,15 +28,14 @@ function NewBill() {
         note: "",
         isPaid: "unpaid",
         billId: crypto.randomUUID(),
-        userId : "1278798764"
     });
 
     const [showdropdown, setShowdropdown] = useState(false)
     const navigate = useNavigate()
     const [addVendor, setAddVendor] = useState(false)
     const [error, setError] = useState("")
-    // const [vendors, setVendors] = useState([]);
-    const vendors = useSelector(state => state.vendorSlice.vendors)
+    const [vendors, setVendors] = useState([]);
+    // const vendors = useSelector(state => state.vendorSlice.vendors)
 
     // add more item into table
     const addItem = () => {
@@ -112,7 +111,7 @@ function NewBill() {
         const taxAmount = (subtotal * taxPercent) / 100;
         return (subtotal + taxAmount).toFixed(2);
     };
-    
+
     // format currency into the indian format
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('en-IN').format(amount);
@@ -125,7 +124,7 @@ function NewBill() {
         }
 
         console.log(billData);
-        
+
         // try {
         //     const res = await axios.post("http://localhost:3000/bills/newbill", {
         //         ...billData
@@ -141,7 +140,7 @@ function NewBill() {
         try {
             const res = await axios.get("http://localhost:3000/vendor/vendors", {
                 headers: {
-                    Authorization: "1278798764"
+                    Authorization: "678e36da2a1b9a0a11433014"
                 }
             })
             const data = res.data
@@ -152,12 +151,18 @@ function NewBill() {
         }
 
     }
+
     useEffect(() => {
+        console.log("hello");
+
         getAllVendors()
     }, [])
 
     const handleVendorChange = (data) => {
-        setBillData((prev) => ({ ...prev, ...data, vendorName: data?.displayName }));
+        const vendorId =  data?._id
+        setBillData((prev) => ({
+            ...prev, ...data, vendorName: data?.displayName, _id : vendorId
+        }));
         setError(""); // Clear any existing errors
     };
 
