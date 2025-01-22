@@ -26,7 +26,6 @@ const Login = () => {
         password
       })
 
-
       if (res?.status == 200) {
         const user = res.data?.user;
         localStorage.setItem("user", JSON.stringify(user));
