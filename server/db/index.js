@@ -21,7 +21,7 @@ const vendorsSchema = new mongoose.Schema({
 });
 
 const billsSchema = new mongoose.Schema({
-  userId: String,
+  _id: { type: mongoose.Schema.Types.ObjectId, required: true },
   bills: [
     {
       items: [

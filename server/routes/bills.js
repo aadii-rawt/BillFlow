@@ -3,15 +3,13 @@ const { Bills } = require("../db");
 const router = express.Router();
 
 router.post("/newbill", async (req, res) => {
-  const { userId } = req.body;
-  console.log(req.body);
-  
-
+  const {userId} =  req.body
+  console.log(req.body);  
   try {
-    const userBills = await Bills.findOne({ userId });
+    const userBills = await Bills.findOne({userId});
     if (!userBills) {
       userBills = await Bills.create({
-        userId,
+        _id : userId,
         bills: [],
       });
     }

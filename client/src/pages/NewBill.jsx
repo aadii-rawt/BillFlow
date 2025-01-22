@@ -15,6 +15,8 @@ function NewBill() {
 
     const [billData, setBillData] = useState({
         items: [{ description: "", quantity: 1, rate: 0, amount: 0 }],
+        vendorName : "",
+        vendorId : "",
         billNumber: "",
         from: "",
         senderPhone: "",
@@ -27,7 +29,8 @@ function NewBill() {
         tax: 0,
         note: "",
         isPaid: "unpaid",
-        billId: crypto.randomUUID(),
+        userId : "678e36da2a1b9a0a11433014",
+        billId: crypto.randomUUID(),   
     });
 
     const [showdropdown, setShowdropdown] = useState(false)
@@ -125,15 +128,15 @@ function NewBill() {
 
         console.log(billData);
 
-        // try {
-        //     const res = await axios.post("http://localhost:3000/bills/newbill", {
-        //         ...billData
-        //     })
-        //     console.log(res);
-        //     navigate("/bills")
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            const res = await axios.post("http://localhost:3000/bills/newbill", {
+                ...billData
+            })
+            console.log(res);
+            navigate("/bills")
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const getAllVendors = async () => {
@@ -161,7 +164,7 @@ function NewBill() {
     const handleVendorChange = (data) => {
         const vendorId =  data?._id
         setBillData((prev) => ({
-            ...prev, ...data, vendorName: data?.displayName, _id : vendorId
+            ...prev, ...data, vendorName: data?.displayName, vendorId : vendorId
         }));
         setError(""); // Clear any existing errors
     };
