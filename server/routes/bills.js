@@ -1,21 +1,22 @@
 const express = require("express");
 const { Bills } = require("../db");
 const router = express.Router();
+const authMiddleware = require("../middleware/authMiddleware");
 
-router.post("/newbill", async (req, res) => {
-  const {userId} =  req.body
-  console.log(req.body);  
+router.post("/newbill", authMiddleware, async (req, res) => {
+  const userId = req._id;
+  console.log(req.body);
   try {
-    const userBills = await Bills.findOne({userId});
+    const userBills = await Bills.findOne({ userId });
     if (!userBills) {
       userBills = await Bills.create({
-        _id : userId,
+        _id: userId,
         bills: [],
       });
     }
 
     userBills.bills.push({
-     ...req.body
+      ...req.body,
     });
 
     await userBills.save();
@@ -23,6 +24,19 @@ router.post("/newbill", async (req, res) => {
     res.json({ msg: "bill created successfully" });
   } catch (error) {
     res.json({ msg: "Error creating bill" });
+  }
+});
+
+router.get("/userBills", authMiddleware, async (req, res) => {
+  const _id = req.userId;
+  const userBills = await Bills.findOne({ _id });
+  try {
+    if (!userBills) {
+      return res.json({ msg: "No vendors found for this user" });
+    }
+    res.json([...userBills.bills]);
+  } catch (error) {
+    res.status(500).json({ msg: "Error fetching vendors" });
   }
 });
 

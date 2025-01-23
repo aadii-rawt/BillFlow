@@ -15,8 +15,8 @@ function NewBill() {
 
     const [billData, setBillData] = useState({
         items: [{ description: "", quantity: 1, rate: 0, amount: 0 }],
-        vendorName : "",
-        vendorId : "",
+        vendorName: "",
+        vendorId: "",
         billNumber: "",
         from: "",
         senderPhone: "",
@@ -29,8 +29,8 @@ function NewBill() {
         tax: 0,
         note: "",
         isPaid: "unpaid",
-        userId : "678e36da2a1b9a0a11433014",
-        billId: crypto.randomUUID(),   
+        userId: "678e36da2a1b9a0a11433014",
+        billId: crypto.randomUUID(),
     });
 
     const [showdropdown, setShowdropdown] = useState(false)
@@ -125,14 +125,16 @@ function NewBill() {
             setError("Please select Vendor")
             return
         }
-
-        console.log(billData);
-
+        const totalAmount = calculateTotalWithTax()
         try {
-            const res = await axios.post("http://localhost:3000/bills/newbill", {
-                ...billData
+            await axios.post("http://localhost:3000/bills/newbill", {
+                ...billData,
+                totalAmount
+            }, {
+                headers: {
+                    Authorization: localStorage.getItem("authToken")
+                }
             })
-            console.log(res);
             navigate("/bills")
         } catch (error) {
             console.log(error);
@@ -143,7 +145,7 @@ function NewBill() {
         try {
             const res = await axios.get("http://localhost:3000/vendor/vendors", {
                 headers: {
-                    Authorization: "678e36da2a1b9a0a11433014"
+                    Authorization: localStorage.getItem("authToken")
                 }
             })
             const data = res.data
@@ -162,9 +164,9 @@ function NewBill() {
     }, [])
 
     const handleVendorChange = (data) => {
-        const vendorId =  data?._id
+        const vendorId = data?._id
         setBillData((prev) => ({
-            ...prev, ...data, vendorName: data?.displayName, vendorId : vendorId
+            ...prev, ...data, vendorName: data?.displayName, vendorId: vendorId
         }));
         setError(""); // Clear any existing errors
     };

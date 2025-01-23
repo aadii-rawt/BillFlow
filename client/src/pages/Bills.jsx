@@ -1,15 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { setBillPreview } from '../store/slices/stateSlice'
 import BillPreview from '../components/BillPreview'
+import axios from 'axios'
+import { setBills } from '../store/slices/billSlice'
 
 function Bills() {
     const bills = useSelector((state) => state.billSlice.bills)
     const billPreview = useSelector((state) => state.stateSlice.billPreview)
     const dispatch = useDispatch()
-    
+
+    const getAllBills = async () => {
+        try {
+            const res = await axios.get("http://localhost:3000/bills/userBills", {
+                headers: {
+                    Authorization: localStorage.getItem("authToken")
+                }
+            })
+            const data = res.data
+            console.log(data);
+             
+            dispatch(setBills(data))
+        } catch (error) {
+            console.log(error);
+
+        }
+
+    }
+
+    useEffect(() => {
+        getAllBills()
+    }, [])
+
     return (
         <div className='relative'>
             <div className=' p-4 flex items-center justify-between'>
