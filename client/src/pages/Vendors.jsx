@@ -56,8 +56,8 @@ function Vendors() {
                     <tbody>
                         { vendors && vendors?.map((ven) => (
                             <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b' 
-                            // onClick={() => setVendorProfile(ven)}
-                           onClick={() => dispatch(setVendorProfile(true))}
+                            onClick={() => dispatch(setVendorProfile(ven))}
+                        //    onClick={() => dispatch(setVendorProfile(true))}
                             >
                                 <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
                                 <td className='text-sm py-2.5'>{ven?.companyName}</td>

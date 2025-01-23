@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Accordion from './Accordion'
 import { HiOutlineChatBubbleOvalLeftEllipsis } from 'react-icons/hi2'
 import { MdKeyboardArrowRight, MdOutlineKeyboardArrowUp } from 'react-icons/md'
 import { FiPlus } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeVendorProfile } from '../store/slices/stateSlice'
+import VendorBillsHistory from './VendorBillsHistory'
 
 function VendorProfile() {
 
-    const vendorProfile = useSelector((state) => state.stateSlice.vendorProfile)
+    const vendor = useSelector((state) => state.stateSlice.vendorProfile)
     const dispatch = useDispatch()
-
-
-
     const [tabs, setTabs] = useState("Overview")
+
+   
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%]'>
             <div className='flex justify-between items-center p-4'>
                 <div>
-                    <h1 className='text-2xl'>{vendorProfile?.displayName}</h1>
+                    <h1 className='text-2xl'>{vendor?.displayName}</h1>
                 </div>
                 <div className='space-x-2'>
                     <button className='px-2.5 py-1 text-[15px] border bg-gray-100 rounded'>Edit</button>
@@ -39,7 +39,7 @@ function VendorProfile() {
                     <div className='min-w-[35%] max-w-[35%] p-4 border-r'>
                         <div className='flex gap-3'>
                             <div className='w-12 h-12 rounded-md bg-gray-200'></div>
-                            <h1 className='font-medium'>Aditya</h1>
+                            <h1 className='font-medium'>{vendor?.displayName}</h1>
                         </div>
                         <Accordion />
                     </div>
@@ -100,52 +100,7 @@ function VendorProfile() {
                 :
                 <div className='p-4 space-y-8'>
                     {/* bills */}
-                    <div className='border  rounded-lg overflow-hidden cursor-pointer'>
-                        <div className='flex p-2 px-3 justify-between items-center bg-[#f9f9fb]'>
-                            <h1 className='font-medium flex gap-0 items-center'> <MdKeyboardArrowRight className='text-gray-500' /> Bills</h1>
-                            <button className='flex items-center gap-1 text-sm font-medium'><FiPlus size={12} className='text-white bg-blue-500 rounded-full' /> New</button>
-                        </div>
-                        <div>
-                            <table className='w-full'>
-                                <thead>
-                                    <tr className='border-t bg-[#f9f9fb]'>
-                                        <th className='py-1 font-medium text-[13px] text-gray-500'>DATE</th>
-                                        <th className='py-1 font-medium text-[13px] text-gray-500'>BILL#</th>
-                                        <th className='py-1 font-medium text-[13px] text-gray-500'>VENDOR NAME</th>
-                                        <th className='py-1 font-medium text-[13px] text-gray-500'>AMOUNT</th>
-                                        <th className='py-1 font-medium text-[13px] text-gray-500'>DUE AMOUNT</th>
-                                        <th className='py-1 font-medium text-[13px] text-gray-500'>STATUS</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className='border-t text-center'>
-                                        <td className='py-2.5 text-[13px]'>31/12/24</td>
-                                        <td className='py-2.5 text-[13px] font-medium text-blue-500'>#4563</td>
-                                        <td className='py-2.5 text-[13px]'>aditya</td>
-                                        <td className='py-2.5 text-[13px]'>₹2,000</td>
-                                        <td className='py-2.5 text-[13px]'>₹500</td>
-                                        <td className='py-2.5 text-[13px]'>Paid</td>
-                                    </tr>
-                                    <tr className='border-t text-center'>
-                                        <td className='py-2.5 text-[13px]'>31/12/24</td>
-                                        <td className='py-2.5 text-[13px] font-medium text-blue-500'>#4563</td>
-                                        <td className='py-2.5 text-[13px]'>aditya</td>
-                                        <td className='py-2.5 text-[13px]'>₹2,000</td>
-                                        <td className='py-2.5 text-[13px]'>₹500</td>
-                                        <td className='py-2.5 text-[13px]'>Paid</td>
-                                    </tr>
-                                    <tr className='border-t text-center'>
-                                        <td className='py-2.5 text-[13px]'>31/12/24</td>
-                                        <td className='py-2.5 text-[13px] font-medium text-blue-500'>#4563</td>
-                                        <td className='py-2.5 text-[13px]'>aditya</td>
-                                        <td className='py-2.5 text-[13px]'>₹2,000</td>
-                                        <td className='py-2.5 text-[13px]'>₹500</td>
-                                        <td className='py-2.5 text-[13px]'>Paid</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                  <VendorBillsHistory  vendor={vendor}/>
 
                     {/* payments */}
                     <div className='border  rounded-lg overflow-hidden cursor-pointer'>

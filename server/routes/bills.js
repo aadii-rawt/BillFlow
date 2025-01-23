@@ -27,6 +27,7 @@ router.post("/newbill", authMiddleware, async (req, res) => {
   }
 });
 
+// get all bills
 router.get("/userBills", authMiddleware, async (req, res) => {
   const _id = req.userId;
   const userBills = await Bills.findOne({ _id });
@@ -38,6 +39,23 @@ router.get("/userBills", authMiddleware, async (req, res) => {
   } catch (error) {
     res.status(500).json({ msg: "Error fetching vendors" });
   }
+});
+
+// get specific vendor bills
+router.get("/vendorBills", authMiddleware, async (req, res) => {
+  const _id = req.userId;
+  const { vendorId } = req.params;
+  const userBills = await Bills.findOne({ _id });
+  try {
+    if (!userBills) {
+      return res.json({ msg: "No vendors found for this user" });
+    }
+  } catch (error) {}
+  console.log(userBills);
+  res.send({
+    msg: "dfkjlsdjf",
+    data : userBills
+  });
 });
 
 module.exports = router;
