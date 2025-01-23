@@ -29,7 +29,7 @@ const Login = () => {
       if (res?.status == 200) {
         const authToken = res.data?.authToken;
         const user = res.data?.user
-        localStorage.setItem("authToken", authToken);
+        localStorage.setItem("authToken", `Bearer ${authToken}`);
         dispatch(setUser(user)); 
         navigate("/")
       }
@@ -38,6 +38,7 @@ const Login = () => {
       setError(error?.response?.data?.msg);
     }
   }
+
   return (
     <div className="flex flex-col lg:flex-row justify-center min-h-screen ">
       <div className=" w-1/2 px-6 lg:px-12">
