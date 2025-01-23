@@ -5,14 +5,11 @@ const authMiddleware = (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-  
-  const jwtToken = token.split(" ")[1]
-  console.log(jwtToken);
-  
+
+  const jwtToken = token.split(" ")[1];
   try {
-    const decoded = jwt.verify(jwtToken,process.env.JWT_SECRET);
-    console.log("Decoded Token:", decoded);
-    req.userId = decoded._id
+    const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET);
+    req.userId = decoded._id;
     next();
   } catch (error) {
     console.error("Token verification failed:", error.message);

@@ -44,18 +44,19 @@ router.get("/userBills", authMiddleware, async (req, res) => {
 // get specific vendor bills
 router.get("/vendorBills", authMiddleware, async (req, res) => {
   const _id = req.userId;
-  const { vendorId } = req.params;
+  const { vendorId } = req.query;
   const userBills = await Bills.findOne({ _id });
   try {
     if (!userBills) {
       return res.json({ msg: "No vendors found for this user" });
     }
-  } catch (error) {}
-  console.log(userBills);
-  res.send({
-    msg: "dfkjlsdjf",
-    data : userBills
-  });
+    const filterdBills = userBills?.bills.filter((bill) => {
+      return bill?._id.toString() === vendorId;
+    });
+    res.send([...filterdBills]);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;
