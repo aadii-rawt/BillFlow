@@ -1,13 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FiPlus, FiPlusCircle } from "react-icons/fi";
 import AreaChart from '../components/AreaChart';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 function Dashboard() {
   const user = useSelector((state) => state?.stateSlice?.user);
   console.log(user);
-  
+
+  const getUserDetails = async () => {
+    const authToken = localStorage.getItem("authToken")
+    console.log(authToken);
+    
+    const res = await axios.get("http://localhost:3000/users/userData", {
+      headers: {
+        Authorization: authToken
+      }
+    })
+
+    console.log(res);
+  }
+
+  useEffect(() => {
+    // const storedUser = localStorage.getItem("user");
+
+    getUserDetails()
+    // if (storedUser) {
+    //   dispatch(setUser(JSON.parse(storedUser))); // Restore user to Redux state
+    // }
+  }, []);
+
   return (
     <div className=''>
       <div className='px-4 py-8 border-b' style={{ backgroundImage: "url('./img/dashboard-banner.svg')" }}>
