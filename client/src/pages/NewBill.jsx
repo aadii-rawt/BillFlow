@@ -129,7 +129,8 @@ function NewBill() {
         try {
             await axios.post("http://localhost:3000/bills/newbill", {
                 ...billData,
-                totalAmount
+                totalAmount,
+                totalDueAmount: totalAmount
             }, {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
