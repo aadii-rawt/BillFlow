@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser")
+require('dotenv').config();
 
 const vendorRoutes = require("../routes/vendor");
 const billsRoutes = require("../routes/bills")
@@ -19,6 +20,7 @@ app.use(
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser())
+
 
 app.use("/vendor", vendorRoutes);
 app.use("/bills", billsRoutes);
