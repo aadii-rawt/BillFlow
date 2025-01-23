@@ -4,12 +4,15 @@ import { RxCross2 } from "react-icons/rx";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { HiDotsVertical } from "react-icons/hi";
 import { closeBillPreview } from '../store/slices/stateSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import BillInvoicePDF from './BillInvoicePDF';
 import html2pdf from "html2pdf.js";
 
 function BillPreview() {
     const dispatch = useDispatch()
+    const bill = useSelector(state => state.stateSlice?.billPreview)
+    console.log(bill);
+
 
     const downloadPDF = async () => {
         const element = document.querySelector("#invoiceBill");
@@ -23,7 +26,7 @@ function BillPreview() {
         <div className='absolute top-0 right-0 bg-white border-l w-[70%]'>
             <div className='flex justify-between items-center p-[19px] border-b'>
                 <div>
-                    <h1 className='text-xl'>#2345678</h1>
+                    <h1 className='text-xl'>{bill?.billNumber}</h1>
                 </div>
                 <div className=''>
                     <button className='text-red-500 text-2xl' onClick={() => dispatch(closeBillPreview())}><RxCross2 /></button>
@@ -39,7 +42,7 @@ function BillPreview() {
 
             {/* pdf section */}
             <div className='m-5'>
-                <BillInvoicePDF />
+                <BillInvoicePDF  data={bill}/>
             </div>
         </div>
     )

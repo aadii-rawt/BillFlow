@@ -40,6 +40,7 @@ const billsSchema = new mongoose.Schema({
       note: String,
       isPaid: String,
       billId: String,
+      totalAmount : Number,
     },
   ],
 });

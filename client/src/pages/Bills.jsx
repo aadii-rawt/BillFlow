@@ -59,13 +59,13 @@ function Bills() {
                     </thead>
                     <tbody>
                         {bills?.map((data) => (
-                            <tr className='text-sm text-center border-b cursor-pointer' onClick={() => dispatch(setBillPreview(true))}>
+                            <tr className='text-sm text-center border-b cursor-pointer' onClick={() => dispatch(setBillPreview(data))}>
                                 <td className='py-2'>{data?.date}</td>
                                 <td className='py-2 text-blue-500'>{data?.billNumber}</td>
                                 <td className='py-2'>{data?.vendorName}</td>
                                 <td className='py-2'>{data?.isPaid}</td>
                                 <td className='py-2'>{data?.dueDate}</td>
-                                <td className='py-2'>₹ 2300</td>
+                                <td className='py-2'>₹ {data?.totalAmount}</td>
                                 <td className='py-2'>₹ 76</td>
                             </tr>
                         ))}
