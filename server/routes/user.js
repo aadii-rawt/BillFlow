@@ -3,7 +3,6 @@
 // const router = express.Router();
 // const jwt = require("jsonwebtoken");
 
-
 // router.post("/signup", async (req, res) => {
 //   console.log(req.body);
 //   const email = req.body.email;
@@ -44,7 +43,7 @@
 //       const token = jwt.sign({ _id: user._id, email,password }, "ukfhnsdfkjh", {
 //         expiresIn: "1h",
 //       });
-      
+
 //       return res.cookie("Authorization",token , {
 //         httpOnly: true,
 //         secure: false, // Set to true in production (requires HTTPS)
@@ -58,7 +57,7 @@
 //     return res.status(401).send({
 //       msg: "Invalid email and password",
 //     });
-    
+
 //   } catch (error) {
 //     console.log(error);
 //     res.send({
@@ -72,7 +71,6 @@
 // });
 
 // module.exports = router;
-
 
 const express = require("express");
 const { Users } = require("../db");
@@ -117,25 +115,27 @@ router.post("/login", async (req, res) => {
     });
     console.log("user exits :", user);
     if (user) {
-      const token = jwt.sign({ _id: user._id,}, "adityarawat", {
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
-      
-      return res.cookie("token",token , {
-        httpOnly: true,
-        secure: false, // Set to true in production (requires HTTPS)
-        // sameSite: 'strict',
-        maxAge: 3600000, // 1 hour
-      }).status(200).send({
-        msg: "user login successfully",
-        user: user,
-        authToken : token,
-      });
+
+      return res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: false, // Set to true in production (requires HTTPS)
+          // sameSite: 'strict',
+          maxAge: 3600000, // 1 hour
+        })
+        .status(200)
+        .send({
+          msg: "user login successfully",
+          user: user,
+          authToken: token,
+        });
     }
     return res.status(401).send({
       msg: "Invalid email and password",
     });
-    
   } catch (error) {
     console.log(error);
     res.send({
@@ -148,21 +148,18 @@ router.post("/login", async (req, res) => {
   });
 });
 
-
-router.get("/userData",authMiddleware, async (req,res,) => {
+router.get("/userData", authMiddleware, async (req, res) => {
   // const _id = req.userId
   // const userVendors = await Users.findOne({ _id });
 
   // const userId = req.headers.authorization
   // console.log(userId);
-  const userId = req.userId
+  const userId = req.userId;
   console.log(userId);
-  
 
   res.send({
-    msg: "getinng...."
-  })
-
-})
+    msg: "getinng....",
+  });
+});
 
 module.exports = router;
