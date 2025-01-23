@@ -25,10 +25,11 @@ const Login = () => {
         email,
         password
       })
-
+      console.log(res);
       if (res?.status == 200) {
-        const user = res.data?.user;
-        localStorage.setItem("user", JSON.stringify(user));
+        const authToken = res.data?.authToken;
+        const user = res.data?.user
+        localStorage.setItem("authToken", authToken);
         dispatch(setUser(user)); 
         navigate("/")
       }
@@ -40,7 +41,6 @@ const Login = () => {
   return (
     <div className="flex flex-col lg:flex-row justify-center min-h-screen ">
       <div className=" w-1/2 px-6 lg:px-12">
-
         <div className="h-full max-w-xs mx-auto flex flex-col justify-center">
           <div>
             <h1 className="font-bold text-3xl">Login</h1>
