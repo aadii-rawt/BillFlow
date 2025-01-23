@@ -77,7 +77,8 @@
 const express = require("express");
 const { Users } = require("../db");
 const router = express.Router();
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/signup", async (req, res) => {
   console.log(req.body);
@@ -116,18 +117,19 @@ router.post("/login", async (req, res) => {
     });
     console.log("user exits :", user);
     if (user) {
-      const token = jwt.sign({ _id: user._id, email,password }, "ukfhnsdfkjh", {
+      const token = jwt.sign({ _id: user._id,}, "adityarawat", {
         expiresIn: "1h",
       });
       
-      return res.cookie("Authorization",token , {
+      return res.cookie("token",token , {
         httpOnly: true,
         secure: false, // Set to true in production (requires HTTPS)
-        sameSite: 'strict',
+        // sameSite: 'strict',
         maxAge: 3600000, // 1 hour
       }).status(200).send({
         msg: "user login successfully",
         user: user,
+        authToken : token,
       });
     }
     return res.status(401).send({
@@ -145,5 +147,22 @@ router.post("/login", async (req, res) => {
     msg: "login",
   });
 });
+
+
+router.get("/userData",authMiddleware, async (req,res,) => {
+  // const _id = req.userId
+  // const userVendors = await Users.findOne({ _id });
+
+  // const userId = req.headers.authorization
+  // console.log(userId);
+  const userId = req.userId
+  console.log(userId);
+  
+
+  res.send({
+    msg: "getinng...."
+  })
+
+})
 
 module.exports = router;
