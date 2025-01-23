@@ -16,7 +16,7 @@ function Vendors() {
             // const res = await fetch("http://localhost:3000/vendor/vendors");
             const res = await axios.get("http://localhost:3000/vendor/vendors", {
                 headers: {
-                    Authorization: "678e36da2a1b9a0a11433014"
+                    Authorization: localStorage.getItem("authToken")
                 }
             })
             const data = res.data

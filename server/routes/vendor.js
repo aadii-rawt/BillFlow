@@ -3,9 +3,8 @@ const { Vendors } = require("../db");
 const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
-router.post("/newvendor", async (req, res) => {
+router.post("/newvendor", authMiddleware, async (req, res) => {
   const {
-    userId,
     salutation,
     lastName,
     firstName,
@@ -15,6 +14,7 @@ router.post("/newvendor", async (req, res) => {
     Phone,
   } = req.body;
 
+  const userId = req.userId;
   try {
     let userVendors = await Vendors.findOne({ _id: userId });
 
@@ -34,7 +34,6 @@ router.post("/newvendor", async (req, res) => {
       email,
       Phone,
     });
-
     await userVendors.save();
 
     res.json({ msg: "Vendor created successfully" });
@@ -46,11 +45,9 @@ router.post("/newvendor", async (req, res) => {
   }
 });
 
-router.get("/vendors",authMiddleware, async (req, res) => {
-  const { authorization: _id } = req.headers;
-
+router.get("/vendors", authMiddleware, async (req, res) => {
+  const _id = req.userId;
   const userVendors = await Vendors.findOne({ _id });
-
   try {
     if (!userVendors) {
       return res.json({ msg: "No vendors found for this user" });

@@ -26,20 +26,24 @@ function VednorForm({ setAddVendor, type = "page" }) {
             setError("Please Enter the Vendor Name")
             return
         }
-         try {
+        try {
             const res = await axios.post("http://localhost:3000/vendor/newvendor", {
-                ...userDetails, userId : "678e36da2a1b9a0a11433014"
+                ...userDetails,
+            }, {
+                headers: {
+                    Authorization: localStorage.getItem("authToken")
+                }
             })
             console.log(res);
         } catch (error) {
             console.log(error);
         }
         console.log(userDetails);
-       if( type = "page"){
-           navigate("/vendors")
-        }else{
-           navigate("/bills/new")  
-       }
+        if (type = "page") {
+            navigate("/vendors")
+        } else {
+            navigate("/bills/new")
+        }
 
     }
     return (
