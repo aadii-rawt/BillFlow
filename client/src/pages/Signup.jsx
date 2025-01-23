@@ -38,13 +38,17 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault()
     if (!dataValidation()) {
-      return; 
+      return;
     }
 
     try {
-      await axios.post("http://localhost:3000/users/signup", {
+      const res = await axios.post("http://localhost:3000/users/signup", {
         ...userData
       })
+
+      const authToken = res?.data?.authToken
+
+      localStorage.setItem("authToken",`Bearer ${authToken}`)
       navigate("/")
 
     } catch (error) {

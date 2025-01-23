@@ -79,11 +79,9 @@ const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/signup", async (req, res) => {
-  console.log(req.body);
   const email = req.body.email;
   try {
     const isUserExist = await Users.findOne({ email });
-    console.log(isUserExist);
 
     if (isUserExist) {
       return res.status(409).send({
@@ -91,12 +89,13 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    await Users.create({
+    const user = await Users.create({
       ...req.body,
     });
-
+    const token = createJWT({ _id: user._id });
     res.send({
       msg: "user created successfully",
+      authToken : token
     });
   } catch (error) {
     console.log(error);
@@ -115,10 +114,7 @@ router.post("/login", async (req, res) => {
     });
     console.log("user exits :", user);
     if (user) {
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
-
+      const token = createJWT({ _id: user._id });
       return res
         .cookie("token", token, {
           httpOnly: true,
@@ -156,5 +152,13 @@ router.get("/userData", authMiddleware, async (req, res) => {
     data: userData,
   });
 });
+
+const createJWT = (data) => {
+  const token = jwt.sign(data, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+
+  return token;
+};
 
 module.exports = router;
