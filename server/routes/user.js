@@ -149,16 +149,11 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/userData", authMiddleware, async (req, res) => {
-  // const _id = req.userId
-  // const userVendors = await Users.findOne({ _id });
-
-  // const userId = req.headers.authorization
-  // console.log(userId);
-  const userId = req.userId;
-  console.log(userId);
-
+  const _id = req.userId;
+  const userData = await Users.findOne({ _id });
+  console.log(userData);
   res.send({
-    msg: "getinng....",
+    data: userData,
   });
 });
 
