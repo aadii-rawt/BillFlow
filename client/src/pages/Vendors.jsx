@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import VendorProfile from '../components/VendorProfile'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setVendorProfile } from '../store/slices/stateSlice'
+import { formatCurrency, setVendorProfile } from '../store/slices/stateSlice'
+import useFormatCurrency from '../hooks/useFormatCurrency'
 
 function Vendors() {
     // const [vendorProfile, setVendorProfile] = useState(null)
@@ -13,6 +14,7 @@ function Vendors() {
     const [vendorsBills, setVendorBills] = useState([]);
     const [vendorPayables, setVendorPayables] = useState({});
     const dispatch = useDispatch()
+    // const formatCurrency = useFormatCurrency()
 
     const getAllVendors = async () => {
         try {
@@ -49,12 +51,18 @@ function Vendors() {
                 }
             });
 
+            // Ensure vendors without bills have a payable of 0.00
+            vendors.forEach((vendor) => {
+                if (!payableMap[vendor?.vendorId]) {
+                    payableMap[vendor?.vendorId] = 0.00; // Set default payable to 0.00
+                }
+            });
+
             setVendorPayables(payableMap);
         } catch (error) {
             console.error("Error fetching bills:", error);
         }
     };
-
 
     useEffect(() => {
         getAllVendors();
@@ -62,6 +70,9 @@ function Vendors() {
     }, [])
 
 
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN').format(amount);
+    };
 
     return (
         <div className='relative'>
@@ -82,7 +93,6 @@ function Vendors() {
                             <th className='font-medium text-sm py-2'>EMAIL</th>
                             <th className='font-medium text-sm py-2'>WORK PHONE</th>
                             <th className='font-medium text-sm py-2'>PAYABLE</th>
-                            <th className='font-medium text-sm py-2'>UNUSED CREDITS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,8 +104,7 @@ function Vendors() {
                                 <td className='text-sm py-2.5'>{ven?.companyName}</td>
                                 <td className='text-sm py-2.5'>{ven?.email}</td>
                                 <td className='text-sm py-2.5'>{ven?.Phone}</td>
-                                <td className='text-sm py-2.5 font-medium'>₹{vendorPayables[ven?._id] ||  "0.00"}</td>
-                                <td className='text-sm py-2.5 font-medium'>₹0.00</td>
+                                <td className='text-sm py-2.5 font-medium'>₹{formatCurrency(vendorPayables[ven?._id]) || 0}</td>
                             </tr>
                         ))}
                         <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'
@@ -107,14 +116,12 @@ function Vendors() {
                             <td className='text-sm py-2.5'>vinay@mt.com</td>
                             <td className='text-sm py-2.5'>+91 79274793888</td>
                             <td className='text-sm py-2.5 font-medium'>₹0.00</td>
-                            <td className='text-sm py-2.5 font-medium'>₹0.00</td>
                         </tr>
                         <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'>
                             <td className='text-sm py-2.5 font-medium text-blue-500'>sahil</td>
                             <td className='text-sm py-2.5'>apple</td>
                             <td className='text-sm py-2.5'>aditya@email.com</td>
                             <td className='text-sm py-2.5'>+91 89890000789</td>
-                            <td className='text-sm py-2.5 font-medium'>₹0.00</td>
                             <td className='text-sm py-2.5 font-medium'>₹0.00</td>
                         </tr>
                     </tbody>

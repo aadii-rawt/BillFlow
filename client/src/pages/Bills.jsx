@@ -65,8 +65,8 @@ function Bills() {
                                 <td className='py-2'>{data?.vendorName}</td>
                                 <td className='py-2'>{data?.isPaid}</td>
                                 <td className='py-2'>{data?.dueDate}</td>
-                                <td className='py-2'>₹ {data?.totalAmount}</td>
-                                <td className='py-2'>₹ 76</td>
+                                <td className='py-2'>₹{data?.totalAmount}</td>
+                                <td className='py-2'>₹{data?.totalDueAmount}</td>
                             </tr>
                         ))}
                     </tbody>
