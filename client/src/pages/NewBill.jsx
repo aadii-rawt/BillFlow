@@ -156,6 +156,7 @@ function NewBill() {
 
     const handleVendorChange = (data) => {
         const vendorId = data?._id
+        console.log(vendorId);
         setBillData((prev) => ({
             ...prev, vendorName: data?.displayName, vendorId: vendorId
         }));
