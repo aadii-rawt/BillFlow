@@ -1,7 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 function BillInvoicePDF({ data }) {
 
+    const user = useSelector(state => state.stateSlice.user)
     const calculateSubtotal = () => {
         return data.items.reduce((subtotal, item) => subtotal + parseInt(item.amount), 0)
     };
@@ -33,16 +35,14 @@ function BillInvoicePDF({ data }) {
 
                 {/* Billing From Section */}
                 <div className="mb-6">
-                    <h2 className="font-semibold text-lg">{data.vendorName}</h2>
-                    <p>Delhi</p>
-                    <p>India</p>
-                    <p>rawataditi600@gmail.com</p>
-
+                    <h2 className="font-semibold text-lg">{user?.companyName}</h2>
+                    <p>{user?.companyAddress}</p>
+                    <p>{user?.email}</p>
                 </div>
                 <div className="grid grid-cols-2 items-end gap-4 mb-6">
                     <div>
                         <h2 className="font-semibold">Bill From</h2>
-                        <p className='font-semibold text-blue-500'>Aditya</p>
+                        <p className='font-semibold text-blue-500'>{data?.vendorName}</p>
                     </div>
                     <div className="text-right space-y-2 text-sm">
                         <p>
