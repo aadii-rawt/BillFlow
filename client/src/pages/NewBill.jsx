@@ -18,18 +18,12 @@ function NewBill() {
         vendorName: "",
         vendorId: "",
         billNumber: "",
-        from: "",
-        senderPhone: "",
-        senderEmail: "",
         uploadedLogo: "",
-        FromAddress: "",
-        vendorName: "",
         date: "",
         dueDate: "",
         tax: 0,
         note: "",
         isPaid: "unpaid",
-        userId: "678e36da2a1b9a0a11433014",
         billId: crypto.randomUUID(),
     });
 
@@ -114,7 +108,6 @@ function NewBill() {
         const taxAmount = (subtotal * taxPercent) / 100;
         return (subtotal + taxAmount).toFixed(2);
     };
-
     // format currency into the indian format
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('en-IN').format(amount);
@@ -150,26 +143,23 @@ function NewBill() {
                 }
             })
             const data = res.data
-            console.log(data);
             setVendors((prev) => ([...prev, ...data?.vendors])); // Set the fetched data to state
         } catch (error) {
             console.error("Error fetching vendors:", error);
         }
 
     }
-
+    
     useEffect(() => {
-        console.log("hello");
-
         getAllVendors()
     }, [])
 
     const handleVendorChange = (data) => {
         const vendorId = data?._id
         setBillData((prev) => ({
-            ...prev, ...data, vendorName: data?.displayName, vendorId: vendorId
+            ...prev, vendorName: data?.displayName, vendorId: vendorId
         }));
-        setError(""); // Clear any existing errors
+        setError(""); 
     };
 
     const [searchQuery, setSearchQuery] = useState("");
