@@ -61,7 +61,7 @@ function Bills() {
                         {bills?.map((data) => (
                             <tr className='text-sm text-center border-b cursor-pointer' onClick={() => dispatch(setBillPreview(data))}>
                                 <td className='py-2'>{data?.date}</td>
-                                <td className='py-2 text-blue-500'>{data?.billNumber}</td>
+                                <td className='py-2 text-blue-500 font-medium'>{data?.billNumber}</td>
                                 <td className='py-2'>{data?.vendorName}</td>
                                 <td className='py-2'>{data?.isPaid}</td>
                                 <td className='py-2'>{data?.dueDate}</td>
