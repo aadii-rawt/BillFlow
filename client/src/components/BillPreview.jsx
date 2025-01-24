@@ -20,8 +20,10 @@ function BillPreview() {
             // margin : 10,
             filename: '#234567.pdf',
         })
-
     }
+
+    
+
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%]'>
             <div className='flex justify-between items-center p-[19px] border-b'>
