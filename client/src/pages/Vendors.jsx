@@ -10,7 +10,10 @@ function Vendors() {
     // const [vendorProfile, setVendorProfile] = useState(null)
     const vendorProfile = useSelector(state => state.stateSlice.vendorProfile)
     const [vendors, setVendors] = useState([]);
+    const [vendorsBills, setVendorBills] = useState([]);
+    const [vendorPayables, setVendorPayables] = useState({});
     const dispatch = useDispatch()
+
     const getAllVendors = async () => {
         try {
             // const res = await fetch("http://localhost:3000/vendor/vendors");
@@ -27,15 +30,44 @@ function Vendors() {
 
     }
 
+    const getAllBills = async () => {
+        try {
+            const res = await axios.get("http://localhost:3000/bills/userBills", {
+                headers: {
+                    Authorization: localStorage.getItem("authToken"),
+                },
+            });
+            const bills = res.data || [];
+            setVendorBills(bills);
+
+            // Calculate the total payable amount for each vendor
+            const payableMap = {};
+            bills.forEach((bill) => {
+                const { vendorId, totalDueAmount } = bill;
+                if (vendorId) {
+                    payableMap[vendorId] = (payableMap[vendorId] || 0) + parseFloat(totalDueAmount || 0);
+                }
+            });
+
+            setVendorPayables(payableMap);
+        } catch (error) {
+            console.error("Error fetching bills:", error);
+        }
+    };
+
+
     useEffect(() => {
-        getAllVendors()
+        getAllVendors();
+        getAllBills();
     }, [])
+
+
 
     return (
         <div className='relative'>
             <div className=' p-4 flex items-center justify-between'>
                 <div>
-                    {/* <button className='text-2xl font-medium'>All Vendors</button> */}
+                    <button className='text-2xl font-medium'>All Vendors</button>
                 </div>
                 <div>
                     <Link to="/vendors/new" className='bg-blue-500 px-3 py-1.5 rounded-md text-white flex items-center justify-center gap-1'> <FiPlus />New</Link>
@@ -54,22 +86,21 @@ function Vendors() {
                         </tr>
                     </thead>
                     <tbody>
-                        { vendors && vendors?.map((ven) => (
-                            <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b' 
-                            onClick={() => dispatch(setVendorProfile(ven))}
-                        //    onClick={() => dispatch(setVendorProfile(true))}
+                        {vendors && vendors?.map((ven) => (
+                            <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b'
+                                onClick={() => dispatch(setVendorProfile(ven))}
                             >
                                 <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
                                 <td className='text-sm py-2.5'>{ven?.companyName}</td>
                                 <td className='text-sm py-2.5'>{ven?.email}</td>
                                 <td className='text-sm py-2.5'>{ven?.Phone}</td>
-                                <td className='text-sm py-2.5 font-medium'>₹0.00</td>
+                                <td className='text-sm py-2.5 font-medium'>₹{vendorPayables[ven?._id] ||  "0.00"}</td>
                                 <td className='text-sm py-2.5 font-medium'>₹0.00</td>
                             </tr>
                         ))}
-                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b' 
-                        // onClick={() => setVendorProfile(true)}
-                        onClick={() => dispatch(setVendorProfile(true))}
+                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'
+                            // onClick={() => setVendorProfile(true)}
+                            onClick={() => dispatch(setVendorProfile(true))}
                         >
                             <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
                             <td className='text-sm py-2.5'>google</td>

@@ -30,14 +30,15 @@ const billsSchema = new mongoose.Schema({
       billNumber: String,
       uploadedLogo: String,
       vendorName: String,
+      vendorId: String,
       date: String,
       dueDate: String,
       tax: Number,
       note: String,
       isPaid: String,
       billId: String,
-      totalAmount : Number,
-      totalDueAmount : Number
+      totalAmount: Number,
+      totalDueAmount: Number,
     },
   ],
 });
