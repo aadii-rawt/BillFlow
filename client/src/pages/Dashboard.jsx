@@ -18,7 +18,7 @@ function Dashboard() {
     })
     dispatch(setUser(res.data.data))
   }
-  
+
   useEffect(() => {
     getUserDetails()
   }, []);
