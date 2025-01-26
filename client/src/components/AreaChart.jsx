@@ -5,11 +5,11 @@ function AreaChart() {
   const [chartOptions, setChartOptions] = useState({
     series: [
       {
-        name: 'Incoming',
+        name: 'Outgoing',
         data: [11, 32, 45, 32, 34, 52, 41],
       },
       {
-        name: 'Outgoing',
+        name: 'Incoming',
         data: [31, 40, 28, 51, 42, 109, 100],
       },
     ],
