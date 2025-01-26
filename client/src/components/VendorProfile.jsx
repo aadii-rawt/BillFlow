@@ -12,6 +12,7 @@ function VendorProfile() {
     const vendor = useSelector((state) => state.stateSlice.vendorProfile)
     const dispatch = useDispatch()
     const [tabs, setTabs] = useState("Overview")
+    
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%]'>
             <div className='flex justify-between items-center p-4'>
