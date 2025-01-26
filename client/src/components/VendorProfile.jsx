@@ -12,8 +12,6 @@ function VendorProfile() {
     const vendor = useSelector((state) => state.stateSlice.vendorProfile)
     const dispatch = useDispatch()
     const [tabs, setTabs] = useState("Overview")
-
-   
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%]'>
             <div className='flex justify-between items-center p-4'>
@@ -29,9 +27,7 @@ function VendorProfile() {
             <div className='px-4 pt-3 pb-2 border-b'>
                 <ul className='flex gap-7 text-[15px] text-gray-500'>
                     <li className={`${tabs == "Overview" && "font-medium text-gray-800"} cursor-pointer`} onClick={() => setTabs("Overview")}>Overview</li>
-                    <li>Comments</li>
                     <li className={`${tabs == "Transaction" && "font-medium text-gray-800"} cursor-pointer`} onClick={() => setTabs("Transactions")}>Transactions</li>
-                    <li>Mails</li>
                 </ul>
             </div>
             {tabs === "Overview" ?
@@ -100,7 +96,7 @@ function VendorProfile() {
                 :
                 <div className='p-4 space-y-8'>
                     {/* bills */}
-                  <VendorBillsHistory  vendor={vendor}/>
+                    <VendorBillsHistory vendor={vendor} />
 
                     {/* payments */}
                     <div className='border  rounded-lg overflow-hidden cursor-pointer'>
