@@ -18,7 +18,7 @@ function BillPreview() {
     const downloadPDF = async () => {
         const element = document.querySelector("#invoiceBill");
         html2pdf(element, {
-            // margin : 10,
+            margin : 10,
             filename: '#234567.pdf',
         })
     }
@@ -42,7 +42,7 @@ function BillPreview() {
                         <div className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r'><HiDotsVertical /></div>
                     </div>
                     {/* pdf section */}
-                    <div className='m-5'>
+                    <div className='m-5 shadow border'>
                         <BillInvoicePDF data={bill} />
                     </div>
                 </div> :
