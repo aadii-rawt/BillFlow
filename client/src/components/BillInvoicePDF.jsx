@@ -9,8 +9,8 @@ function BillInvoicePDF({ data }) {
     };
 
     return (
-        <div id='invoiceBill' className='w-full h-full shadow'>
-            <div className="max-w-4xl mx-auto border p-6">
+        <div id='invoiceBill' className='w-full h-full'>
+            <div className="max-w-4xl mx-auto  p-6">
                 {/* Header Section */}
                 <div className="flex justify-between items-center mb-4">
                     {/* Logo */}
@@ -97,10 +97,10 @@ function BillInvoicePDF({ data }) {
                     </div>
                 </div>
 
-                {/* Footer Section */}
+                {/* Footer Section
                 <div className="mt-14">
                     <p>Authorized Signature ___________________________</p>
-                </div>
+                </div> */}
             </div>
         </div>
     )
