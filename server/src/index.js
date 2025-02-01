@@ -26,7 +26,7 @@ app.use("/vendor", vendorRoutes);
 app.use("/bills", billsRoutes);
 app.use('/users',userRoutes)
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);

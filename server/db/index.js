@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect(
-  "mongodb+srv://rawatadii060:yDuEBbm5Ah20hjNt@cluster0.0yiiy.mongodb.net/BillFlow"
-);
+mongoose.connect(process.env.DB_CONNECTION);
 
 const vendorsSchema = new mongoose.Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, required: true }, // Define _id explicitly if needed
