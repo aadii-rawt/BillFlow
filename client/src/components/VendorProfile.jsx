@@ -11,6 +11,8 @@ function VendorProfile() {
 
     const vendor = useSelector((state) => state.stateSlice.vendorProfile)
     const dispatch = useDispatch()
+    console.log(vendor);
+    
     const [tabs, setTabs] = useState("Overview")
     
     return (
@@ -54,7 +56,7 @@ function VendorProfile() {
                                 <tbody>
                                     <tr className='border-b text-center'>
                                         <td className='text-sm py-1.5'>INR- Indian Rupee</td>
-                                        <td className='text-sm py-1.5 font-medium    text-blue-500'>₹2,000</td>
+                                        <td className='text-sm py-1.5 font-medium    text-blue-500'>₹{vendor?.payableAmount}</td>
                                         <td className='text-sm py-1.5'>₹0</td>
                                     </tr>
                                 </tbody>
