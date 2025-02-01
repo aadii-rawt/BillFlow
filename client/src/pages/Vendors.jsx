@@ -98,38 +98,38 @@ function Vendors() {
                     <tbody>
                         {vendors && vendors?.map((ven) => (
                             <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b'
-                                onClick={() => dispatch(setVendorProfile(ven))}
+                                onClick={() => dispatch(setVendorProfile({ ...ven, payableAmount: vendorPayables[ven?._id] || 0 }))}
                             >
-                                <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
-                                <td className='text-sm py-2.5'>{ven?.companyName}</td>
-                                <td className='text-sm py-2.5'>{ven?.email}</td>
-                                <td className='text-sm py-2.5'>{ven?.Phone}</td>
-                                <td className='text-sm py-2.5 font-medium'>₹{formatCurrency(vendorPayables[ven?._id]) || 0}</td>
-                            </tr>
+                        <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
+                        <td className='text-sm py-2.5'>{ven?.companyName}</td>
+                        <td className='text-sm py-2.5'>{ven?.email}</td>
+                        <td className='text-sm py-2.5'>{ven?.Phone}</td>
+                        <td className='text-sm py-2.5 font-medium'>₹{formatCurrency(vendorPayables[ven?._id]) || 0}</td>
+                    </tr>
                         ))}
-                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'
-                            // onClick={() => setVendorProfile(true)}
-                            onClick={() => dispatch(setVendorProfile(true))}
-                        >
-                            <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
-                            <td className='text-sm py-2.5'>google</td>
-                            <td className='text-sm py-2.5'>vinay@mt.com</td>
-                            <td className='text-sm py-2.5'>+91 79274793888</td>
-                            <td className='text-sm py-2.5 font-medium'>₹0.00</td>
-                        </tr>
-                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'>
-                            <td className='text-sm py-2.5 font-medium text-blue-500'>sahil</td>
-                            <td className='text-sm py-2.5'>apple</td>
-                            <td className='text-sm py-2.5'>aditya@email.com</td>
-                            <td className='text-sm py-2.5'>+91 89890000789</td>
-                            <td className='text-sm py-2.5 font-medium'>₹0.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            {vendorProfile && <VendorProfile />}
+                    <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'
+                        // onClick={() => setVendorProfile(true)}
+                        onClick={() => dispatch(setVendorProfile(true))}
+                    >
+                        <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
+                        <td className='text-sm py-2.5'>google</td>
+                        <td className='text-sm py-2.5'>vinay@mt.com</td>
+                        <td className='text-sm py-2.5'>+91 79274793888</td>
+                        <td className='text-sm py-2.5 font-medium'>₹0.00</td>
+                    </tr>
+                    <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'>
+                        <td className='text-sm py-2.5 font-medium text-blue-500'>sahil</td>
+                        <td className='text-sm py-2.5'>apple</td>
+                        <td className='text-sm py-2.5'>aditya@email.com</td>
+                        <td className='text-sm py-2.5'>+91 89890000789</td>
+                        <td className='text-sm py-2.5 font-medium'>₹0.00</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
+            { vendorProfile && <VendorProfile /> }
+        </div >
     )
 }
 
