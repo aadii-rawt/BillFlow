@@ -21,7 +21,7 @@ function Bills() {
             })
             const data = res.data
             console.log(data);
-             
+
             dispatch(setBills(data))
         } catch (error) {
             console.log(error);
@@ -63,7 +63,7 @@ function Bills() {
                                 <td className='py-2'>{data?.date}</td>
                                 <td className='py-2 text-blue-500 font-medium'>{data?.billNumber}</td>
                                 <td className='py-2'>{data?.vendorName}</td>
-                                <td className='py-2'>{data?.isPaid}</td>
+                                <td className={`py-2 ${data?.isPaid == "unpaid" ? "text-[#f76831]" : "text-[#22B378]"}`}>{data?.isPaid}</td>
                                 <td className='py-2'>{data?.dueDate}</td>
                                 <td className='py-2'>₹{data?.totalAmount}</td>
                                 <td className='py-2'>₹{data?.totalDueAmount}</td>
