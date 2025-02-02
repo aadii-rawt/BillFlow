@@ -79,7 +79,39 @@ function Accordion() {
               overflow: "hidden",
             }}
           >
-            {index == 4 ?
+            {index == 0 &&
+              <div className="py-2 bg-white text-gray-600 text-sm space-y-2">
+                <div className="">
+                  <p className="text-black">Billing Address </p>
+                  <p className="text-gray-500">No Billing Address</p>
+                </div>
+                <div className="">
+                  <p className="text-black">Shipping Address </p>
+                  <p className="text-gray-500">No Shipping Address</p>
+                </div>
+              </div>}
+            {index == 1 &&
+              <div className="py-2 bg-white text-gray-600 text-sm space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">Default Currency</span>
+                  <span className="text-black">INR</span>
+                </div>
+              </div>}
+            {index == 2 &&
+              <div className="py-2 bg-white text-gray-600 text-sm space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">No contact persons found.</span>
+
+                </div>
+              </div>}
+            {index == 3 &&
+              <div className="py-2 bg-white text-gray-600 text-sm space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500">No bank account added yet</span>
+
+                </div>
+              </div>}
+            {index == 4 &&
               <div className="py-2 bg-white text-gray-600 text-sm space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-gray-500">Vendor ID</span>
@@ -93,9 +125,7 @@ function Accordion() {
                   <span className="text-gray-500">Created By</span>
                   <span className="text-black">Aditya Rawat</span>
                 </div>
-              </div> :
-              <div className="py-2 bg-white text-gray-600 text-sm">{item.content}</div>
-            }
+              </div>}
           </div>
         </div>
       ))
