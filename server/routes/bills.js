@@ -51,7 +51,7 @@ router.get("/vendorBills", authMiddleware, async (req, res) => {
       return res.json({ msg: "No vendors found for this user" });
     }
     const filterdBills = userBills?.bills.filter((bill) => {
-      return bill?._id.toString() === vendorId;
+      return bill?.vendorId === vendorId;
     });
     res.send([...filterdBills]);
   } catch (error) {
