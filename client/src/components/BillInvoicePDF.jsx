@@ -69,7 +69,7 @@ function BillInvoicePDF({ data }) {
                         </thead>
                         <tbody>
 
-                            {data?.items.map((item) => (
+                            {data?.item && data?.items.map((item) => (
                                 <tr className='text-center'>
                                     <td>{item?.description}</td>
                                     <td>{item?.quantity}</td>
