@@ -10,6 +10,19 @@ function Dashboard() {
   const user = useSelector(state => state.stateSlice.user)
   const dispatch = useDispatch()
   const [totalPayableAmount, setTotalPayableAmount] = useState(0)
+  const [currentPayable, setCurrentPayable] = useState(0)
+  const [overduePayable, setOverduePayable] = useState(0)
+
+
+  // const currentDate = new Date()
+  // console.log(currentDate);
+
+  // const da = new Date("2025-01-01")
+  // if (currentDate > da) {
+  //   console.log("bigger");
+  // } else {
+  //   console.log("msmall");
+  // }
 
   const getUserDetails = async () => {
     const res = await axios.get("http://localhost:3000/users/userData", {
@@ -28,8 +41,32 @@ function Dashboard() {
         },
       });
       const bills = res.data || [];
-      const totalDueAmount = bills.reduce((sum, bill) => sum + (bill?.totalDueAmount || 0), 0);
-      setTotalPayableAmount(totalDueAmount)
+      console.log(bills);
+
+      // const currentAmount = 0
+      // const overdueAmount = 0
+      // const totalDueAmount = bills.reduce((sum, bill) => sum + (bill?.totalDueAmount || 0), 0);
+      // setTotalPayableAmount(totalDueAmount)
+      // setCurrentPayable(totalDueAmount)
+
+      let currentAmount = 0
+      let overdueAmount = 0
+      bills?.map((bill) => {
+        const date = new Date()
+        const dueDate = new Date(bill?.dueDate)
+
+        if (date > dueDate) {
+          console.log("overdue");
+          overdueAmount = overdueAmount + bill?.totalDueAmount
+        } else {
+          console.log("current");
+          currentAmount = currentAmount + bill?.totalDueAmount
+        }
+      })
+
+      setCurrentPayable(currentAmount)
+      setOverduePayable(overdueAmount)
+
 
     } catch (error) {
       console.error("Error fetching bills:", error);
@@ -84,11 +121,11 @@ function Dashboard() {
           <div className='flex px-5 py-4'>
             <div className='w-1/2 border-r'>
               <h1 className='text-blue-500 text-sm '>CURRENT</h1>
-              <h1 className='text-2xl my-1'>₹{formatCurrency(totalPayableAmount)}</h1>
+              <h1 className='text-2xl my-1'>₹{formatCurrency(currentPayable)}</h1>
             </div>
             <div className='px-5'>
               <h1 className='text-red-400 text-sm '>OVERDUE</h1>
-              <h1 className='text-2xl my-1'>₹0.00</h1>
+              <h1 className='text-2xl my-1'>₹{formatCurrency(overduePayable)}</h1>
             </div>
           </div>
         </div>
