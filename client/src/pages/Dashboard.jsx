@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiPlus, FiPlusCircle } from "react-icons/fi";
 import AreaChart from '../components/AreaChart';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { setUser } from '../store/slices/stateSlice';
 function Dashboard() {
   const user = useSelector(state => state.stateSlice.user)
   const dispatch = useDispatch()
+  const [totalPayableAmount, setTotalPayableAmount] = useState(0)
 
   const getUserDetails = async () => {
     const res = await axios.get("http://localhost:3000/users/userData", {
@@ -19,8 +20,30 @@ function Dashboard() {
     dispatch(setUser(res.data.data))
   }
 
+  const getTotalPayable = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/bills/userBills", {
+        headers: {
+          Authorization: localStorage.getItem("authToken"),
+        },
+      });
+      const bills = res.data || [];
+      const totalDueAmount = bills.reduce((sum, bill) => sum + (bill?.totalDueAmount || 0), 0);
+      setTotalPayableAmount(totalDueAmount)
+
+    } catch (error) {
+      console.error("Error fetching bills:", error);
+    }
+
+  }
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN').format(amount);
+  };
+
   useEffect(() => {
     getUserDetails()
+    getTotalPayable()
   }, []);
 
   return (
@@ -61,7 +84,7 @@ function Dashboard() {
           <div className='flex px-5 py-4'>
             <div className='w-1/2 border-r'>
               <h1 className='text-blue-500 text-sm '>CURRENT</h1>
-              <h1 className='text-2xl my-1'>₹0.00</h1>
+              <h1 className='text-2xl my-1'>₹{formatCurrency(totalPayableAmount)}</h1>
             </div>
             <div className='px-5'>
               <h1 className='text-red-400 text-sm '>OVERDUE</h1>
