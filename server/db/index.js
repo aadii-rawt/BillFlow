@@ -49,8 +49,25 @@ const usersSchema = new mongoose.Schema({
   companyAddress: String,
 });
 
+const paymentSchema = new mongoose.Schema({
+  _id: { type: mongoose.Schema.Types.ObjectId, required: true },
+  payments: [
+    {
+      paymentId: String,
+      billId: String,
+      vendorId: String,
+      amountPaid: Number,
+      paymentMethod: String,
+      paymentDate: String,
+      note: String,
+      createdAt: String,
+    },
+  ],
+});
+
 const Vendors = mongoose.model("vendors", vendorsSchema);
 const Bills = mongoose.model("bills", billsSchema);
 const Users = mongoose.model("users", usersSchema);
+const Payements = mongoose.model("payments", paymentSchema);
 
-module.exports = { Vendors, Bills, Users };
+module.exports = { Vendors, Bills, Users, Payements };
