@@ -8,6 +8,7 @@ require('dotenv').config();
 const vendorRoutes = require("../routes/vendor");
 const billsRoutes = require("../routes/bills")
 const userRoutes = require("../routes/user")
+const paymentRoute = require('../routes/payment')
 
 app.use(
   cors({
@@ -25,6 +26,7 @@ app.use(cookieParser())
 app.use("/vendor", vendorRoutes);
 app.use("/bills", billsRoutes);
 app.use('/users',userRoutes)
+app.use('/payment',paymentRoute)
 
 const PORT = process.env.PORT || 3000;
 
