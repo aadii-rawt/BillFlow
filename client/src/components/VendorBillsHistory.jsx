@@ -2,11 +2,16 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { MdKeyboardArrowRight } from 'react-icons/md'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { setBillPreview } from '../store/slices/stateSlice'
 
 function VendorBillsHistory({ vendor }) {
 
     const [bills, setBills] = useState([])
-
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    // #f76831 overdue text color
     const getBills = async () => {
         try {
             const res = await axios.get("http://localhost:3000/bills/vendorBills", {
@@ -17,7 +22,7 @@ function VendorBillsHistory({ vendor }) {
                     Authorization: localStorage.getItem("authToken")
                 },
             })
-            setBills((prev) => [...res.data])
+            setBills((prev) => ([...res.data]))
         } catch (error) {
             console.log(error);
 
@@ -27,7 +32,12 @@ function VendorBillsHistory({ vendor }) {
     useEffect(() => {
         getBills()
     }, [vendor])
-    
+
+    const handleBill = () => {
+        navigate("/bills")
+        dispatch(setBillPreview({vendro: "dfjklsj"}))
+    }
+
     return (
         <div className='border  rounded-lg overflow-hidden cursor-pointer'>
             <div className='flex p-2 px-3 justify-between items-center bg-[#f9f9fb]'>
@@ -53,11 +63,11 @@ function VendorBillsHistory({ vendor }) {
                                 <td className='py-2.5 text-[13px] font-medium text-blue-500'>{bill?.billNumber}</td>
                                 <td className='py-2.5 text-[13px]'>{bill?.vendorName}</td>
                                 <td className='py-2.5 text-[13px]'>₹{bill?.totalAmount}</td>
-                                <td className='py-2.5 text-[13px]'>₹500</td>
-                                <td className='py-2.5 text-[13px]'>Paid</td>
+                                <td className='py-2.5 text-[13px]'>₹{bill?.totalDueAmount}</td>
+                                <td className={`py-2.5 text-[13px] ${bill?.isPaid == "unpaid" ? "text-[#f76831]" : "text-[#22B378]"}`}>{bill?.isPaid}</td>
                             </tr>
                         ))}
-                        <tr className='border-t text-center'>
+                        <tr className='border-t text-center' onClick={() => handleBill()}>
                             <td className='py-2.5 text-[13px]'>31/12/24</td>
                             <td className='py-2.5 text-[13px] font-medium text-blue-500'>#4563</td>
                             <td className='py-2.5 text-[13px]'>aditya</td>
