@@ -12,7 +12,6 @@ import BillPayment from './BillPayment';
 function BillPreview() {
     const dispatch = useDispatch()
     const bill = useSelector(state => state.stateSlice?.billPreview)
-    console.log(bill);
     const [payment, setPayment] = useState(false)
     
     const downloadPDF = async () => {
@@ -46,7 +45,7 @@ function BillPreview() {
                         <BillInvoicePDF data={bill} />
                     </div>
                 </div> :
-                <BillPayment setPayment={setPayment} />
+                <BillPayment setPayment={setPayment} bill={bill} />
             }
         </div>
     )
