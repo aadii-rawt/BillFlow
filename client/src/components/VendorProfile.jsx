@@ -3,6 +3,7 @@ import Accordion from './Accordion'
 import { HiOutlineChatBubbleOvalLeftEllipsis } from 'react-icons/hi2'
 import { MdKeyboardArrowRight, MdOutlineKeyboardArrowUp } from 'react-icons/md'
 import { FiPlus } from 'react-icons/fi'
+import { RxCross1 } from 'react-icons/rx'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeVendorProfile } from '../store/slices/stateSlice'
 import VendorBillsHistory from './VendorBillsHistory'
@@ -11,26 +12,24 @@ function VendorProfile() {
 
     const vendor = useSelector((state) => state.stateSlice.vendorProfile)
     const dispatch = useDispatch()
-    console.log(vendor);
-    
     const [tabs, setTabs] = useState("Overview")
-    
+
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%]'>
             <div className='flex justify-between items-center p-4'>
                 <div>
                     <h1 className='text-2xl'>{vendor?.displayName}</h1>
                 </div>
-                <div className='space-x-2'>
+                <div className='space-x-2 flex items-center'>
                     <button className='px-2.5 py-1 text-[15px] border bg-gray-100 rounded'>Edit</button>
                     <button className='px-2.5 py-1 text-[15px] border bg-blue-500 text-white rounded'>New</button>
-                    <button className='px-2.5 py-1 text-[15px] border bg-gray-100 rounded' onClick={() => dispatch(closeVendorProfile())}>X</button>
+                    <button className=' text-red-500 px-4 text-xl' onClick={() => dispatch(closeVendorProfile())}><RxCross1 /></button>
                 </div>
             </div>
             <div className='px-4 pt-3 pb-2 border-b'>
                 <ul className='flex gap-7 text-[15px] text-gray-500'>
                     <li className={`${tabs == "Overview" && "font-medium text-gray-800"} cursor-pointer`} onClick={() => setTabs("Overview")}>Overview</li>
-                    <li className={`${tabs == "Transaction" && "font-medium text-gray-800"} cursor-pointer`} onClick={() => setTabs("Transactions")}>Transactions</li>
+                    <li className={`${tabs == "Transactions" && "font-medium text-gray-800"} cursor-pointer`} onClick={() => setTabs("Transactions")}>Transactions</li>
                 </ul>
             </div>
             {tabs === "Overview" ?
