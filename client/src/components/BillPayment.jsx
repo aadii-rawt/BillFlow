@@ -3,7 +3,7 @@ import BillPreview from './BillPreview';
 
 function BillPayment({ setPayment, bill }) {
 
-    console.log(bill);
+    
 
     const [paymentData, setPaymentDate] = useState({
         paymentId: crypto.randomUUID(),
