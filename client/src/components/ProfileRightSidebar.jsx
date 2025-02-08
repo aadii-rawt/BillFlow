@@ -6,7 +6,7 @@ import { handleUserProfile } from '../store/slices/stateSlice';
 function ProfileRightSidebar() {
     const dispatch = useDispatch()
     return (
-        <div className='absolute flex overflow-hidden justify-end h-full top-16 right-0 bg-gray-900/50 border-l w-full'>
+        <div className='absolute flex overflow-hidden justify-end h-full top-0 right-0 bg-gray-900/50 border-l w-full'>
             <div className='w-[28%] bg-[#F9F9FB] animate-slide-right'>
                 <div className='flex justify-between items-center p-4'>
                     <div className='flex gap-2'>

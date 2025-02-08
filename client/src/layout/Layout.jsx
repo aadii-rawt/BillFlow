@@ -46,8 +46,8 @@ function Layout() {
   // }, [])
 
   return (
-    <div className='flex min-h-screen '>
-      <Sidebar />
+    <div className=' min-h-screen '>
+      {/* <Sidebar />
       <div className='w-full h-full relative'>
         <Header />
         <Outlet />
@@ -55,7 +55,15 @@ function Layout() {
       <ScrollRestoration />
 
         {userProfile && <ProfileRightSidebar />}
-      {/* <ProfileRightSidebar /> */}
+      <ProfileRightSidebar /> */}
+      <Header />
+      <div className='flex w-full relative'>
+        <Sidebar />
+        <div className='flex-1'>
+          <Outlet />
+        </div>
+      {userProfile && <ProfileRightSidebar />}
+      </div>
     </div>
   )
 }
