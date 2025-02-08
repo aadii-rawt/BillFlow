@@ -3,12 +3,14 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
 import { ScrollRestoration } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../store/slices/stateSlice'
 import { jwtDecode } from "jwt-decode";
+import ProfileRightSidebar from '../components/ProfileRightSidebar'
 
 function Layout() {
   // const dispatch = useDispatch();
+  const userProfile = useSelector((state) => state.stateSlice.userProfile)
 
   // useEffect(() => {
   //   const storedUser = localStorage.getItem("user");
@@ -44,13 +46,16 @@ function Layout() {
   // }, [])
 
   return (
-    <div className='flex min-h-screen'>
+    <div className='flex min-h-screen '>
       <Sidebar />
-      <div className='w-full h-full'>
+      <div className='w-full h-full relative'>
         <Header />
         <Outlet />
       </div>
       <ScrollRestoration />
+
+        {userProfile && <ProfileRightSidebar />}
+      {/* <ProfileRightSidebar /> */}
     </div>
   )
 }
