@@ -7,6 +7,7 @@ const stateSlice = createSlice({
     user: null,
     vendorProfile: null,
     billPreview: null,
+    userProfile: false,
   },
   reducers: {
     setUser(state, action) {
@@ -24,6 +25,9 @@ const stateSlice = createSlice({
     closeBillPreview(state) {
       state.billPreview = null;
     },
+    handleUserProfile(state, action) {
+      state.userProfile = !state.userProfile;
+    },
     formatCurrency(amount) {
       return new Intl.NumberFormat("en-IN").format(amount);
     },
@@ -37,5 +41,6 @@ export const {
   closeBillPreview,
   setUser,
   formatCurrency,
+  handleUserProfile,
 } = stateSlice.actions;
 export default stateSlice.reducer;
