@@ -36,7 +36,8 @@ function BillPayment({ setPayment, bill }) {
             console.log(res);
         } catch (error) {
             console.log(error);
-
+        } finally {
+            setPayment(false)
         }
     }
 

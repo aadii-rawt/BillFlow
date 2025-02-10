@@ -93,7 +93,7 @@ function BillInvoicePDF({ data }) {
                     </div>
                     <div className="flex justify-end gap-10 items-center  text-pink-600 font-bold mt-2">
                         <span>Balance Due</span>
-                        <span>₹2,000.00</span>
+                        <span>₹{data?.totalDueAmount}</span>
                     </div>
                 </div>
 
