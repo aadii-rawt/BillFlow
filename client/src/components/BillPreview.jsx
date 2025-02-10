@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import BillInvoicePDF from './BillInvoicePDF';
 import html2pdf from "html2pdf.js";
 import BillPayment from './BillPayment';
+import axios from 'axios';
 
-function BillPreview({ getAllBills, setBillPreview,bill }) {
+function BillPreview({ getAllBills, setBillPreview, bill }) {
     const dispatch = useDispatch()
     // const bill = useSelector(state => state.stateSlice?.billPreview)
     const [payment, setPayment] = useState(false)
-
+    const [billDetails, setBillDetails] = useState({})
     const downloadPDF = async () => {
         const element = document.querySelector("#invoiceBill");
         html2pdf(element, {
@@ -21,9 +22,29 @@ function BillPreview({ getAllBills, setBillPreview,bill }) {
             filename: '#234567.pdf',
         })
     }
-    // useEffect(() => {
-    //     getAllBills()
-    // }, [])
+
+    const getBillDetails = async () => {
+        try {
+
+            const res = await axios.get("http://localhost:3000/bills/id", {
+                params: {
+                    billId: bill?._id
+                },
+                headers: {
+                    Authorization: localStorage.getItem("authToken")
+                },
+            })
+            setBillDetails(res.data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getBillDetails()
+        // console.log("helo");
+        
+    },[])
 
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%] h-fit'>
@@ -45,10 +66,10 @@ function BillPreview({ getAllBills, setBillPreview,bill }) {
                     </div>
                     {/* pdf section */}
                     <div className='m-5 shadow border'>
-                        <BillInvoicePDF data={bill} />
+                        <BillInvoicePDF data={billDetails} />
                     </div>
                 </div> :
-                <BillPayment getAllBills={getAllBills} setPayment={setPayment} bill={bill} />
+                <BillPayment getAllBills={getAllBills} getBillDetails={getBillDetails} setPayment={setPayment} bill={bill} />
             }
         </div>
     )
