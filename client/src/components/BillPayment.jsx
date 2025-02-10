@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import BillPreview from './BillPreview';
+import axios from 'axios';
 
 function BillPayment({ setPayment, bill }) {
 
-    
+
 
     const [paymentData, setPaymentDate] = useState({
         paymentId: crypto.randomUUID(),
@@ -21,11 +22,22 @@ function BillPayment({ setPayment, bill }) {
         setPaymentDate((prev) => ({ ...prev, [name]: value }))
     }
 
-    const handlePayment = (e) => {
+    const handlePayment = async (e) => {
         e.preventDefault()
 
         console.log(paymentData);
 
+        try {
+            const res = await axios.post("http://localhost:3000/payment//createPayment", { ...paymentData }, {
+                headers: {
+                    Authorization: localStorage.getItem("authToken")
+                }
+            })
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
     return (
@@ -59,9 +71,9 @@ function BillPayment({ setPayment, bill }) {
                                 value={paymentData?.paymentMethod}
                                 onChange={handleDataChange}
                                 className='border-gray-500/50 border min-w-[200px] hover:border-blue-500 outline-none px-2 py-1 rounded-md'>
-                                <option value="">Cash</option>
-                                <option value="">UPI</option>
-                                <option value="">Bank</option>
+                                <option value="Cash">Cash</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Bank">Bank</option>
                             </select>
                         </div>
                     </div>
