@@ -5,7 +5,7 @@ const { Payements, Bills } = require("../db");
 
 router.post("/createPayment", authMiddleware, async (req, res) => {
   const userId = req.userId;
-  const { billId } = req.body;
+  const { billId,amountPaid } = req.body;
   try {
     // let userVendors = await Pay.findOne({ _id: userId });
 
@@ -22,7 +22,18 @@ router.post("/createPayment", authMiddleware, async (req, res) => {
       return res.status(404).json({ msg: "Bill not found" });
     }
 
-    userBills.bills[billIndex].isPaid = "paid" || "Paid"; // Default to "Paid"
+    let bill = userBills.bills[billIndex];
+    const newDueAmount = bill.totalDueAmount - amountPaid;
+
+    if (newDueAmount <= 0) {
+      bill.totalDueAmount = 0;
+      bill.isPaid = "Paid";
+    } else {
+      bill.totalDueAmount = newDueAmount;
+      bill.isPaid = "Partial";
+    }
+
+    // userBills.bills[billIndex].isPaid = "paid" || "Paid"; // Default to "Paid"
 
     await userBills.save();
 
