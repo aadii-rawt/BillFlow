@@ -2,10 +2,7 @@ import React, { useState } from 'react'
 import BillPreview from './BillPreview';
 import axios from 'axios';
 
-function BillPayment({ setPayment, bill }) {
-
-
-
+function BillPayment({ setPayment, bill,getAllBills }) {
     const [paymentData, setPaymentDate] = useState({
         paymentId: crypto.randomUUID(),
         billId: bill?.billId,
@@ -38,6 +35,7 @@ function BillPayment({ setPayment, bill }) {
             console.log(error);
         } finally {
             setPayment(false)
+            getAllBills()
         }
     }
 
