@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { setBillPreview } from '../store/slices/stateSlice'
+// import { setBillPreview } from '../store/slices/stateSlice'
 import BillPreview from '../components/BillPreview'
 import axios from 'axios'
 import { setBills } from '../store/slices/billSlice'
 
 function Bills() {
     const bills = useSelector((state) => state.billSlice.bills)
-    const billPreview = useSelector((state) => state.stateSlice.billPreview)
+    // const billPreview = useSelector((state) => state.stateSlice.billPreview)
+    const [billPreview,setBillPreview] = useState(null)
     const dispatch = useDispatch()
 
     const getAllBills = async () => {
@@ -59,7 +60,7 @@ function Bills() {
                     </thead>
                     <tbody>
                         {bills?.map((data) => (
-                            <tr key={data?.billId} className='text-sm text-center border-b cursor-pointer' onClick={() => dispatch(setBillPreview(data))}>
+                            <tr key={data?.billId} className='text-sm text-center border-b cursor-pointer' onClick={() => setBillPreview(data)}>
                                 <td className='py-2'>{data?.date}</td>
                                 <td className='py-2 text-blue-500 font-medium'>{data?.billNumber}</td>
                                 <td className='py-2'>{data?.vendorName}</td>
@@ -73,7 +74,7 @@ function Bills() {
                 </table>
             </div>
 
-            {billPreview && <BillPreview />}
+            {billPreview && <BillPreview bill={billPreview} setBillPreview={setBillPreview} getAllBills={getAllBills} />}
         </div>
     )
 }
