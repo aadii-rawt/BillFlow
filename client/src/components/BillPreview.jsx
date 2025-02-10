@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdOutlineEdit } from 'react-icons/md';
 import { RxCross2 } from "react-icons/rx";
 import { BsFileEarmarkPdf } from "react-icons/bs";
@@ -9,18 +9,21 @@ import BillInvoicePDF from './BillInvoicePDF';
 import html2pdf from "html2pdf.js";
 import BillPayment from './BillPayment';
 
-function BillPreview() {
+function BillPreview({ getAllBills, setBillPreview,bill }) {
     const dispatch = useDispatch()
-    const bill = useSelector(state => state.stateSlice?.billPreview)
+    // const bill = useSelector(state => state.stateSlice?.billPreview)
     const [payment, setPayment] = useState(false)
-    
+
     const downloadPDF = async () => {
         const element = document.querySelector("#invoiceBill");
         html2pdf(element, {
-            margin : 10,
+            margin: 10,
             filename: '#234567.pdf',
         })
     }
+    // useEffect(() => {
+    //     getAllBills()
+    // }, [])
 
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%] h-fit'>
@@ -31,7 +34,7 @@ function BillPreview() {
                             <h1 className='text-xl'>{bill?.billNumber}</h1>
                         </div>
                         <div className=''>
-                            <button className='text-red-500 text-2xl' onClick={() => dispatch(closeBillPreview())}><RxCross2 /></button>
+                            <button className='text-red-500 text-2xl' onClick={() => setBillPreview(null)}><RxCross2 /></button>
                         </div>
                     </div>
                     <div className='flex justify-start bg-[#f7f7f7] border-b'>
@@ -45,7 +48,7 @@ function BillPreview() {
                         <BillInvoicePDF data={bill} />
                     </div>
                 </div> :
-                <BillPayment setPayment={setPayment} bill={bill} />
+                <BillPayment getAllBills={getAllBills} setPayment={setPayment} bill={bill} />
             }
         </div>
     )
