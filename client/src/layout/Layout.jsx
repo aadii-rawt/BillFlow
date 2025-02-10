@@ -26,7 +26,7 @@ function Layout() {
     try {
       const { exp } = jwtDecode(realToken)
       if (exp * 1000 < Date.now()) {
-        // localStorage.removeItem("authToken");
+        localStorage.removeItem("authToken");
         console.log("token expire");
         return true;
       }
@@ -39,11 +39,11 @@ function Layout() {
 
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (checkTokenExpire()) {
-  //     navigate('/login')
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (checkTokenExpire()) {
+      navigate('/login')
+    }
+  }, [])
 
   return (
     <div className=' min-h-screen '>
