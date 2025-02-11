@@ -25,6 +25,7 @@ function NewBill() {
         note: "",
         isPaid: "unpaid",
         billId: crypto.randomUUID(),
+        createdAt : ""
     });
 
     const [showdropdown, setShowdropdown] = useState(false)
@@ -123,7 +124,8 @@ function NewBill() {
             await axios.post("http://localhost:3000/bills/newbill", {
                 ...billData,
                 totalAmount,
-                totalDueAmount: totalAmount
+                totalDueAmount: totalAmount,
+                createdAt : Date.now()
             }, {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
