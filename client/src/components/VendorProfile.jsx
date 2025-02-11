@@ -8,10 +8,78 @@ import { useDispatch, useSelector } from 'react-redux'
 import { closeVendorProfile } from '../store/slices/stateSlice'
 import VendorBillsHistory from './VendorBillsHistory'
 import PaymentHistory from './PaymentHistory'
+import axios from 'axios'
 
 function VendorProfile({ vendor, setVendorProfile }) {
 
     const [tabs, setTabs] = useState("Overview")
+    const [activityFeed, setActivityFeed] = useState([])
+
+    const getActivityFeed = async () => {
+        try {
+            // Fetch payments
+            const paymentRes = await axios.get("http://localhost:3000/payment/vendorPayments", {
+                params: { vendorId: vendor?._id },
+                headers: { Authorization: localStorage.getItem("authToken") },
+            });
+
+            // Fetch bills
+            const billRes = await axios.get("http://localhost:3000/bills/vendorBills", {
+                params: { vendorId: vendor?._id },
+                headers: { Authorization: localStorage.getItem("authToken") },
+            });
+
+            // Add a `type` field and `createdAt` timestamp
+            const payments = paymentRes.data.map(payment => ({
+                ...payment,
+                type: "payment",
+                createdAt: +payment.createdAt || Date.now(), // If `createdAt` exists in data, use it
+            }));
+
+            const bills = billRes.data.map(bill => ({
+                ...bill,
+                type: "bill",
+                createdAt: +bill.createdAt || Date.now(),
+            }));
+
+            // Merge and sort by `createdAt` (descending order)
+            const activityFeed = [...payments, ...bills].sort((a, b) => b.createdAt - a.createdAt);
+
+            // Update state
+            setActivityFeed(activityFeed);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const formatDateTime = (timestamp) => {
+        console.log(timestamp);
+        
+        const date = new Date(timestamp);
+
+        // Format date as DD/MM/YY
+        const formattedDate = date.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "2-digit",
+        });
+
+        // Format time as HH:MM AM/PM
+        const formattedTime = date.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        });
+
+        return `${formattedDate} ${formattedTime}`;
+    };
+
+
+    useEffect(() => {
+        getActivityFeed()
+        console.log(activityFeed);
+
+    }, [vendor])
 
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%]'>
@@ -62,35 +130,58 @@ function VendorProfile({ vendor, setVendorProfile }) {
                             </table>
                         </div>
                         {/* activity feed */}
-                        <div className='flex items-center justify-center flex-col my-10'>
-                            <div className="relative flex items-start gap-2">
-                                {/* Timeline Indicator */}
-                                <div className="flex gap-2  items-center">
-                                    <div className='text-right'>
-                                        <div className="text-sm text-gray-500">
-                                            31/12/24
+                        <div className='flex items-center space-y-10 justify-center flex-col my-10'>
+                            {activityFeed?.map((a) => (
+                                <div className="relative flex items-start gap-2">
+                                    {/* Timeline Indicator */}
+                                    <div className="flex gap-2  items-center">
+                                        <div className='text-right'>
+                                            <div className="text-sm text-gray-500">
+                                                {formatDateTime(a?.createdAt)}
+                                                {/* {a?.createdAt} */}
+                                                {/* {formatDateTime(1739254403492)} */}
+                                            </div>
+                                            <div className="text-sm text-gray-400">
+                                                {/* {formatDate(vendor?.createdAt).formattedTime} */}
+                                                {/* 02:34 AM */}
+                                            </div>
                                         </div>
-                                        <div className="text-sm text-gray-400">
-                                            {/* {formatDate(vendor?.createdAt).formattedTime} */}
-                                            02:34 AM
+                                        <div className="border text-white rounded-full p-1.5 flex items-center justify-center">
+                                            <HiOutlineChatBubbleOvalLeftEllipsis size={20} className='text-blue-400' />
                                         </div>
+                                        <div className="h-full w-px bg-blue-500"></div>
                                     </div>
-                                    <div className="border text-white rounded-full p-1.5 flex items-center justify-center">
-                                        <HiOutlineChatBubbleOvalLeftEllipsis size={20} className='text-blue-400' />
-                                    </div>
-                                    <div className="h-full w-px bg-blue-500"></div>
-                                </div>
+                                    {/* Timeline Content */}
+                                    {a?.type == "payment" ?
+                                        <div className=''>
+                                            <div className=" bg-gray-100 p-2 rounded-md border">
+                                                <h4 className="text-gray-800 font-medium">Payments Made added</h4>
+                                                <p className="text-gray-600 text-sm">
+                                                    Payment of amount ₹{a?.amountPaid}.00 made and applied for {a?.billNumber} by
+                                                 <span className='font-semibold'> Sahil</span>
+                                                </p>
+                                            </div>
+                                        </div> :
+                                        <div className=''>
+                                            <div className=" bg-gray-100 p-2 rounded-md border">
+                                                <h4 className="text-gray-800 font-medium">Bill added</h4>
+                                                <p className="text-gray-600 text-sm">
+                                                    Bill {a?.billNumber} of amount ₹{a?.totalAmount}.00 created
+                                                    by <span className='font-semibold'>Sahil</span>
+                                                </p>
+                                            </div>
+                                        </div>}
 
-                                {/* Timeline Content */}
-                                <div className=''>
-                                    <div className=" bg-gray-100 p-2 rounded-md border">
-                                        <h4 className="text-gray-800 font-medium">Contact person added</h4>
-                                        <p className="text-gray-600 text-sm">
-                                            Contact person Aditya has been created  by <span className='font-semibold'>Sahil</span>
-                                        </p>
-                                    </div>
+                                    {/* <div className=''>
+                                        <div className=" bg-gray-100 p-2 rounded-md border">
+                                            <h4 className="text-gray-800 font-medium">Contact person added</h4>
+                                            <p className="text-gray-600 text-sm">
+                                                Contact person Aditya has been created  by <span className='font-semibold'>Sahil</span>
+                                            </p>
+                                        </div>
+                                    </div> */}
                                 </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -142,7 +233,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                             </table>
                         </div>
                     </div> */}
-                    <PaymentHistory  vendor={vendor}/>
+                    <PaymentHistory vendor={vendor} />
                 </div>
             }
         </div>
