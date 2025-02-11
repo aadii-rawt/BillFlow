@@ -54,8 +54,6 @@ function VendorProfile({ vendor, setVendorProfile }) {
     };
 
     const formatDateTime = (timestamp) => {
-        console.log(timestamp);
-
         const date = new Date(timestamp);
 
         // Format date as DD/MM/YY
@@ -75,11 +73,8 @@ function VendorProfile({ vendor, setVendorProfile }) {
         return `${formattedDate} ${formattedTime}`;
     };
 
-
     useEffect(() => {
         getActivityFeed()
-        console.log(activityFeed);
-
     }, [vendor])
 
     return (
@@ -132,8 +127,8 @@ function VendorProfile({ vendor, setVendorProfile }) {
                         </div>
                         {/* activity feed */}
                         <div className='flex items-center space-y-10 justify-center flex-col my-10'>
-                            {activityFeed?.map((a) => (
-                                <div className="relative flex items-start gap-2">
+                            {activityFeed?.map((a, i) => (
+                                <div key={i} className="relative flex items-start gap-2">
                                     {/* Timeline Indicator */}
                                     <div className="flex gap-2  items-center">
                                         <div className='text-right'>

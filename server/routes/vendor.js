@@ -79,18 +79,15 @@ router.get("/:vendorId", authMiddleware, async (req, res) => {
 // update vendor details
 router.patch("/edit/:vendorId", authMiddleware, async (req, res) => {
   const { vendorId } = req.params;
-  const userId = req.userId; 
+  const userId = req.userId;
   const updatedData = req.body;
 
   try {
-    // Find the user vendors document
     let userVendors = await Vendors.findOne({ _id: userId });
-
     if (!userVendors) {
       return res.status(404).json({ msg: "User's vendors not found" });
     }
 
-    // Find the index of the vendor to update
     const vendorIndex = userVendors.vendors.findIndex(
       (v) => v._id.toString() === vendorId
     );
@@ -99,10 +96,9 @@ router.patch("/edit/:vendorId", authMiddleware, async (req, res) => {
       return res.status(404).json({ msg: "Vendor not found" });
     }
 
-    // Update only the provided fields (partial update)
     userVendors.vendors[vendorIndex] = {
-      ...userVendors.vendors[vendorIndex], // Keep existing fields
-      ...updatedData, // Overwrite with new data
+      ...userVendors.vendors[vendorIndex], 
+      ...updatedData, 
     };
 
     await userVendors.save();

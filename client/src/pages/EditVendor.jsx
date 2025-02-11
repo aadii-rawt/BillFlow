@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { RxCross1 } from 'react-icons/rx'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from "axios"
+import { useDispatch } from 'react-redux';
+import { handleNotify } from '../store/slices/stateSlice';
 
 function EditVendor({ setAddVendor, type = "page" }) {
     const navigate = useNavigate();
     const { vendorId } = useParams()
+    const dispatch = useDispatch()
 
     const [userDetails, setUserDetails] = useState({
         salutation: "",
@@ -44,7 +47,8 @@ function EditVendor({ setAddVendor, type = "page" }) {
         fetchDetails()
     }, [])
 
-    const handleEdit = async () => {
+    const handleEdit = async (e) => {
+        e?.preventDefault()
         try {
             const res = await axios.patch(`http://localhost:3000/vendor/edit/${vendorId}`, {
                 ...userDetails
@@ -52,33 +56,14 @@ function EditVendor({ setAddVendor, type = "page" }) {
                 headers: { Authorization: localStorage.getItem("authToken") }
             })
             console.log(res);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const handleSubmit = async () => {
-        if (!userDetails?.displayName) {
-            setError("Please Enter the Vendor Name")
-            return
-        }
-        try {
-            const res = await axios.post("http://localhost:3000/vendor/newvendor", {
-                ...userDetails, createdAt: Date.now()
-            }, {
-                headers: {
-                    Authorization: localStorage.getItem("authToken")
+            navigate("/vendors", {
+                state: {
+                    vendorData: { ...res.data?.updatedVendor }
                 }
             })
-            console.log(res);
+            dispatch(handleNotify())
         } catch (error) {
             console.log(error);
-        }
-        console.log(userDetails);
-        if (type = "page") {
-            navigate("/vendors")
-        } else {
-            navigate("/bills/new")
         }
     }
 
