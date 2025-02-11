@@ -9,6 +9,7 @@ import { closeVendorProfile } from '../store/slices/stateSlice'
 import VendorBillsHistory from './VendorBillsHistory'
 import PaymentHistory from './PaymentHistory'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 function VendorProfile({ vendor, setVendorProfile }) {
 
@@ -88,7 +89,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                     <h1 className='text-2xl'>{vendor?.displayName}</h1>
                 </div>
                 <div className='space-x-2 flex items-center'>
-                    <button className='px-2.5 py-1 text-[15px] border bg-gray-100 rounded'>Edit</button>
+                    <Link to={`/bills/edit/${vendor?._id}`} className='px-2.5 py-1 text-[15px] border bg-gray-100 rounded'>Edit</Link>
                     <button className='px-2.5 py-1 text-[15px] border bg-blue-500 text-white rounded'>New</button>
                     <button className=' text-red-500 px-4 text-xl' onClick={() => setVendorProfile(null)}><RxCross1 /></button>
                 </div>
@@ -183,34 +184,34 @@ function VendorProfile({ vendor, setVendorProfile }) {
                                 </div>
                             ))}
                             <div className="relative flex items-start gap-2">
-                                    {/* Timeline Indicator */}
-                                    <div className="flex gap-2  items-center">
-                                        <div className='text-right'>
-                                            <div className="text-sm text-gray-500">
-                                                {formatDateTime(vendor?.createdAt)}
-                                                {/* {vendor?.createdAt} */}
-                                                {/* {formatDateTime(1739254403492)} */}
-                                            </div>
-                                            <div className="text-sm text-gray-400">
-                                                {/* {formatDate(vendor?.createdAt).formattedTime} */}
-                                                {/* 02:34 AM */}
-                                            </div>
+                                {/* Timeline Indicator */}
+                                <div className="flex gap-2  items-center">
+                                    <div className='text-right'>
+                                        <div className="text-sm text-gray-500">
+                                            {formatDateTime(vendor?.createdAt)}
+                                            {/* {vendor?.createdAt} */}
+                                            {/* {formatDateTime(1739254403492)} */}
                                         </div>
-                                        <div className="border text-white rounded-full p-1.5 flex items-center justify-center">
-                                            <HiOutlineChatBubbleOvalLeftEllipsis size={20} className='text-blue-400' />
+                                        <div className="text-sm text-gray-400">
+                                            {/* {formatDate(vendor?.createdAt).formattedTime} */}
+                                            {/* 02:34 AM */}
                                         </div>
-                                        <div className="h-full w-px bg-blue-500"></div>
                                     </div>
-                                    {/* Timeline Content */}
-                                    <div className=''>
-                                        <div className=" bg-gray-100 p-2 rounded-md border">
-                                            <h4 className="text-gray-800 font-medium">Contact person added</h4>
-                                            <p className="text-gray-600 text-sm">
-                                                Contact person Aditya has been created  by <span className='font-semibold'>Sahil</span>
-                                            </p>
-                                        </div>
+                                    <div className="border text-white rounded-full p-1.5 flex items-center justify-center">
+                                        <HiOutlineChatBubbleOvalLeftEllipsis size={20} className='text-blue-400' />
+                                    </div>
+                                    <div className="h-full w-px bg-blue-500"></div>
+                                </div>
+                                {/* Timeline Content */}
+                                <div className=''>
+                                    <div className=" bg-gray-100 p-2 rounded-md border">
+                                        <h4 className="text-gray-800 font-medium">Contact person added</h4>
+                                        <p className="text-gray-600 text-sm">
+                                            Contact person Aditya has been created  by <span className='font-semibold'>Sahil</span>
+                                        </p>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
