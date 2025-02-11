@@ -13,7 +13,7 @@ const paymentRoute = require('../routes/payment')
 app.use(
   cors({
     origin: "http://localhost:5174", // Allow requests from your frontend
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+    methods: ["GET", "POST", "PUT", "DELETE","PATCH"], // Specify allowed methods
     // allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
   })
 );

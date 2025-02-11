@@ -3,6 +3,7 @@ const { Vendors } = require("../db");
 const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
+// create new vendor
 router.post("/newvendor", authMiddleware, async (req, res) => {
   const {
     salutation,
@@ -45,6 +46,7 @@ router.post("/newvendor", authMiddleware, async (req, res) => {
   }
 });
 
+// get all vendors
 router.get("/vendors", authMiddleware, async (req, res) => {
   const _id = req.userId;
   const userVendors = await Vendors.findOne({ _id });
@@ -59,16 +61,11 @@ router.get("/vendors", authMiddleware, async (req, res) => {
 });
 
 // get specific vendor
-router.get("/vendorId", authMiddleware, async (req, res) => {
-  console.log("rechied");
-  
+router.get("/:vendorId", authMiddleware, async (req, res) => {
   const _id = req.userId;
-  const { vendorId } = req.query;
+  const { vendorId } = req.params;
   const allVendors = await Vendors.findOne({ _id });
-  console.log(allVendors);
-  
   try {
-
     const filterVendor = allVendors?.vendors.find((vendor) => {
       return vendor?._id.toString() === vendorId;
     });
@@ -76,6 +73,49 @@ router.get("/vendorId", authMiddleware, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.send({ msg: "something went wrong" });
+  }
+});
+
+// update vendor details
+router.patch("/edit/:vendorId", authMiddleware, async (req, res) => {
+  const { vendorId } = req.params;
+  const userId = req.userId; 
+  const updatedData = req.body;
+
+  try {
+    // Find the user vendors document
+    let userVendors = await Vendors.findOne({ _id: userId });
+
+    if (!userVendors) {
+      return res.status(404).json({ msg: "User's vendors not found" });
+    }
+
+    // Find the index of the vendor to update
+    const vendorIndex = userVendors.vendors.findIndex(
+      (v) => v._id.toString() === vendorId
+    );
+
+    if (vendorIndex === -1) {
+      return res.status(404).json({ msg: "Vendor not found" });
+    }
+
+    // Update only the provided fields (partial update)
+    userVendors.vendors[vendorIndex] = {
+      ...userVendors.vendors[vendorIndex], // Keep existing fields
+      ...updatedData, // Overwrite with new data
+    };
+
+    await userVendors.save();
+
+    res.json({
+      msg: "Vendor updated successfully",
+      updatedVendor: userVendors.vendors[vendorIndex],
+    });
+  } catch (error) {
+    console.error("Error:", error.message);
+    res
+      .status(500)
+      .json({ msg: "Error updating vendor", error: error.message });
   }
 });
 
