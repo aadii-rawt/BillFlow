@@ -47,7 +47,7 @@ function BillPayment({ setPayment, bill,getAllBills,getBillDetails }) {
         <div className='min-h-screen border-l'>
             <div className='flex justify-between items-center p-[19px] border-b '>
                 <div>
-                    <h1 className='text-xl'>#23456y7u8</h1>
+                    <h1 className='text-xl'>{bill?.billNumber}</h1>
                 </div>
                 <div className=''>
                     {/* <button className='text-red-500 text-2xl' onClick={() => dispatch(closeBillPreview())}><RxCross2 /></button> */}
