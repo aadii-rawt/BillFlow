@@ -24,7 +24,6 @@ function BillPayment({ setPayment, bill,getAllBills,getBillDetails }) {
 
     const handlePayment = async (e) => {
         e.preventDefault()
-
         console.log(paymentData);
 
         try {
