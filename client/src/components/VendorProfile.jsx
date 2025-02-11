@@ -7,11 +7,10 @@ import { RxCross1 } from 'react-icons/rx'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeVendorProfile } from '../store/slices/stateSlice'
 import VendorBillsHistory from './VendorBillsHistory'
+import PaymentHistory from './PaymentHistory'
 
-function VendorProfile() {
+function VendorProfile({ vendor, setVendorProfile }) {
 
-    const vendor = useSelector((state) => state.stateSlice.vendorProfile)
-    const dispatch = useDispatch()
     const [tabs, setTabs] = useState("Overview")
 
     return (
@@ -23,7 +22,7 @@ function VendorProfile() {
                 <div className='space-x-2 flex items-center'>
                     <button className='px-2.5 py-1 text-[15px] border bg-gray-100 rounded'>Edit</button>
                     <button className='px-2.5 py-1 text-[15px] border bg-blue-500 text-white rounded'>New</button>
-                    <button className=' text-red-500 px-4 text-xl' onClick={() => dispatch(closeVendorProfile())}><RxCross1 /></button>
+                    <button className=' text-red-500 px-4 text-xl' onClick={() => setVendorProfile(null)}><RxCross1 /></button>
                 </div>
             </div>
             <div className='px-4 pt-3 pb-2 border-b'>
@@ -101,7 +100,7 @@ function VendorProfile() {
                     <VendorBillsHistory vendor={vendor} />
 
                     {/* payments */}
-                    <div className='border  rounded-lg overflow-hidden cursor-pointer'>
+                    {/* <div className='border  rounded-lg overflow-hidden cursor-pointer'>
                         <div className='flex p-2 px-3 justify-between items-center bg-[#f9f9fb]'>
                             <h1 className='font-medium flex gap-0 items-center'> <MdKeyboardArrowRight className='text-gray-500' /> Bill Payments</h1>
                             <button className='flex items-center gap-1 text-sm font-medium'><FiPlus size={12} className='text-white bg-blue-500 rounded-full' /> New</button>
@@ -142,7 +141,8 @@ function VendorProfile() {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> */}
+                    <PaymentHistory  vendor={vendor}/>
                 </div>
             }
         </div>
