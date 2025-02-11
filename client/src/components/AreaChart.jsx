@@ -1,82 +1,77 @@
-import React, { useState } from 'react';
-import Chart from 'react-apexcharts';
+import React, { useState } from "react";
+import Chart from "react-apexcharts";
 
 function AreaChart() {
+  // Function to generate all 12 months of the current year
+  const getAllMonths = () => {
+    const months = [];
+    const currentYear = new Date().getFullYear();
+
+    for (let i = 0; i < 12; i++) {
+      const date = new Date(currentYear, i, 1);
+      const month = date.toLocaleString("en-US", { month: "short" }); // "Jan", "Feb", etc.
+      months.push(`${month} '${currentYear.toString().slice(-2)}`); // "Jan '24"
+    }
+    return months;
+  };
+
   const [chartOptions, setChartOptions] = useState({
     series: [
       {
-        name: 'Outgoing',
-        data: [11, 32, 45, 32, 34, 52, 41],
+        name: "Outgoing",
+        data: [11, 32, 45, 32, 34, 52, 41, 38, 50, 60, 55, 42], // Sample data
       },
       {
-        name: 'Incoming',
-        data: [31, 40, 28, 51, 42, 109, 100],
+        name: "Incoming",
+        data: [31, 40, 28, 51, 42, 109, 100, 95, 85, 77, 88, 99], // Sample data
       },
     ],
     options: {
       chart: {
         height: 350,
-        type: 'area',
+        type: "area",
         zoom: {
           enabled: false,
         },
         toolbar: {
-          show: true, // Show toolbar
+          show: true,
           tools: {
-            download: false, // Hide the download button
-            selection: false, // Disable selection tool
-            zoom: false, // Disable zooming
-            zoomin: false, // Disable zoom in
-            zoomout: false, // Disable zoom out
-            pan: false, // Disable panning
-            reset: false, // Disable reset zoom
+            download: false,
+            selection: false,
+            zoom: false,
+            zoomin: false,
+            zoomout: false,
+            pan: false,
+            reset: false,
           },
-        }
+        },
       },
       dataLabels: {
         enabled: false,
       },
       stroke: {
-        curve: 'smooth',
-        // colors: ['#FF5733', '#33FF57'], 
-      },
-      fill: {
-      // colors: ['#FF5733', '#33FF57'], // Area colors
+        curve: "smooth",
       },
       xaxis: {
-        type: 'datetime',
-        categories: [
-          '2018-09-19T00:00:00.000Z',
-          '2018-09-19T01:30:00.000Z',
-          '2018-09-19T02:30:00.000Z',
-          '2018-09-19T03:30:00.000Z',
-          '2018-09-19T04:30:00.000Z',
-          '2018-09-19T05:30:00.000Z',
-          '2018-09-19T06:30:00.000Z',
-        ],
+        categories: getAllMonths(), // Set months dynamically
         tooltip: {
-          enabled: false, // Disable tooltip on the x-axis
+          enabled: false,
         },
       },
       tooltip: {
         x: {
-          format: 'dd/MM/yy HH:mm',
+          format: "MMM yy", // Display format in tooltip
         },
       },
       legend: {
-        show: false, // Disable the legend
+        show: false,
       },
     },
   });
 
   return (
     <div className="w-full">
-      <Chart
-        options={chartOptions.options}
-        series={chartOptions.series}
-        type="area"
-        height={350}
-      />
+      <Chart options={chartOptions.options} series={chartOptions.series} type="area" height={350} />
     </div>
   );
 }
