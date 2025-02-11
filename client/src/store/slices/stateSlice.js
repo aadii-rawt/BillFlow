@@ -8,6 +8,7 @@ const stateSlice = createSlice({
     vendorProfile: null,
     billPreview: null,
     userProfile: false,
+    notification: false,
   },
   reducers: {
     setUser(state, action) {
@@ -31,6 +32,12 @@ const stateSlice = createSlice({
     formatCurrency(amount) {
       return new Intl.NumberFormat("en-IN").format(amount);
     },
+    handleNotify(state,action) {
+      state.notification = action;
+    },
+    stopNotify(state,) {
+      state.notification = false;
+    },
   },
 });
 
@@ -42,5 +49,7 @@ export const {
   setUser,
   formatCurrency,
   handleUserProfile,
+  handleNotify,
+  stopNotify
 } = stateSlice.actions;
 export default stateSlice.reducer;

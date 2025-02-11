@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
@@ -7,10 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../store/slices/stateSlice'
 import { jwtDecode } from "jwt-decode";
 import ProfileRightSidebar from '../components/ProfileRightSidebar'
+import ToastNotification from '../components/ToastNotification'
 
 function Layout() {
   // const dispatch = useDispatch();
-  const userProfile = useSelector((state) => state.stateSlice.userProfile)
+  const userProfile = useSelector((state) => state.stateSlice.userProfile);
+  // const [notify, setNotify] = useState(true)
+  const notify = useSelector((state) => state.stateSlice.notification)
 
   // useEffect(() => {
   //   const storedUser = localStorage.getItem("user");
@@ -62,7 +65,8 @@ function Layout() {
         <div className='flex-1'>
           <Outlet />
         </div>
-      {userProfile && <ProfileRightSidebar />}
+        {userProfile && <ProfileRightSidebar />}
+        {notify && <ToastNotification />}
       </div>
     </div>
   )

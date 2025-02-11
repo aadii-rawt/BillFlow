@@ -41,8 +41,6 @@ function Dashboard() {
         },
       });
       const bills = res.data || [];
-      console.log(bills);
-
       // const currentAmount = 0
       // const overdueAmount = 0
       // const totalDueAmount = bills.reduce((sum, bill) => sum + (bill?.totalDueAmount || 0), 0);
@@ -56,10 +54,8 @@ function Dashboard() {
         const dueDate = new Date(bill?.dueDate)
 
         if (date > dueDate) {
-          console.log("overdue");
           overdueAmount = overdueAmount + bill?.totalDueAmount
         } else {
-          console.log("current");
           currentAmount = currentAmount + bill?.totalDueAmount
         }
       })

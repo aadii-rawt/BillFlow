@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import VendorProfile from '../components/VendorProfile'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,12 +8,13 @@ import { formatCurrency, setVendorProfile } from '../store/slices/stateSlice'
 import useFormatCurrency from '../hooks/useFormatCurrency'
 
 function Vendors() {
-    const [vendorProfile,setVendorProfile] = useState(null)
+    const [vendorProfile, setVendorProfile] = useState(null)
     const [vendors, setVendors] = useState([]);
     const [vendorsBills, setVendorBills] = useState([]);
     const [vendorPayables, setVendorPayables] = useState({});
     const dispatch = useDispatch()
-    // const formatCurrency = useFormatCurrency()
+    const location = useLocation();
+    const { vendorData } = location.state || {};
 
     const getAllVendors = async () => {
         try {
@@ -68,6 +69,11 @@ function Vendors() {
         getAllBills();
     }, [])
 
+    useEffect(() => {
+        if (vendorData) {
+            setVendorProfile({ ...vendorData, payableAmount: vendorPayables[vendorData?._id] || 0 })
+        }
+    }, [])
 
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('en-IN').format(amount);
@@ -99,35 +105,35 @@ function Vendors() {
                             <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b'
                                 onClick={() => setVendorProfile({ ...ven, payableAmount: vendorPayables[ven?._id] || 0 })}
                             >
-                        <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
-                        <td className='text-sm py-2.5'>{ven?.companyName}</td>
-                        <td className='text-sm py-2.5'>{ven?.email}</td>
-                        <td className='text-sm py-2.5'>{ven?.Phone}</td>
-                        <td className='text-sm py-2.5 font-medium'>₹{formatCurrency(vendorPayables[ven?._id]) || 0}</td>
-                    </tr>
+                                <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
+                                <td className='text-sm py-2.5'>{ven?.companyName}</td>
+                                <td className='text-sm py-2.5'>{ven?.email}</td>
+                                <td className='text-sm py-2.5'>{ven?.Phone}</td>
+                                <td className='text-sm py-2.5 font-medium'>₹{formatCurrency(vendorPayables[ven?._id]) || 0}</td>
+                            </tr>
                         ))}
-                    <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'
-                        // onClick={() => setVendorProfile(true)}
-                        onClick={() => dispatch(setVendorProfile(true))}
-                    >
-                        <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
-                        <td className='text-sm py-2.5'>google</td>
-                        <td className='text-sm py-2.5'>vinay@mt.com</td>
-                        <td className='text-sm py-2.5'>+91 79274793888</td>
-                        <td className='text-sm py-2.5 font-medium'>₹0.00</td>
-                    </tr>
-                    <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'>
-                        <td className='text-sm py-2.5 font-medium text-blue-500'>sahil</td>
-                        <td className='text-sm py-2.5'>apple</td>
-                        <td className='text-sm py-2.5'>aditya@email.com</td>
-                        <td className='text-sm py-2.5'>+91 89890000789</td>
-                        <td className='text-sm py-2.5 font-medium'>₹0.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'
+                            // onClick={() => setVendorProfile(true)}
+                            onClick={() => dispatch(setVendorProfile(true))}
+                        >
+                            <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
+                            <td className='text-sm py-2.5'>google</td>
+                            <td className='text-sm py-2.5'>vinay@mt.com</td>
+                            <td className='text-sm py-2.5'>+91 79274793888</td>
+                            <td className='text-sm py-2.5 font-medium'>₹0.00</td>
+                        </tr>
+                        <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'>
+                            <td className='text-sm py-2.5 font-medium text-blue-500'>sahil</td>
+                            <td className='text-sm py-2.5'>apple</td>
+                            <td className='text-sm py-2.5'>aditya@email.com</td>
+                            <td className='text-sm py-2.5'>+91 89890000789</td>
+                            <td className='text-sm py-2.5 font-medium'>₹0.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            { vendorProfile && <VendorProfile vendor={vendorProfile} setVendorProfile={setVendorProfile}/> }
+            {vendorProfile && <VendorProfile vendor={vendorProfile} setVendorProfile={setVendorProfile} />}
         </div >
     )
 }
