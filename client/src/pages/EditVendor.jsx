@@ -5,7 +5,7 @@ import axios from "axios"
 
 function EditVendor({ setAddVendor, type = "page" }) {
     const navigate = useNavigate();
-    const { id } = useParams()
+    const { vendorId } = useParams()
 
     const [userDetails, setUserDetails] = useState({
         salutation: "",
@@ -26,9 +26,9 @@ function EditVendor({ setAddVendor, type = "page" }) {
 
     const fetchDetails = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/vendor/vendorId", {
+            const res = await axios.get(`http://localhost:3000/vendor/${vendorId}`, {
                 params: {
-                    vendorId: id
+                    vendorId
                 },
                 headers: {
                     Authorization: localStorage.getItem("authToken")
@@ -44,6 +44,18 @@ function EditVendor({ setAddVendor, type = "page" }) {
         fetchDetails()
     }, [])
 
+    const handleEdit = async () => {
+        try {
+            const res = await axios.patch(`http://localhost:3000/vendor/edit/${vendorId}`, {
+                ...userDetails
+            }, {
+                headers: { Authorization: localStorage.getItem("authToken") }
+            })
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const handleSubmit = async () => {
         if (!userDetails?.displayName) {
@@ -161,7 +173,7 @@ function EditVendor({ setAddVendor, type = "page" }) {
             </div>
 
             <div className={`border-t p-4 flex gap-3 bottom-0 w-full ${type == "page" ? "fixed" : "absolute"} `}>
-                <button onClick={handleSubmit} className='bg-blue-500 text-white px-2.5 py-1  rounded-md'>Save</button>
+                <button onClick={handleEdit} className='bg-blue-500 text-white px-2.5 py-1  rounded-md'>Save</button>
                 {type == "page" ?
                     <button className='bg-gray-100 px-2.5 py-1  rounded-md border' onClick={() => navigate(-1)}>Cancel</button> :
                     <button className='bg-gray-100 px-2.5 py-1  rounded-md border' onClick={() => setAddVendor(false)}>Cancel</button>

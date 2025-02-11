@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         element: <NewBill />
       },
       {
-        path: "/bills/edit/:id",
+        path: "/bills/edit/:vendorId",
         element: <EditVendor />
       },
       {
