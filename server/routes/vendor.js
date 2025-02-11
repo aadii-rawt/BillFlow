@@ -58,4 +58,25 @@ router.get("/vendors", authMiddleware, async (req, res) => {
   }
 });
 
+// get specific vendor
+router.get("/vendorId", authMiddleware, async (req, res) => {
+  console.log("rechied");
+  
+  const _id = req.userId;
+  const { vendorId } = req.query;
+  const allVendors = await Vendors.findOne({ _id });
+  console.log(allVendors);
+  
+  try {
+
+    const filterVendor = allVendors?.vendors.find((vendor) => {
+      return vendor?._id.toString() === vendorId;
+    });
+    res.send(filterVendor);
+  } catch (error) {
+    console.log(error);
+    res.send({ msg: "something went wrong" });
+  }
+});
+
 module.exports = router;
