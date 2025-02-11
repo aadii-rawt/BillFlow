@@ -3,10 +3,13 @@ import BillPreview from './BillPreview';
 import axios from 'axios';
 
 function BillPayment({ setPayment, bill,getAllBills,getBillDetails }) {
+    console.log(bill);
+    
     const [paymentData, setPaymentDate] = useState({
         paymentId: crypto.randomUUID(),
         billId: bill?.billId,
         vendorId: bill?.vendorId,
+        billNumber : bill?.billNumber,
         amountPaid: bill?.totalDueAmount || 0,
         paymentMethod: "",
         paymentDate: "",
@@ -25,7 +28,7 @@ function BillPayment({ setPayment, bill,getAllBills,getBillDetails }) {
         console.log(paymentData);
 
         try {
-            const res = await axios.post("http://localhost:3000/payment//createPayment", { ...paymentData }, {
+            const res = await axios.post("http://localhost:3000/payment//createPayment", { ...paymentData, createdAt : Date.now() }, {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
                 }
