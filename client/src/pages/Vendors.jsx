@@ -8,8 +8,7 @@ import { formatCurrency, setVendorProfile } from '../store/slices/stateSlice'
 import useFormatCurrency from '../hooks/useFormatCurrency'
 
 function Vendors() {
-    // const [vendorProfile, setVendorProfile] = useState(null)
-    const vendorProfile = useSelector(state => state.stateSlice.vendorProfile)
+    const [vendorProfile,setVendorProfile] = useState(null)
     const [vendors, setVendors] = useState([]);
     const [vendorsBills, setVendorBills] = useState([]);
     const [vendorPayables, setVendorPayables] = useState({});
@@ -98,7 +97,7 @@ function Vendors() {
                     <tbody>
                         {vendors && vendors?.map((ven) => (
                             <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b'
-                                onClick={() => dispatch(setVendorProfile({ ...ven, payableAmount: vendorPayables[ven?._id] || 0 }))}
+                                onClick={() => setVendorProfile({ ...ven, payableAmount: vendorPayables[ven?._id] || 0 })}
                             >
                         <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
                         <td className='text-sm py-2.5'>{ven?.companyName}</td>
@@ -128,7 +127,7 @@ function Vendors() {
             </table>
         </div>
 
-            { vendorProfile && <VendorProfile /> }
+            { vendorProfile && <VendorProfile vendor={vendorProfile} setVendorProfile={setVendorProfile}/> }
         </div >
     )
 }
