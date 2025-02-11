@@ -13,6 +13,7 @@ function VednorForm({ setAddVendor, type = "page" }) {
         displayName: "",
         email: "",
         Phone: "",
+        createdAt : "",
     })
     const [error, setError] = useState("")
 
@@ -28,7 +29,7 @@ function VednorForm({ setAddVendor, type = "page" }) {
         }
         try {
             const res = await axios.post("http://localhost:3000/vendor/newvendor", {
-                ...userDetails,
+                ...userDetails, createdAt : Date.now()
             }, {
                 headers: {
                     Authorization: localStorage.getItem("authToken")

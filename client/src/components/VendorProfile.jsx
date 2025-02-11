@@ -54,7 +54,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
 
     const formatDateTime = (timestamp) => {
         console.log(timestamp);
-        
+
         const date = new Date(timestamp);
 
         // Format date as DD/MM/YY
@@ -158,7 +158,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                                                 <h4 className="text-gray-800 font-medium">Payments Made added</h4>
                                                 <p className="text-gray-600 text-sm">
                                                     Payment of amount ₹{a?.amountPaid}.00 made and applied for {a?.billNumber} by
-                                                 <span className='font-semibold'> Sahil</span>
+                                                    <span className='font-semibold'> Sahil</span>
                                                 </p>
                                             </div>
                                         </div> :
@@ -182,6 +182,35 @@ function VendorProfile({ vendor, setVendorProfile }) {
                                     </div> */}
                                 </div>
                             ))}
+                            <div className="relative flex items-start gap-2">
+                                    {/* Timeline Indicator */}
+                                    <div className="flex gap-2  items-center">
+                                        <div className='text-right'>
+                                            <div className="text-sm text-gray-500">
+                                                {formatDateTime(vendor?.createdAt)}
+                                                {/* {vendor?.createdAt} */}
+                                                {/* {formatDateTime(1739254403492)} */}
+                                            </div>
+                                            <div className="text-sm text-gray-400">
+                                                {/* {formatDate(vendor?.createdAt).formattedTime} */}
+                                                {/* 02:34 AM */}
+                                            </div>
+                                        </div>
+                                        <div className="border text-white rounded-full p-1.5 flex items-center justify-center">
+                                            <HiOutlineChatBubbleOvalLeftEllipsis size={20} className='text-blue-400' />
+                                        </div>
+                                        <div className="h-full w-px bg-blue-500"></div>
+                                    </div>
+                                    {/* Timeline Content */}
+                                    <div className=''>
+                                        <div className=" bg-gray-100 p-2 rounded-md border">
+                                            <h4 className="text-gray-800 font-medium">Contact person added</h4>
+                                            <p className="text-gray-600 text-sm">
+                                                Contact person Aditya has been created  by <span className='font-semibold'>Sahil</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>

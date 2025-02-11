@@ -13,7 +13,7 @@ const vendorsSchema = new mongoose.Schema({
       displayName: String,
       email: String,
       Phone: String,
-      createdAt: { type: Date, default: Date.now },
+      createdAt: String,
     },
   ],
 });
@@ -37,7 +37,7 @@ const billsSchema = new mongoose.Schema({
       billId: String,
       totalAmount: Number,
       totalDueAmount: Number,
-      createdAt : String,
+      createdAt: String,
     },
   ],
 });
