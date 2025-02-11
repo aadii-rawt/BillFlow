@@ -55,6 +55,7 @@ const paymentSchema = new mongoose.Schema({
     {
       paymentId: String,
       billId: String,
+      billNumber: String,
       vendorId: String,
       amountPaid: Number,
       paymentMethod: String,
