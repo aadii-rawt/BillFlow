@@ -37,6 +37,7 @@ const billsSchema = new mongoose.Schema({
       billId: String,
       totalAmount: Number,
       totalDueAmount: Number,
+      createdAt : String,
     },
   ],
 });
