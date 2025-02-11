@@ -5,10 +5,8 @@ const { Payements, Bills } = require("../db");
 
 router.post("/createPayment", authMiddleware, async (req, res) => {
   const userId = req.userId;
-  const { billId,amountPaid } = req.body;
+  const { billId, amountPaid } = req.body;
   try {
-    // let userVendors = await Pay.findOne({ _id: userId });
-
     let userBills = await Bills.findOne({ _id: userId });
 
     if (!userBills) {
@@ -33,31 +31,47 @@ router.post("/createPayment", authMiddleware, async (req, res) => {
       bill.isPaid = "Partial";
     }
 
-    // userBills.bills[billIndex].isPaid = "paid" || "Paid"; // Default to "Paid"
-
     await userBills.save();
 
     // store payment
-    // let userPayments = await Payements.findOne({ _id: userId });
+    let userPayments = await Payements.findOne({ _id: userId });
 
-    // if (!userPayments) {
-    //   userPayments = await Payements.create({
-    //     _id: userId,
-    //     payements: [],
-    //   });
-    // }
+    if (!userPayments) {
+      userPayments = await Payements.create({
+        _id: userId,
+        payements: [],
+      });
+    }
 
-    // userPayments.payments.push({
-    //   ...req.body,
-    // });
+    userPayments.payments.push({
+      ...req.body,
+    });
 
-    // await userPayments.save();
+    await userPayments.save();
 
     res.json({ msg: "payment made successfully" });
   } catch (error) {
     console.log(error);
 
     res.json({ msg: "Error making payment" });
+  }
+});
+
+// get specific vendor payments
+router.get("/vendorPayments", authMiddleware, async (req, res) => {
+  const _id = req.userId;
+  const { vendorId } = req.query;
+  const userPayments = await Payements.findOne({ _id })
+  try {
+    if (!userPayments) {
+      return res.json([]);
+    }
+    const filterdBills = userPayments?.payments.filter((bill) => {
+      return bill?.vendorId === vendorId;
+    });
+    res.send([...filterdBills]);
+  } catch (error) {
+    console.log(error);
   }
 });
 
