@@ -42,9 +42,11 @@ function BillPreview({ getAllBills, setBillPreview, bill }) {
 
     useEffect(() => {
         getBillDetails()
-        // console.log("helo");
         
     },[])
+    useEffect(() => {
+        setPayment(false)
+    },[bill])
 
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%] h-fit'>
