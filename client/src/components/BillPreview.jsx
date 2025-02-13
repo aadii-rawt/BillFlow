@@ -10,12 +10,14 @@ import html2pdf from "html2pdf.js";
 import BillPayment from './BillPayment';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { handleNotify } from '../store/slices/stateSlice';
 
 function BillPreview({ getAllBills, setBillPreview, bill }) {
     const navigate = useNavigate()
     const [payment, setPayment] = useState(false)
     const [billDetails, setBillDetails] = useState({})
-
+    const notification = useSelector((state) => state.stateSlice.notification)
+    const dispatch = useDispatch()
     const downloadPDF = async () => {
         const element = document.querySelector("#invoiceBill");
         html2pdf(element, {
@@ -42,6 +44,12 @@ function BillPreview({ getAllBills, setBillPreview, bill }) {
     }
 
     const handleBillEdit = () => {
+        if (bill?.isPaid == "Paid" || bill?.isPaid == "Partial") {
+            console.log("rea");
+            
+            dispatch(handleNotify({msg : "Can not edit this bill", type : "error"}))
+            return
+        }
         navigate("/bills/new", {
             state: {
                 type: "edit",
