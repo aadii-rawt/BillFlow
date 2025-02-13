@@ -185,7 +185,7 @@ function NewBill() {
         }
 
     }
-    
+
     useEffect(() => {
         getAllVendors()
     }, [])
