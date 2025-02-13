@@ -6,7 +6,7 @@ import { handleNotify, stopNotify } from '../store/slices/stateSlice';
 
 function ToastNotification() {
     const dispatch = useDispatch()
-    const notification = useSelector((state) => state?.stateSlice.notification)    
+    const notification = useSelector((state) => state?.stateSlice.notification)
     useEffect(() => {
         const id = setTimeout(() => {
             dispatch(stopNotify())
@@ -17,8 +17,8 @@ function ToastNotification() {
     return ReactDOM.createPortal(
         <div className={`${notification?.type == "error" ? "bg-red-100  shadow-red-100" : "bg-green-100  shadow-green-100"} text-sm animate-slide-down flex gap-3 items-center justify-center max-w-[310px] z-50  p-2 py-2
          border-2 border-white fixed top-10 left-1/2 transform -translate-x-1/2 rounded-lg shadow-md `}>
-            <div className={`rounded-md w-8 h-8 ${notification?.type == "error" ? "bg-red-600" : "bg-green-600"}  flex items-center justify-center text-white`} onClick={() => dispatch(stopNotify())}><FaCircleCheck /></div>
-       {notification?.msg}
+            <div className={`rounded-md min-w-8 min-h-8 ${notification?.type == "error" ? "bg-red-600" : "bg-green-600"}  flex items-center justify-center text-white`} onClick={() => dispatch(stopNotify())}><FaCircleCheck /></div>
+            <p> {notification?.msg} </p>
         </div>,
         document.getElementById("portal")
     );

@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { RxCross1 } from 'react-icons/rx'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios"
+import { useDispatch } from 'react-redux';
+import { handleNotify } from '../store/slices/stateSlice';
 
 function VednorForm({ setAddVendor, type = "page" }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const [userDetails, setUserDetails] = useState({
         salutation: "",
         firstName: "",
@@ -45,7 +48,7 @@ function VednorForm({ setAddVendor, type = "page" }) {
         } else {
             navigate("/bills/new")
         }
-
+        dispatch(handleNotify({msg:"The contact has been added.", type: "succes"}))
     }
     return (
         <div className={`relative bg-white min-h-screen ${type == "modal" && "animate-slide-down duration-500 "}`}>

@@ -47,7 +47,7 @@ function BillPreview({ getAllBills, setBillPreview, bill }) {
         if (bill?.isPaid == "Paid" || bill?.isPaid == "Partial") {
             console.log("rea");
             
-            dispatch(handleNotify({msg : "Can not edit this bill", type : "error"}))
+            dispatch(handleNotify({msg : "Bill cannot be changed because payments have been recorded.", type : "error"}))
             return
         }
         navigate("/bills/new", {
