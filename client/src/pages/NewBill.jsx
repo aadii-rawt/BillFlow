@@ -13,11 +13,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleNotify } from '../store/slices/stateSlice';
 
 function NewBill() {
-
+    const location = useLocation()
+    const paramData = location?.state || {}
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    
     const [billData, setBillData] = useState({
         items: [{ description: "", quantity: 1, rate: 0, amount: 0 }],
-        vendorName: "",
-        vendorId: "",
+        vendorName: paramData?.vendorName || "",
+        vendorId:  paramData?.vendorId || "",
         billNumber: "",
         uploadedLogo: "",
         date: "",
@@ -29,13 +33,9 @@ function NewBill() {
         createdAt: ""
     });
     const [showdropdown, setShowdropdown] = useState(false)
-    const navigate = useNavigate()
     const [addVendor, setAddVendor] = useState(false)
     const [error, setError] = useState("")
     const [vendors, setVendors] = useState([]);
-    const location = useLocation()
-    const paramData = location?.state || {}
-    const dispatch = useDispatch()
 
     // add more item into table
     const addItem = () => {
@@ -160,7 +160,6 @@ function NewBill() {
     // select or change vendor
     const handleVendorChange = (data) => {
         const vendorId = data?._id
-        console.log(vendorId);
         setBillData((prev) => ({
             ...prev, vendorName: data?.displayName, vendorId: vendorId
         }));
