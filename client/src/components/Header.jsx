@@ -1,11 +1,13 @@
 import React from 'react'
 import { IoIosSearch } from "react-icons/io";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { handleUserProfile, setBillPreview } from '../store/slices/stateSlice';
 import { Link } from 'react-router-dom';
+import { GoGear } from "react-icons/go";
 function Header() {
   const dispatch = useDispatch()
-  return (
+  const user = useSelector((state) => state.stateSlice.user)
+   return (
     <div className='bg-[#21263c]  px-5 py-3 flex items-center justify-between'>
       <div>
         <div className='border rounded-md  py-1 flex items-center'>
@@ -14,8 +16,8 @@ function Header() {
         </div>
       </div>
       <div className='flex gap-5 items-center'>
-        <Link to='/setting' className='text-white '>setting</Link>
-        <div onClick={() => dispatch(handleUserProfile(true))} className='w-10 h-10 cursor-pointer rounded-full bg-green-600 text-white flex items-center justify-center font-medium text-xl'>A</div>
+        <Link to='/setting' className='text-white text-xl'><GoGear /></Link>
+        <div onClick={() => dispatch(handleUserProfile(true))} className='w-10 h-10 cursor-pointer rounded-full bg-green-600 text-white flex items-center justify-center font-medium text-xl'>{user?.companyName?.[0]}</div>
       </div>
     </div>
   )
