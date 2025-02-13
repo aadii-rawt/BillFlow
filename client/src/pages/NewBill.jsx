@@ -164,10 +164,28 @@ function NewBill() {
         setError("");
     };
 
+    // edit bill
     const handleEdit = async () => {
-        console.log("edit");
+        try {
+            const totalAmount = calculateTotalWithTax()
+            const res = await axios.patch(`http://localhost:3000/bills/edit/${billData?._id}`, {
+                ...billData,totalAmount, totalDueAmount: totalAmount,
+            }, {
+                headers: { Authorization: localStorage.getItem("authToken") }
+            })
+            console.log(res);
+            // navigate("/vendors", {
+            //     state: {
+            //         vendorData: { ...res.data?.updatedVendor }
+            //     }
+            // })
+            // dispatch(handleNotify())
+        } catch (error) {
+            console.log(error);
+        }
 
     }
+    
     useEffect(() => {
         getAllVendors()
     }, [])

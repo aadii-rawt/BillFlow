@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 function BillInvoicePDF({ data }) {
 
+    console.log(data);
+    
     const user = useSelector(state => state.stateSlice.user)
     const calculateSubtotal = () => {
         return data?.items?.reduce((subtotal, item) => subtotal + parseInt(item.amount), 0)
@@ -68,8 +70,7 @@ function BillInvoicePDF({ data }) {
                             </tr>
                         </thead>
                         <tbody>
-
-                            {data?.item && data?.items.map((item) => (
+                            {data?.items && data?.items.map((item) => (
                                 <tr className='text-center'>
                                     <td>{item?.description}</td>
                                     <td>{item?.quantity}</td>

@@ -60,7 +60,6 @@ router.get("/vendorBills", authMiddleware, async (req, res) => {
 });
 
 // get bill by id
-
 router.get("/id", authMiddleware, async (req, res) => {
   const _id = req.userId;
   const { billId } = req.query;
@@ -75,5 +74,42 @@ router.get("/id", authMiddleware, async (req, res) => {
     res.send({ msg: "something went wrong" });
   }
 });
+
+router.patch("/edit/:billId", authMiddleware, async (req,res) => {
+  const { billId } = req.params;
+  const userId = req.userId;
+  const updatedData = req.body;
+  try {
+    let userBills = await Bills.findOne({ _id: userId });
+    if (!userBills) {
+      return res.status(404).json({ msg: "User's bills not found" });
+    }
+
+    const billIndex = userBills.bills.findIndex(
+      (v) => v._id.toString() === billId
+    );
+
+    if (billIndex === -1) {
+      return res.status(404).json({ msg: "Vendor not found" });
+    }
+
+    userBills.bills[billIndex] = {
+      ...userBills.bills[billIndex], 
+      ...updatedData, 
+    };
+
+    await userBills.save();
+
+    res.json({
+      msg: "bill updated successfully",
+      updatedVendor: userBills.bills[billIndex],
+    });
+  } catch (error) {
+    console.error("Error:", error.message);
+    res
+      .status(500)
+      .json({ msg: "Error updating bill", error: error.message });
+  }
+})
 
 module.exports = router;
