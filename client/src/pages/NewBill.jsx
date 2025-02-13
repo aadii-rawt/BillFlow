@@ -5,7 +5,7 @@ import { VscMail } from "react-icons/vsc";
 import { MdDeleteOutline } from "react-icons/md";
 import { RxCross1, RxCross2 } from "react-icons/rx";
 import { TbInvoice } from 'react-icons/tb';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import VendorForm from '../components/VendorForm'
 import Modal from '../components/Modal';
 import axios from 'axios';
@@ -25,15 +25,15 @@ function NewBill() {
         note: "",
         isPaid: "unpaid",
         billId: crypto.randomUUID(),
-        createdAt : ""
+        createdAt: ""
     });
-
     const [showdropdown, setShowdropdown] = useState(false)
     const navigate = useNavigate()
     const [addVendor, setAddVendor] = useState(false)
     const [error, setError] = useState("")
     const [vendors, setVendors] = useState([]);
-    // const vendors = useSelector(state => state.vendorSlice.vendors)
+    const location = useLocation()
+    const paramData = location?.state || {}
 
     // add more item into table
     const addItem = () => {
@@ -86,6 +86,7 @@ function NewBill() {
             [field]: value
         }));
     };
+
     // to upload company logo
     const handleLogoUpload = (e) => {
         const file = e.target.files[0];
@@ -114,6 +115,7 @@ function NewBill() {
         return new Intl.NumberFormat('en-IN').format(amount);
     };
 
+    // submit and store bill
     const handleSubmit = async () => {
         if (!billData?.vendorName) {
             setError("Please select Vendor")
@@ -125,7 +127,7 @@ function NewBill() {
                 ...billData,
                 totalAmount,
                 totalDueAmount: totalAmount,
-                createdAt : Date.now()
+                createdAt: Date.now()
             }, {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
@@ -136,7 +138,7 @@ function NewBill() {
             console.log(error);
         }
     }
-
+    // fetch all vendors
     const getAllVendors = async () => {
         try {
             const res = await axios.get("http://localhost:3000/vendor/vendors", {
@@ -151,19 +153,30 @@ function NewBill() {
         }
 
     }
-    
-    useEffect(() => {
-        getAllVendors()
-    }, [])
 
+    // select or change vendor
     const handleVendorChange = (data) => {
         const vendorId = data?._id
         console.log(vendorId);
         setBillData((prev) => ({
             ...prev, vendorName: data?.displayName, vendorId: vendorId
         }));
-        setError(""); 
+        setError("");
     };
+
+    const handleEdit = async () => {
+        console.log("edit");
+
+    }
+    useEffect(() => {
+        getAllVendors()
+    }, [])
+
+    useEffect(() => {
+        if (paramData?.type == "edit") {
+            setBillData(paramData?.bill)
+        }
+    }, [])
 
     const [searchQuery, setSearchQuery] = useState("");
     const filteredVendors = vendors.filter((data) =>
@@ -173,7 +186,7 @@ function NewBill() {
     return (
         <div className="relative min-h-screen w-full">
             <div className='p-4 border-b flex justify-between items-center '>
-                <h1 className='text-2xl flex items-center gap-3'> <TbInvoice size={30} /> New Bill</h1>
+                <h1 className='text-2xl flex items-center gap-3 capitalize'> <TbInvoice size={30} /> {paramData?.type} Bill</h1>
                 <button onClick={() => navigate(-1)}><RxCross1 size={20} className='text-gray-600' /></button>
             </div>
 
@@ -424,18 +437,16 @@ function NewBill() {
 
             {/* save or cancel the form */}
             <div className='border-t p-4 bg-white flex  gap-3 fixed bottom-0 w-full'>
-                <button onClick={handleSubmit} className='bg-blue-500 text-white px-2.5 py-1  rounded-md' >Save</button>
+                <button onClick={paramData?.type == "edit" ? handleEdit : handleSubmit} className='bg-blue-500 text-white px-2.5 py-1  rounded-md' >Save</button>
                 <button className='bg-gray-100 px-2.5 py-1  rounded-md border' onClick={() => navigate(-1)}>Cancel</button>
             </div>
 
             {/* modals */}
 
-
             {addVendor && <Modal>
                 <VendorForm type="modal" setAddVendor={setAddVendor} />
             </Modal>
             }
-
 
         </div>
     )

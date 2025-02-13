@@ -9,12 +9,13 @@ import BillInvoicePDF from './BillInvoicePDF';
 import html2pdf from "html2pdf.js";
 import BillPayment from './BillPayment';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function BillPreview({ getAllBills, setBillPreview, bill }) {
-    const dispatch = useDispatch()
-    // const bill = useSelector(state => state.stateSlice?.billPreview)
+    const navigate = useNavigate()
     const [payment, setPayment] = useState(false)
     const [billDetails, setBillDetails] = useState({})
+
     const downloadPDF = async () => {
         const element = document.querySelector("#invoiceBill");
         html2pdf(element, {
@@ -40,13 +41,22 @@ function BillPreview({ getAllBills, setBillPreview, bill }) {
         }
     }
 
+    const handleBillEdit = () => {
+        navigate("/bills/new", {
+            state: {
+                type: "edit",
+                bill: billDetails
+            }
+        })
+    }
+
     useEffect(() => {
         getBillDetails()
-        
-    },[])
+    }, [])
+
     useEffect(() => {
         setPayment(false)
-    },[bill])
+    }, [bill])
 
     return (
         <div className='absolute top-0 right-0 bg-white border-l w-[70%] h-fit'>
@@ -61,10 +71,10 @@ function BillPreview({ getAllBills, setBillPreview, bill }) {
                         </div>
                     </div>
                     <div className='flex justify-start bg-[#f7f7f7] border-b'>
-                        <div className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r'><MdOutlineEdit /> Edit</div>
+                        <div className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r' onClick={handleBillEdit}><MdOutlineEdit /> Edit</div>
                         <div onClick={downloadPDF} className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r'><BsFileEarmarkPdf /> PDF</div>
-                        {bill?.isPaid != "Paid" && 
-                        <div onClick={() => setPayment(true)} className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r'>Record Payment</div>}
+                        {bill?.isPaid != "Paid" &&
+                            <div onClick={() => setPayment(true)} className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r'>Record Payment</div>}
                         <div className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r'><HiDotsVertical /></div>
                     </div>
                     {/* pdf section */}

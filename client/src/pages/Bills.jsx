@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 // import { setBillPreview } from '../store/slices/stateSlice'
 import BillPreview from '../components/BillPreview'
 import axios from 'axios'
@@ -9,8 +9,8 @@ import { setBills } from '../store/slices/billSlice'
 
 function Bills() {
     const bills = useSelector((state) => state.billSlice.bills)
-    // const billPreview = useSelector((state) => state.stateSlice.billPreview)
-    const [billPreview,setBillPreview] = useState(null)
+    const navigate = useNavigate()
+    const [billPreview, setBillPreview] = useState(null)
     const dispatch = useDispatch()
 
     const getAllBills = async () => {
@@ -28,7 +28,14 @@ function Bills() {
             console.log(error);
 
         }
+    }
 
+    const handleNewBill = () => {
+        navigate("/bills/new", {
+            state: {
+                type : "new"
+            }
+        })
     }
 
     useEffect(() => {
@@ -42,7 +49,7 @@ function Bills() {
                     <button className='text-2xl font-medium'>All Bills</button>
                 </div>
                 <div>
-                    <Link to="/bills/new" className='bg-blue-500 px-3 py-1.5 rounded-md text-white flex items-center justify-center gap-1'> <FiPlus />New</Link>
+                    <button onClick={handleNewBill} className='bg-blue-500 px-3 py-1.5 rounded-md text-white flex items-center justify-center gap-1'> <FiPlus />New</button>
                 </div>
             </div>
             <div>
