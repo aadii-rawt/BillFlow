@@ -71,7 +71,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
             hour12: true,
         });
 
-        return `${formattedDate} ${formattedTime}`;
+        return <span>{formattedDate} <br/> {formattedTime}</span>;
     };
 
     const handleNewBill = () => {
@@ -143,15 +143,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                                     {/* Timeline Indicator */}
                                     <div className="flex gap-2  items-center">
                                         <div className='text-right'>
-                                            <div className="text-sm text-gray-500">
-                                                {formatDateTime(a?.createdAt)}
-                                                {/* {a?.createdAt} */}
-                                                {/* {formatDateTime(1739254403492)} */}
-                                            </div>
-                                            <div className="text-sm text-gray-400">
-                                                {/* {formatDate(vendor?.createdAt).formattedTime} */}
-                                                {/* 02:34 AM */}
-                                            </div>
+                                               <p className='text-xs text-gray-500'>{formatDateTime(a?.createdAt)}</p>  
                                         </div>
                                         <div className="border text-white rounded-full p-1.5 flex items-center justify-center">
                                             <HiOutlineChatBubbleOvalLeftEllipsis size={20} className='text-blue-400' />
@@ -160,7 +152,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                                     </div>
                                     {/* Timeline Content */}
                                     {a?.type == "payment" ?
-                                        <div className=''>
+                                        <div className='max-w-[300px]'>
                                             <div className=" bg-gray-100 p-2 rounded-md border">
                                                 <h4 className="text-gray-800 font-medium">Payments Made added</h4>
                                                 <p className="text-gray-600 text-sm">
@@ -169,7 +161,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                                                 </p>
                                             </div>
                                         </div> :
-                                        <div className=''>
+                                        <div className='max-w-[300px]'>
                                             <div className=" bg-gray-100 p-2 rounded-md border">
                                                 <h4 className="text-gray-800 font-medium">Bill added</h4>
                                                 <p className="text-gray-600 text-sm">
@@ -178,30 +170,14 @@ function VendorProfile({ vendor, setVendorProfile }) {
                                                 </p>
                                             </div>
                                         </div>}
-
-                                    {/* <div className=''>
-                                        <div className=" bg-gray-100 p-2 rounded-md border">
-                                            <h4 className="text-gray-800 font-medium">Contact person added</h4>
-                                            <p className="text-gray-600 text-sm">
-                                                Contact person Aditya has been created  by <span className='font-semibold'>Sahil</span>
-                                            </p>
-                                        </div>
-                                    </div> */}
                                 </div>
                             ))}
+
                             <div className="relative flex items-start gap-2">
                                 {/* Timeline Indicator */}
                                 <div className="flex gap-2  items-center">
                                     <div className='text-right'>
-                                        <div className="text-sm text-gray-500">
-                                            {formatDateTime(vendor?.createdAt)}
-                                            {/* {vendor?.createdAt} */}
-                                            {/* {formatDateTime(1739254403492)} */}
-                                        </div>
-                                        <div className="text-sm text-gray-400">
-                                            {/* {formatDate(vendor?.createdAt).formattedTime} */}
-                                            {/* 02:34 AM */}
-                                        </div>
+                                          <p className='text-xs text-gray-500'>{formatDateTime(vendor?.createdAt)}</p>
                                     </div>
                                     <div className="border text-white rounded-full p-1.5 flex items-center justify-center">
                                         <HiOutlineChatBubbleOvalLeftEllipsis size={20} className='text-blue-400' />
@@ -209,7 +185,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                                     <div className="h-full w-px bg-blue-500"></div>
                                 </div>
                                 {/* Timeline Content */}
-                                <div className=''>
+                                <div className='max-w-[300px]'>
                                     <div className=" bg-gray-100 p-2 rounded-md border">
                                         <h4 className="text-gray-800 font-medium">Contact person added</h4>
                                         <p className="text-gray-600 text-sm">
