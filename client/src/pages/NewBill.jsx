@@ -9,7 +9,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import VendorForm from '../components/VendorForm'
 import Modal from '../components/Modal';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleNotify } from '../store/slices/stateSlice';
 
 function NewBill() {
 
@@ -34,6 +35,7 @@ function NewBill() {
     const [vendors, setVendors] = useState([]);
     const location = useLocation()
     const paramData = location?.state || {}
+    const dispatch = useDispatch()
 
     // add more item into table
     const addItem = () => {
@@ -134,6 +136,7 @@ function NewBill() {
                 }
             })
             navigate("/bills")
+            dispatch(handleNotify({msg:"The bill has been created.", type: "succes"}))
         } catch (error) {
             console.log(error);
         }
