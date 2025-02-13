@@ -9,12 +9,13 @@ import { closeVendorProfile } from '../store/slices/stateSlice'
 import VendorBillsHistory from './VendorBillsHistory'
 import PaymentHistory from './PaymentHistory'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function VendorProfile({ vendor, setVendorProfile }) {
-
+    
     const [tabs, setTabs] = useState("Overview")
     const [activityFeed, setActivityFeed] = useState([])
+    const navigate = useNavigate()
 
     const getActivityFeed = async () => {
         try {
@@ -73,6 +74,16 @@ function VendorProfile({ vendor, setVendorProfile }) {
         return `${formattedDate} ${formattedTime}`;
     };
 
+    const handleNewBill = () => {
+        navigate("/bills/new", {
+            state: {
+                type: "new",
+                vendorName: vendor?.displayName,
+                vendorID: vendor?._id
+            }
+        })
+    }
+
     useEffect(() => {
         getActivityFeed()
     }, [vendor])
@@ -85,7 +96,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                 </div>
                 <div className='space-x-2 flex items-center'>
                     <Link to={`/bills/edit/${vendor?._id}`} className='px-2.5 py-1 text-[15px] border bg-gray-100 rounded'>Edit</Link>
-                    <button className='px-2.5 py-1 text-[15px] border bg-blue-500 text-white rounded'>New</button>
+                    <button onClick={handleNewBill} className='px-2.5 py-1 text-[15px] border bg-blue-500 text-white rounded'>New</button>
                     <button className=' text-red-500 px-4 text-xl' onClick={() => setVendorProfile(null)}><RxCross1 /></button>
                 </div>
             </div>

@@ -26,7 +26,6 @@ function BillPayment({ setPayment, bill,getAllBills,getBillDetails }) {
     const handlePayment = async (e) => {
         e.preventDefault()
         console.log(paymentData);
-
         try {
             const res = await axios.post("http://localhost:3000/payment//createPayment", { ...paymentData, createdAt : Date.now() }, {
                 headers: {
