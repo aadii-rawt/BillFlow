@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import BillPreview from './BillPreview';
 import axios from 'axios';
+import { handleNotify } from '../store/slices/stateSlice';
+import { useDispatch } from 'react-redux';
 
 function BillPayment({ setPayment, bill,getAllBills,getBillDetails }) {
-    console.log(bill);
-    
+    const dispatch = useDispatch()
     const [paymentData, setPaymentDate] = useState({
         paymentId: crypto.randomUUID(),
         billId: bill?.billId,
@@ -32,7 +33,7 @@ function BillPayment({ setPayment, bill,getAllBills,getBillDetails }) {
                     Authorization: localStorage.getItem("authToken")
                 }
             })
-            console.log(res);
+            dispatch(handleNotify({msg:"The payment made to the vendor has been recorded.", type: "succes"}))
         } catch (error) {
             console.log(error);
         } finally {
