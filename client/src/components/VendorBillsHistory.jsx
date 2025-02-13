@@ -11,7 +11,6 @@ function VendorBillsHistory({ vendor }) {
     const [bills, setBills] = useState([])
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    // #f76831 overdue text color
     const getBills = async () => {
         try {
             const res = await axios.get("http://localhost:3000/bills/vendorBills", {
@@ -35,7 +34,7 @@ function VendorBillsHistory({ vendor }) {
 
     const handleBill = () => {
         navigate("/bills")
-        dispatch(setBillPreview({vendro: "dfjklsj"}))
+        dispatch(setBillPreview({ vendro: "dfjklsj" }))
     }
 
     return (
@@ -58,7 +57,7 @@ function VendorBillsHistory({ vendor }) {
                     </thead>
                     <tbody>
                         {bills?.map((bill) => (
-                            <tr className='border-t text-center'>
+                            <tr className='border-t text-center' onClick={() => navigate("/bills", { state: { vendorBill: bill } })}>
                                 <td className='py-2.5 text-[13px]'>{bill?.date}</td>
                                 <td className='py-2.5 text-[13px] font-medium text-blue-500'>{bill?.billNumber}</td>
                                 <td className='py-2.5 text-[13px]'>{bill?.vendorName}</td>

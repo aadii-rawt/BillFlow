@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 // import { setBillPreview } from '../store/slices/stateSlice'
 import BillPreview from '../components/BillPreview'
 import axios from 'axios'
 import { setBills } from '../store/slices/billSlice'
 
 function Bills() {
-    const bills = useSelector((state) => state.billSlice.bills)
-    const navigate = useNavigate()
-    const [billPreview, setBillPreview] = useState(null)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const vendorBill = location?.state?.vendorBill || null
+    const bills = useSelector((state) => state.billSlice.bills)
+    const [billPreview, setBillPreview] = useState(vendorBill || null)
 
     const getAllBills = async () => {
         try {
@@ -21,8 +23,6 @@ function Bills() {
                 }
             })
             const data = res.data
-            console.log(data);
-
             dispatch(setBills(data))
         } catch (error) {
             console.log(error);

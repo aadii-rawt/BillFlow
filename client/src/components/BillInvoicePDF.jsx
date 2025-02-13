@@ -2,8 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 
 function BillInvoicePDF({ data }) {
-
-    console.log(data);
     
     const user = useSelector(state => state.stateSlice.user)
     const calculateSubtotal = () => {
