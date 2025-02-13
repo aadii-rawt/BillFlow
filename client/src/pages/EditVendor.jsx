@@ -61,7 +61,7 @@ function EditVendor({ setAddVendor, type = "page" }) {
                     vendorData: { ...res.data?.updatedVendor }
                 }
             })
-            dispatch(handleNotify())
+            dispatch(handleNotify({msg : "Contact information has been saved.", type : "succes"}))
         } catch (error) {
             console.log(error);
         }
