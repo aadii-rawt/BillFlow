@@ -60,7 +60,7 @@ function BillPreview({ getAllBills, setBillPreview, bill }) {
 
     useEffect(() => {
         getBillDetails()
-    }, [])
+    }, [bill])
 
     useEffect(() => {
         setPayment(false)

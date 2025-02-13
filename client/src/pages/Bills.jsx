@@ -67,7 +67,7 @@ function Bills() {
                     </thead>
                     <tbody>
                         {bills?.map((data) => (
-                            <tr key={data?.billId} className='text-sm text-center border-b cursor-pointer' onClick={() => setBillPreview(data)}>
+                            <tr key={data?.billId} className='text-sm text-center border-b cursor-pointer hover:bg-[#F9F9FB]' onClick={() => setBillPreview(data)}>
                                 <td className='py-2'>{data?.date}</td>
                                 <td className='py-2 text-blue-500 font-medium'>{data?.billNumber}</td>
                                 <td className='py-2'>{data?.vendorName}</td>
