@@ -3,7 +3,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const { Customers } = require("../db");
 const router = express.Router();
 
-// create new vendor
+// create new customer
 router.post("/newcustomer", authMiddleware, async (req, res) => {
   const userDetails = req.body;
   console.log(userDetails);
@@ -35,16 +35,16 @@ router.post("/newcustomer", authMiddleware, async (req, res) => {
 });
 
 // get all vendors
-router.get("/vendors", authMiddleware, async (req, res) => {
+router.get("/customers", authMiddleware, async (req, res) => {
   const _id = req.userId;
-  const userVendors = await Vendors.findOne({ _id });
+  const userCustomers = await Customers.findOne({ _id });
   try {
-    if (!userVendors) {
-      return res.json({ msg: "No vendors found for this user" });
+    if (!userCustomers) {
+      return res.json({ msg: "No customers found for this user" });
     }
-    res.json({ vendors: userVendors.vendors });
+    res.json({ customers: userCustomers.customers });
   } catch (error) {
-    res.status(500).json({ msg: "Error fetching vendors" });
+    res.status(500).json({ msg: "Error fetching customers" });
   }
 });
 
