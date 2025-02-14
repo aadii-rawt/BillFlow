@@ -1,43 +1,31 @@
 const express = require("express");
-const { Vendors } = require("../db");
 const authMiddleware = require("../middleware/authMiddleware");
+const { Customers } = require("../db");
 const router = express.Router();
 
 // create new vendor
-router.post("/newvendor", authMiddleware, async (req, res) => {
-  const {
-    salutation,
-    lastName,
-    firstName,
-    companyName,
-    displayName,
-    email,
-    Phone,
-  } = req.body;
+router.post("/newcustomer", authMiddleware, async (req, res) => {
+  const userDetails = req.body;
+  console.log(userDetails);
+  
 
   const userId = req.userId;
   try {
-    let userVendors = await Vendors.findOne({ _id: userId });
+    let userCustomers = await Customers.findOne({ _id: userId });
 
-    if (!userVendors) {
-      userVendors = await Vendors.create({
+    if (!userCustomers) {
+      userCustomers = await Customers.create({
         _id: userId,
-        vendors: [],
+        customers: [],
       });
     }
 
-    userVendors.vendors.push({
-      salutation,
-      lastName,
-      firstName,
-      companyName,
-      displayName,
-      email,
-      Phone,
+    userCustomers.customers.push({
+      ...userDetails
     });
-    await userVendors.save();
+    await userCustomers.save();
 
-    res.json({ msg: "Vendor created successfully" });
+    res.json({ msg: "Customer created successfully" });
   } catch (error) {
     console.error("Error:", error.message);
     res
