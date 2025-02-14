@@ -85,7 +85,7 @@ function  Customers() {
                     <button className='text-2xl font-medium'>All Customers</button>
                 </div>
                 <div>
-                    <Link to="/vendors/new" className='bg-blue-500 px-3 py-1.5 rounded-md text-white flex items-center justify-center gap-1'> <FiPlus />New</Link>
+                    <Link to="/customers/new" className='bg-blue-500 px-3 py-1.5 rounded-md text-white flex items-center justify-center gap-1'> <FiPlus />New</Link>
                 </div>
             </div>
             <div>
