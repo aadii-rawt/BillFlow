@@ -36,8 +36,6 @@ function ProfileRightSidebar() {
                     <button onClick={handleLogOut} className='text-red-500'>Sign Out</button>
                 </div>
                 
-                <p className='text-sm text-gray-600 mb-4'>You are currently in the Free plan.</p>
-                
                 <div className='grid grid-cols-3 gap-4 text-center'>
                     {[
                         { title: "Help ", icon: "https://cdn-icons-png.flaticon.com/512/10015/10015092.png" },
@@ -57,9 +55,9 @@ function ProfileRightSidebar() {
                 </div>
                 
                 <div className='mt-6'>
-                    <p className='font-semibold text-sm text-gray-700 mb-2'>Need Assistance?</p>
+                    <p className='font-semibold text-gray-700 mb-2'>Need Assistance?</p>
                     <p className='text-blue-500 text-sm cursor-pointer'>Have questions? Ask away!</p>
-                    <p className='text-blue-500 text-sm cursor-pointer mt-1'>Send an email</p>
+                    <p className='text-blue-500 text-sm cursor-pointer mt-1.5'>Send an email</p>
                 </div>
             </div>
         </div>
