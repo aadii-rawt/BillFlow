@@ -9,6 +9,7 @@ const vendorRoutes = require("../routes/vendor");
 const billsRoutes = require("../routes/bills")
 const userRoutes = require("../routes/user")
 const paymentRoute = require('../routes/payment')
+const customers = require("../routes/customers")
 
 app.use(
   cors({
@@ -27,6 +28,7 @@ app.use("/vendor", vendorRoutes);
 app.use("/bills", billsRoutes);
 app.use('/users',userRoutes)
 app.use('/payment',paymentRoute)
+app.use("/customers",customers)
 
 const PORT = process.env.PORT || 3000;
 
