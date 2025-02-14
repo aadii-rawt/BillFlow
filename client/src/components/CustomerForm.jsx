@@ -18,6 +18,7 @@ function CustomerForm({ setAddVendor, type = "page" }) {
         Phone: "",
         createdAt : "",
     })
+
     const [error, setError] = useState("")
 
     const handleData = (e) => {
@@ -27,11 +28,11 @@ function CustomerForm({ setAddVendor, type = "page" }) {
 
     const handleSubmit = async () => {
         if (!userDetails?.displayName) {
-            setError("Please Enter the Vendor Name")
+            setError("Please Enter the Customer Name")
             return
         }
         try {
-            const res = await axios.post("http://localhost:3000/vendor/newvendor", {
+            const res = await axios.post("http://localhost:3000/customers/newcustomer", {
                 ...userDetails, createdAt : Date.now()
             }, {
                 headers: {
@@ -44,9 +45,9 @@ function CustomerForm({ setAddVendor, type = "page" }) {
         }
         console.log(userDetails);
         if (type = "page") {
-            navigate("/vendors")
+            navigate("/customers")
         } else {
-            navigate("/bills/new")
+            navigate("/invoices/new")
         }
         dispatch(handleNotify({msg:"The contact has been added.", type: "succes"}))
     }
