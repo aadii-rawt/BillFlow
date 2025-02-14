@@ -15,6 +15,7 @@ import store from "./store/store"
 import Setting from "./pages/Setting"
 import EditVendor from "./pages/EditVendor"
 import NewCustomer from "./pages/NewCustomer"
+import NewInvoice from "./pages/NewInvoice"
 //using redux
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "/bills/new",
         element: <NewBill />
+      },
+      {
+        path: "/invoices/new",
+        element: <NewInvoice />
       },
       {
         path: "/bills/edit/:vendorId",
