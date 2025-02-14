@@ -53,7 +53,7 @@ function CustomerForm({ setAddVendor, type = "page" }) {
     return (
         <div className={`relative bg-white min-h-screen ${type == "modal" && "animate-slide-down duration-500 "}`}>
             <div className='p-4 border-b flex items-center justify-between'>
-                <h1 className='text-2xl '>New Vendor</h1>
+                <h1 className='text-2xl '>New Customer</h1>
                 {type == "page" ?
                     <button onClick={() => navigate(-1)}><RxCross1 size={20} className='text-gray-600' /></button> :
                     <button onClick={() => setAddVendor(false)}><RxCross1 size={20} className='text-red-500' /></button>
