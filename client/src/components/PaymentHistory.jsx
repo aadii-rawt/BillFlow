@@ -31,7 +31,7 @@ function PaymentHistory({ vendor }) {
         <div className='border  rounded-lg overflow-hidden cursor-pointer'>
             <div className='flex p-2 px-3 justify-between items-center bg-[#f9f9fb]'>
                 <h1 className='font-medium flex gap-0 items-center'> <MdKeyboardArrowRight className='text-gray-500' /> Bill Payments</h1>
-                <button className='flex items-center gap-1 text-sm font-medium'><FiPlus size={12} className='text-white bg-blue-500 rounded-full' /> New</button>
+                {/* <button className='flex items-center gap-1 text-sm font-medium'><FiPlus size={12} className='text-white bg-blue-500 rounded-full' /> New</button> */}
             </div>
             <div>
                 <table className='w-full'>

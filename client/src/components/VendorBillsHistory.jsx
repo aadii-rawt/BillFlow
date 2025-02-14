@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setBillPreview } from '../store/slices/stateSlice'
 
-function VendorBillsHistory({ vendor }) {
+function VendorBillsHistory({ vendor,handleNewBill }) {
 
     const [bills, setBills] = useState([])
     const navigate = useNavigate()
@@ -41,7 +41,7 @@ function VendorBillsHistory({ vendor }) {
         <div className='border  rounded-lg overflow-hidden cursor-pointer'>
             <div className='flex p-2 px-3 justify-between items-center bg-[#f9f9fb]'>
                 <h1 className='font-medium flex gap-0 items-center'> <MdKeyboardArrowRight className='text-gray-500' /> Bills</h1>
-                <button className='flex items-center gap-1 text-sm font-medium'><FiPlus size={12} className='text-white bg-blue-500 rounded-full' /> New</button>
+                <button onClick={handleNewBill} className='flex items-center gap-1 text-sm font-medium'><FiPlus size={12} className='text-white bg-blue-500 rounded-full' /> New</button>
             </div>
             <div>
                 <table className='w-full'>

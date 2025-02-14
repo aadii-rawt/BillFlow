@@ -200,7 +200,7 @@ function VendorProfile({ vendor, setVendorProfile }) {
                 :
                 <div className='p-4 space-y-8'>
                     {/* bills */}
-                    <VendorBillsHistory vendor={vendor} />
+                    <VendorBillsHistory vendor={vendor}  handleNewBill={handleNewBill} />
 
                     {/* payments */}
                     {/* <div className='border  rounded-lg overflow-hidden cursor-pointer'>
