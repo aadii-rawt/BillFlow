@@ -14,6 +14,7 @@ import {Provider} from 'react-redux'
 import store from "./store/store"
 import Setting from "./pages/Setting"
 import EditVendor from "./pages/EditVendor"
+import NewCustomerVendor from "./pages/NewCustomerVendor"
 //using redux
 const router = createBrowserRouter([
   {
@@ -42,7 +43,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/vendors/new",
-        element: <NewVendor />
+        // element: <NewVendor />
+        element: <NewCustomerVendor />
       },
       {
         path: "/bills/new",
