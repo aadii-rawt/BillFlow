@@ -111,7 +111,7 @@ const Vendors = mongoose.model("vendors", vendorsSchema);
 const Bills = mongoose.model("bills", billsSchema);
 const Users = mongoose.model("users", usersSchema);
 const Payements = mongoose.model("payments", paymentSchema);
-const Customers = mongoose.model("customesr", customresSchema);
+const Customers = mongoose.model("customers", customresSchema);
 const Invoices = mongoose.model("invoices", invoicesSchema);
 
 module.exports = { Vendors, Bills, Users, Payements, Customers, Invoices };
