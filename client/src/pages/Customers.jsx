@@ -6,10 +6,11 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { formatCurrency, setVendorProfile } from '../store/slices/stateSlice'
 import useFormatCurrency from '../hooks/useFormatCurrency'
+import CustomerProfile from '../components/CustomerProfile'
 
 function  Customers() {
-    const [vendorProfile, setVendorProfile] = useState(null)
-    const [vendors, setVendors] = useState([]);
+    const [customerProfile, setCustomerProfile] = useState(null)
+    const [customers, setCustomers] = useState([]);
     const [vendorsBills, setVendorBills] = useState([]);
     const [vendorPayables, setVendorPayables] = useState({});
     const dispatch = useDispatch()
@@ -19,13 +20,13 @@ function  Customers() {
     const getAllVendors = async () => {
         try {
             // const res = await fetch("http://localhost:3000/vendor/vendors");
-            const res = await axios.get("http://localhost:3000/vendor/vendors", {
+            const res = await axios.get("http://localhost:3000/customers/customers", {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
                 }
             })
             const data = res.data
-            setVendors((prev) => ([...prev, ...data?.vendors])); // Set the fetched data to state
+            setCustomers((prev) => ([...prev, ...data?.customers])); // Set the fetched data to state
         } catch (error) {
             console.error("Error fetching vendors:", error);
         }
@@ -51,7 +52,7 @@ function  Customers() {
             });
 
             // Ensure vendors without bills have a payable of 0.00
-            vendors.forEach((vendor) => {
+            customers.forEach((vendor) => {
                 if (!payableMap[vendor?.vendorId]) {
                     payableMap[vendor?.vendorId] = 0.00; // Set default payable to 0.00
                 }
@@ -70,7 +71,7 @@ function  Customers() {
 
     useEffect(() => {
         if (vendorData) {
-            setVendorProfile({ ...vendorData, payableAmount: vendorPayables[vendorData?._id] || 0 })
+            setCustomerProfile({ ...vendorData, payableAmount: vendorPayables[vendorData?._id] || 0 })
         }
     }, [])
 
@@ -100,9 +101,9 @@ function  Customers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {vendors && vendors?.map((ven) => (
+                        {customers && customers?.map((ven) => (
                             <tr key={ven?.displayName} className='text-center cursor-pointer hover:bg-gray-100 border-b'
-                                onClick={() => setVendorProfile({ ...ven, payableAmount: vendorPayables[ven?._id] || 0 })}
+                                onClick={() => setCustomerProfile({ ...ven, payableAmount: vendorPayables[ven?._id] || 0 })}
                             >
                                 <td className='text-sm py-2.5 font-medium text-blue-500'>{ven?.displayName}</td>
                                 <td className='text-sm py-2.5'>{ven?.companyName}</td>
@@ -112,8 +113,8 @@ function  Customers() {
                             </tr>
                         ))}
                         <tr className='text-center cursor-pointer hover:bg-gray-100 border-b'
-                            // onClick={() => setVendorProfile(true)}
-                            onClick={() => dispatch(setVendorProfile(true))}
+                            // onClick={() => setCustomerProfile(true)}
+                            onClick={() => dispatch(setCustomerProfile(true))}
                         >
                             <td className='text-sm py-2.5 font-medium text-blue-500'>vinay</td>
                             <td className='text-sm py-2.5'>google</td>
@@ -131,7 +132,7 @@ function  Customers() {
                     </tbody>
                 </table>
             </div>
-            {vendorProfile && <VendorProfile vendor={vendorProfile} setVendorProfile={setVendorProfile} />}
+            {customerProfile && <CustomerProfile customer={customerProfile} setCustomerProfile={setCustomerProfile} />}
         </div >
     )
 }
