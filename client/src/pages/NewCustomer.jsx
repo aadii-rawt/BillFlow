@@ -1,9 +1,12 @@
 import React from 'react'
+import CustomerForm from '../components/CustomerForm'
 
 function NewCustomer() {
-  return (
-    <div>NewCustomer</div>
-  )
+    return (
+        <>
+            <CustomerForm type="page" />
+        </>
+    )
 }
 
 export default NewCustomer
