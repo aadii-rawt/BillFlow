@@ -22,7 +22,7 @@ function BillPreview({ getAllBills, setBillPreview, bill }) {
         const element = document.querySelector("#invoiceBill");
         html2pdf(element, {
             margin: 10,
-            filename: '#234567.pdf',
+            filename: `${bill?.billNumber}.pdf'`,
         })
     }
 
