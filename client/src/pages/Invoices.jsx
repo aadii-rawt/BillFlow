@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-// import { setBillPreview } from '../store/slices/stateSlice'
+import { useLocation, useNavigate } from 'react-router-dom'
 import BillPreview from '../components/BillPreview'
 import axios from 'axios'
-import { setBills } from '../store/slices/billSlice'
-
+import InvoicePreview from '../components/InvoicePreview'
 function Invoices() {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
-    const vendorBill = location?.state?.vendorBill || null
-    const bills = useSelector((state) => state.billSlice.bills)
-    const [billPreview, setBillPreview] = useState(vendorBill || null)
+    const customerInvoice = location?.state?.customerInvoice || null
+    const [invoices,setInvoices] = useState([])
+    const [invoicePreview, setInvoicePreview] = useState(customerInvoice || null)
 
-    const getAllBills = async () => {
+    const getAllInvoices = async () => {
         try {
             const res = await axios.get("http://localhost:3000/invoices/userInvoices", {
                 headers: {
@@ -23,7 +19,7 @@ function Invoices() {
                 }
             })
             const data = res.data
-            dispatch(setBills(data))
+            setInvoices(data)
         } catch (error) {
             console.log(error);
 
@@ -37,9 +33,9 @@ function Invoices() {
             }
         })
     }
-
+    
     useEffect(() => {
-        getAllBills()
+        getAllInvoices()
     }, [])
 
     return (
@@ -66,8 +62,8 @@ function Invoices() {
                         </tr>
                     </thead>
                     <tbody>
-                        {bills?.map((data) => (
-                            <tr key={data?.billId} className='text-sm text-center border-b cursor-pointer hover:bg-[#F9F9FB]' onClick={() => setBillPreview(data)}>
+                        {invoices?.map((data) => (
+                            <tr key={data?.billId} className='text-sm text-center border-b cursor-pointer hover:bg-[#F9F9FB]' onClick={() => setInvoicePreview(data)}>
                                 <td className='py-2'>{data?.date}</td>
                                 <td className='py-2 text-blue-500 font-medium'>{data?.invoiceNumber}</td>
                                 <td className='py-2'>{data?.customerName}</td>
@@ -80,8 +76,7 @@ function Invoices() {
                     </tbody>
                 </table>
             </div>
-
-            {billPreview && <BillPreview bill={billPreview} setBillPreview={setBillPreview} getAllBills={getAllBills} />}
+            {invoicePreview && <InvoicePreview invoice={invoicePreview} setInvoicePreview={setInvoicePreview} getAllInvoices={getAllInvoices} />}
         </div>
     )
 }
