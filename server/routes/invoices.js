@@ -64,13 +64,13 @@ router.get("/vendorBills", authMiddleware, async (req, res) => {
 // get bill by id
 router.get("/id", authMiddleware, async (req, res) => {
   const _id = req.userId;
-  const { billId } = req.query;
-  const userBills = await Bills.findOne({ _id });
+  const { invoiceId } = req.query;
+  const userInvoices = await Invoices.findOne({ _id });
   try {
-    const filterdBill = userBills?.bills.find((bill) => {
-      return bill?._id.toString() === billId;
+    const filterdInvoices = userInvoices?.invoices.find((bill) => {
+      return bill?._id.toString() === invoiceId;
     });
-    res.send(filterdBill);
+    res.send(filterdInvoices);
   } catch (error) {
     console.log(error);
     res.send({ msg: "something went wrong" });
