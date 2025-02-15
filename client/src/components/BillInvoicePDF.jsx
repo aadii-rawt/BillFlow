@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 
-function BillInvoicePDF({ data }) {
+function BillInvoicePDF({ data, type="bill" }) {
+    console.log(data);
     
     const user = useSelector(state => state.stateSlice.user)
     const calculateSubtotal = () => {
@@ -23,8 +24,8 @@ function BillInvoicePDF({ data }) {
                     </div>
                     {/* Invoice Details */}
                     <div className="text-right">
-                        <h1 className="text-3xl font-semibold">BILL</h1>
-                        <p className="font-medium my-1">{data?.billNumber}</p>
+                        <h1 className="text-3xl font-semibold">{type == "bill" ? "BILL" : "INVOICE" }</h1>
+                        <p className="font-medium my-1">{type == "bill" ? data?.billNumber : data?.invoiceNumber}</p>
                         {/* <p className="text-xl font-bold text-pink-600">Balance Due</p>
                         <p className="text-xl font-bold text-pink-600">₹2,000.00</p> */}
                     </div>
@@ -41,12 +42,12 @@ function BillInvoicePDF({ data }) {
                 </div>
                 <div className="grid grid-cols-2 items-end gap-4 mb-6">
                     <div>
-                        <h2 className="font-semibold">Bill From</h2>
+                        <h2 className="font-semibold">{type == "bill" ?  "Bill" : "Invoice" } From</h2>
                         <p className='font-semibold text-blue-500'>{data?.vendorName}</p>
                     </div>
                     <div className="text-right space-y-2 text-sm">
                         <p>
-                            <span className="font-bold">Bill Date: </span>{data?.date}
+                            <span className="font-bold">{type == "bill" ? "Bill" : "Invoice"} Date: </span>{data?.date}
                         </p>
                         <p>
                             <span className="font-bold">Due Date:</span> {data?.dueDate}
