@@ -11,6 +11,7 @@ import BillPayment from './BillPayment';
 import axios from 'axios';
 import { data, useNavigate } from 'react-router-dom';
 import { handleNotify } from '../store/slices/stateSlice';
+import InvoicePayment from './InvoicePayment';
 
 function InvoicePreview({ getAllInvoices, setInvoicePreview, invoice }) {
     const navigate = useNavigate()
@@ -88,8 +89,7 @@ function InvoicePreview({ getAllInvoices, setInvoicePreview, invoice }) {
                         <BillInvoicePDF data={invoiceDetails} type='invoice' />
                     </div>
                 </div> :
-                <></>
-                // <BillPayment getAllInvoices={getAllInvoices} getInvoiceDetails={getInvoiceDetails} setPayment={setPayment} bill={bill} />
+                <InvoicePayment getAllInvoices={getAllInvoices} getInvoiceDetails={getInvoiceDetails} setPayment={setPayment} invoice={invoice} />
             }
         </div>
     )
