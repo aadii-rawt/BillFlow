@@ -77,38 +77,38 @@ router.get("/id", authMiddleware, async (req, res) => {
   }
 });
 
-router.patch("/edit/:billId", authMiddleware, async (req, res) => {
-  const { billId } = req.params;
+router.patch("/edit/:invoiceId", authMiddleware, async (req, res) => {
+  const { invoiceId } = req.params;
   const userId = req.userId;
   const updatedData = req.body;
   try {
-    let userBills = await Bills.findOne({ _id: userId });
-    if (!userBills) {
+    let userInvoices = await Invoices.findOne({ _id: userId });
+    if (!userInvoices) {
       return res.status(404).json({ msg: "User's bills not found" });
     }
 
-    const billIndex = userBills.bills.findIndex(
-      (v) => v._id.toString() === billId
+    const invoiceIndex = userInvoices.invoices.findIndex(
+      (v) => v._id.toString() === invoiceId
     );
 
-    if (billIndex === -1) {
-      return res.status(404).json({ msg: "Vendor not found" });
+    if (invoiceIndex === -1) {
+      return res.status(404).json({ msg: "customer not found" });
     }
 
-    userBills.bills[billIndex] = {
-      ...userBills.bills[billIndex],
+    userInvoices.invoices[invoiceIndex] = {
+      ...userInvoices.invoices[invoiceIndex],
       ...updatedData,
     };
 
-    await userBills.save();
+    await userInvoices.save();
 
     res.json({
-      msg: "bill updated successfully",
-      updatedVendor: userBills.bills[billIndex],
+      msg: "invoice updated successfully",
+      updatedInvoice: userInvoices.invoices[invoiceIndex],
     });
   } catch (error) {
     console.error("Error:", error.message);
-    res.status(500).json({ msg: "Error updating bill", error: error.message });
+    res.status(500).json({ msg: "Error updating invoice", error: error.message });
   }
 });
 
