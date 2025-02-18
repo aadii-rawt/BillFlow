@@ -12,7 +12,6 @@ function Bills() {
     const navigate = useNavigate()
     const location = useLocation()
     const vendorBill = location?.state?.billData || null
-    // const bills = useSelector((state) => state.billSlice.bills)
     const [bills,setBills] = useState([])
     const [billPreview, setBillPreview] = useState(vendorBill || null)
 
