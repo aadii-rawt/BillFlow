@@ -176,12 +176,12 @@ function NewBill() {
                 headers: { Authorization: localStorage.getItem("authToken") }
             })
             console.log(res);
-            // navigate("/vendors", {
-            //     state: {
-            //         vendorData: { ...res.data?.updatedVendor }
-            //     }
-            // })
-            // dispatch(handleNotify())
+            navigate("/bills", {
+                state: {
+                    billData: { ...res.data?.updatedVendor }
+                }
+            })
+            dispatch(handleNotify({msg:"Bill updated",success: "success"}))
         } catch (error) {
             console.log(error);
         }
