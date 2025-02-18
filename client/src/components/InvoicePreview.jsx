@@ -43,7 +43,7 @@ function InvoicePreview({ getAllInvoices, setInvoicePreview, invoice }) {
         }
     }
 
-    const handleBillEdit = () => {
+    const handleInvoiceEdit = () => {
         if (invoice?.isPaid == "Paid" || invoice?.isPaid == "Partial") {
             console.log("rea");   
             dispatch(handleNotify({msg : "Bill cannot be changed because payments have been recorded.", type : "error"}))
@@ -52,7 +52,7 @@ function InvoicePreview({ getAllInvoices, setInvoicePreview, invoice }) {
         navigate("/invoices/new", {
             state: {
                 type: "edit",
-                bill: billDetails
+                bill: invoice
             }
         })
     }
@@ -78,7 +78,7 @@ function InvoicePreview({ getAllInvoices, setInvoicePreview, invoice }) {
                         </div>
                     </div>
                     <div className='flex justify-start bg-[#f7f7f7] border-b'>
-                        <div className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r' onClick={handleBillEdit}><MdOutlineEdit /> Edit</div>
+                        <div className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r' onClick={handleInvoiceEdit}><MdOutlineEdit /> Edit</div>
                         <div onClick={downloadPDF} className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r'><BsFileEarmarkPdf /> PDF</div>
                         {invoice?.isPaid != "Paid" &&
                             <div onClick={() => setPayment(true)} className='flex items-center justify-center gap-2 bg-[#f7f7f7] p-2 hover:text-blue-500 cursor-pointer text-sm border-r'>Record Payment</div>}
