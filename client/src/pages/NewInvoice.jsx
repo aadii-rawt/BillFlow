@@ -173,22 +173,21 @@ function NewInvoice() {
     const handleEdit = async () => {
         try {
             const totalAmount = calculateTotalWithTax()
-            const res = await axios.patch(`http://localhost:3000/bills/edit/${invoiceData?._id}`, {
+            const res = await axios.patch(`http://localhost:3000/invoices/edit/${invoiceData?._id}`, {
                 ...invoiceData, totalAmount, totalDueAmount: totalAmount,
             }, {
                 headers: { Authorization: localStorage.getItem("authToken") }
             })
             console.log(res);
-            // navigate("/vendors", {
-            //     state: {
-            //         vendorData: { ...res.data?.updatedVendor }
-            //     }
-            // })
-            // dispatch(handleNotify())
+            navigate("/invoices", {
+                state: {
+                    invoiceData: { ...res.data?.updatedInvoice }
+                }
+            })
+            dispatch(handleNotify({msg:"Invoice updated",success: "success"}))
         } catch (error) {
             console.log(error);
         }
-
     }
 
     useEffect(() => {
