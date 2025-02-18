@@ -11,7 +11,7 @@ function Bills() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
-    const vendorBill = location?.state?.vendorBill || null
+    const vendorBill = location?.state?.billData || null
     const bills = useSelector((state) => state.billSlice.bills)
     const [billPreview, setBillPreview] = useState(vendorBill || null)
 
