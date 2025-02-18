@@ -42,23 +42,14 @@ function Layout() {
 
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (checkTokenExpire()) {
-  //     navigate('/login')
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (checkTokenExpire()) {
+      navigate('/login')
+    }
+  }, [])
 
   return (
     <div className=' min-h-screen '>
-      {/* <Sidebar />
-      <div className='w-full h-full relative'>
-        <Header />
-        <Outlet />
-      </div>
-      <ScrollRestoration />
-
-        {userProfile && <ProfileRightSidebar />}
-      <ProfileRightSidebar /> */}
       <Header />
       <div className='flex w-full relative'>
         <Sidebar />
