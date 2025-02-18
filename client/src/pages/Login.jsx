@@ -52,14 +52,14 @@ const Login = () => {
               <label className="block text-gray-700 font-medium text-sm mb-1" htmlFor="email">
                 Email*
               </label>
-              <div className=" flex gap-2 items-center px-4 rounded-3xl border border-gray-400">
+              <div className=" flex gap-2 !text-black items-center px-4 rounded-3xl border border-gray-400">
                 <HiOutlineMail className="text-gray-500" />
                 <input
                   type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full  bg-transparent px-1 py-2 outline-none "
+                  className="w-full  bg-transparent text-black px-1 py-2 outline-none "
                   placeholder="Enter your email"
                 />
               </div>
@@ -75,7 +75,7 @@ const Login = () => {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-transparent px-1 py-2 outline-none"
+                  className="w-full bg-transparent text-black px-1 py-2 outline-none"
                   placeholder="••••••••"
                 />
 
