@@ -3,7 +3,6 @@ import { MdOutlineEdit } from 'react-icons/md';
 import { RxCross2 } from "react-icons/rx";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { HiDotsVertical } from "react-icons/hi";
-import { closeBillPreview } from '../store/slices/stateSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import BillInvoicePDF from './BillInvoicePDF';
 import html2pdf from "html2pdf.js";
@@ -19,6 +18,7 @@ function InvoicePreview({ getAllInvoices, setInvoicePreview, invoice }) {
     const [invoiceDetails, setInvoiceDetails] = useState({})
     const notification = useSelector((state) => state.stateSlice.notification)
     const dispatch = useDispatch()
+    
     const downloadPDF = async () => {
         const element = document.querySelector("#invoiceBill");
         html2pdf(element, {

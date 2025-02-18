@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import { useLocation, useNavigate } from 'react-router-dom'
-import BillPreview from '../components/BillPreview'
 import axios from 'axios'
 import InvoicePreview from '../components/InvoicePreview'
 function Invoices() {
@@ -63,7 +62,7 @@ function Invoices() {
                     </thead>
                     <tbody>
                         {invoices?.map((data) => (
-                            <tr key={data?.billId} className='text-sm text-center border-b cursor-pointer hover:bg-[#F9F9FB]' onClick={() => setInvoicePreview(data)}>
+                            <tr key={data?.invoiceId} className='text-sm text-center border-b cursor-pointer hover:bg-[#F9F9FB]' onClick={() => setInvoicePreview(data)}>
                                 <td className='py-2'>{data?.date}</td>
                                 <td className='py-2 text-blue-500 font-medium'>{data?.invoiceNumber}</td>
                                 <td className='py-2'>{data?.customerName}</td>

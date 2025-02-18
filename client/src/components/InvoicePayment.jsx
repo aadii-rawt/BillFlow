@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import BillPreview from './BillPreview';
 import axios from 'axios';
 import { handleNotify } from '../store/slices/stateSlice';
 import { useDispatch } from 'react-redux';
@@ -9,7 +8,7 @@ function InvoicePayment({ setPayment, invoice, getAllInvoices, getInvoiceDetails
     const [paymentData, setPaymentDate] = useState({
         paymentId: crypto.randomUUID(),
         invoiceId: invoice?.invoiceId,
-        vendorId: invoice?.vendorId,
+        vendorId: invoice?.customerId,
         invoiceNumber: invoice?.invoiceNumber,
         amountPaid: invoice?.totalDueAmount || 0,
         paymentMethod: "",
@@ -27,12 +26,12 @@ function InvoicePayment({ setPayment, invoice, getAllInvoices, getInvoiceDetails
         e.preventDefault()
         console.log(paymentData);
         try {
-            const res = await axios.post("http://localhost:3000/payment//createPayment", { ...paymentData, createdAt: Date.now() }, {
+            const res = await axios.post("http://localhost:3000/payment/invoice/createPayment", { ...paymentData, createdAt: Date.now() }, {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
                 }
             })
-            dispatch(handleNotify({ msg: "The payment made to the vendor has been recorded.", type: "succes" }))
+            dispatch(handleNotify({ msg: "The payment made to the customer has been recorded.", type: "succes" }))
         } catch (error) {
             console.log(error);
         } finally {

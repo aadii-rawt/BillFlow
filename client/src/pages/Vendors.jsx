@@ -80,7 +80,7 @@ function Vendors() {
     };
 
     return (
-        <div className='relative'>
+        <div className='relative '>
             <div className=' p-4 flex items-center justify-between'>
                 <div>
                     <button className='text-2xl font-medium'>All Vendors</button>

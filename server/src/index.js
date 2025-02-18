@@ -3,8 +3,10 @@ const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser")
+const mongoose = require("mongoose")
 require('dotenv').config();
 
+// all routes
 const vendorRoutes = require("../routes/vendor");
 const billsRoutes = require("../routes/bills")
 const userRoutes = require("../routes/user")
@@ -24,6 +26,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser())
 
+mongoose.connect(process.env.DB_CONNECTION); // connect to the database
 
 app.use("/vendor", vendorRoutes);
 app.use("/bills", billsRoutes);
