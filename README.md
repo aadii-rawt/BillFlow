@@ -19,8 +19,6 @@ Billflow is a full-stack invoicing and billing web application inspired by **Zoh
 
 ---
 
----
-
 ## 🚀 Features
 
 - 🔐 User authentication (JWT)
