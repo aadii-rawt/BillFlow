@@ -7,8 +7,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/slices/stateSlice";
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("google@g.com")
+  const [password, setPassword] = useState("Pass@123")
   const [error, setError] = useState("")
   const navigate = useNavigate()
   const dispatch = useDispatch()
