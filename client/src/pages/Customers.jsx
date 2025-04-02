@@ -57,7 +57,6 @@ function  Customers() {
                     payableMap[vendor?.vendorId] = 0.00; // Set default payable to 0.00
                 }
             });
-
             setVendorPayables(payableMap);
         } catch (error) {
             console.error("Error fetching bills:", error);

@@ -13,6 +13,7 @@ const userRoutes = require("../routes/user")
 const paymentRoute = require('../routes/payment')
 const customers = require("../routes/customers")
 const invoices = require("../routes/invoices")
+const ProductRoute = require("../routes/products");
 
 app.use(
   cors({
@@ -34,6 +35,7 @@ app.use('/users',userRoutes)
 app.use('/payment',paymentRoute)
 app.use("/customers",customers)
 app.use("/invoices",invoices)
+app.use("/product", ProductRoute);
 
 const PORT = process.env.PORT || 3000;
 
