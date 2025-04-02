@@ -25,7 +25,7 @@ function Dashboard() {
   // }
 
   const getUserDetails = async () => {
-    const res = await axios.get("http://localhost:3000/users/userData", {
+    const res = await axios.get("https://billflow.onrender.com/users/userData", {
       headers: {
         Authorization: localStorage.getItem("authToken")
       }
@@ -35,7 +35,7 @@ function Dashboard() {
 
   const getTotalPayable = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/bills/userBills", {
+      const res = await axios.get("https://billflow.onrender.com/bills/userBills", {
         headers: {
           Authorization: localStorage.getItem("authToken"),
         },

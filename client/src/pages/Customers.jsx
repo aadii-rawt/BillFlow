@@ -19,8 +19,8 @@ function  Customers() {
 
     const getAllVendors = async () => {
         try {
-            // const res = await fetch("http://localhost:3000/vendor/vendors");
-            const res = await axios.get("http://localhost:3000/customers/customers", {
+            // const res = await fetch("https://billflow.onrender.com/vendor/vendors");
+            const res = await axios.get("https://billflow.onrender.com/customers/customers", {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
                 }
@@ -34,7 +34,7 @@ function  Customers() {
 
     const getAllBills = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/bills/userBills", {
+            const res = await axios.get("https://billflow.onrender.com/bills/userBills", {
                 headers: {
                     Authorization: localStorage.getItem("authToken"),
                 },

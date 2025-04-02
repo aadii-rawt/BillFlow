@@ -17,7 +17,7 @@ const ProductRoute = require("../routes/products");
 
 app.use(
   cors({
-    origin: "http://localhost:5174", // Allow requests from your frontend
+    origin: "https://billsflow.netlify.app", // Allow requests from your frontend
     methods: ["GET", "POST", "PUT", "DELETE","PATCH"], // Specify allowed methods
     // allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
   })

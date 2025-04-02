@@ -32,7 +32,7 @@ function CustomerForm({ setAddVendor, type = "page" }) {
             return
         }
         try {
-            const res = await axios.post("http://localhost:3000/customers/newcustomer", {
+            const res = await axios.post("https://billflow.onrender.com/customers/newcustomer", {
                 ...userDetails, createdAt : Date.now()
             }, {
                 headers: {

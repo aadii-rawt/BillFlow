@@ -42,7 +42,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:3000/users/signup", {
+      const res = await axios.post("https://billflow.onrender.com/users/signup", {
         ...userData
       })
 

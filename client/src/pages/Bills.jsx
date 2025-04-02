@@ -16,7 +16,7 @@ function Bills() {
 
     const getAllBills = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/bills/userBills", {
+            const res = await axios.get("https://billflow.onrender.com/bills/userBills", {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
                 }

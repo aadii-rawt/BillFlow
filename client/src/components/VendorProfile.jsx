@@ -20,13 +20,13 @@ function VendorProfile({ vendor, setVendorProfile }) {
     const getActivityFeed = async () => {
         try {
             // Fetch payments
-            const paymentRes = await axios.get("http://localhost:3000/payment/vendorPayments", {
+            const paymentRes = await axios.get("https://billflow.onrender.com/payment/vendorPayments", {
                 params: { vendorId: vendor?._id },
                 headers: { Authorization: localStorage.getItem("authToken") },
             });
 
             // Fetch bills
-            const billRes = await axios.get("http://localhost:3000/bills/vendorBills", {
+            const billRes = await axios.get("https://billflow.onrender.com/bills/vendorBills", {
                 params: { vendorId: vendor?._id },
                 headers: { Authorization: localStorage.getItem("authToken") },
             });

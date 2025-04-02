@@ -29,7 +29,7 @@ function BillPreview({ getAllBills, setBillPreview, bill }) {
     const getBillDetails = async () => {
         try {
 
-            const res = await axios.get("http://localhost:3000/bills/id", {
+            const res = await axios.get("https://billflow.onrender.com/bills/id", {
                 params: {
                     billId: bill?._id
                 },

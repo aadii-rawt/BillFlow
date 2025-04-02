@@ -29,7 +29,7 @@ function InvoicePreview({ getAllInvoices, setInvoicePreview, invoice }) {
 
     const getInvoiceDetails = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/invoices/id", {
+            const res = await axios.get("https://billflow.onrender.com/invoices/id", {
                 params: {
                     invoiceId: invoice?._id
                 },

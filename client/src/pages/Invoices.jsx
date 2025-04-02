@@ -12,7 +12,7 @@ function Invoices() {
 
     const getAllInvoices = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/invoices/userInvoices", {
+            const res = await axios.get("https://billflow.onrender.com/invoices/userInvoices", {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
                 }

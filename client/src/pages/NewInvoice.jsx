@@ -128,7 +128,7 @@ function NewInvoice() {
         
         const totalAmount = calculateTotalWithTax()
         try {
-            await axios.post("http://localhost:3000/invoices/newInvoice", {
+            await axios.post("https://billflow.onrender.com/invoices/newInvoice", {
                 ...invoiceData,
                 totalAmount,
                 totalDueAmount: totalAmount,
@@ -147,7 +147,7 @@ function NewInvoice() {
     // fetch all vendors
     const getAllCustomers = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/customers/customers", {
+            const res = await axios.get("https://billflow.onrender.com/customers/customers", {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
                 }
@@ -173,7 +173,7 @@ function NewInvoice() {
     const handleEdit = async () => {
         try {
             const totalAmount = calculateTotalWithTax()
-            const res = await axios.patch(`http://localhost:3000/invoices/edit/${invoiceData?._id}`, {
+            const res = await axios.patch(`https://billflow.onrender.com/invoices/edit/${invoiceData?._id}`, {
                 ...invoiceData, totalAmount, totalDueAmount: totalAmount,
             }, {
                 headers: { Authorization: localStorage.getItem("authToken") }

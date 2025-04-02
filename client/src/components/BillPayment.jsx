@@ -27,7 +27,7 @@ function BillPayment({ setPayment, bill,getAllBills,getBillDetails }) {
         e.preventDefault()
         console.log(paymentData);
         try {
-            const res = await axios.post("http://localhost:3000/payment//createPayment", { ...paymentData, createdAt : Date.now() }, {
+            const res = await axios.post("https://billflow.onrender.com/payment//createPayment", { ...paymentData, createdAt : Date.now() }, {
                 headers: {
                     Authorization: localStorage.getItem("authToken")
                 }

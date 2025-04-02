@@ -31,7 +31,7 @@ function VednorForm({ setAddVendor, type = "page" }) {
             return
         }
         try {
-            const res = await axios.post("http://localhost:3000/vendor/newvendor", {
+            const res = await axios.post("https://billflow.onrender.com/vendor/newvendor", {
                 ...userDetails, createdAt : Date.now()
             }, {
                 headers: {

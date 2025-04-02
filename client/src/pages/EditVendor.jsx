@@ -29,7 +29,7 @@ function EditVendor({ setAddVendor, type = "page" }) {
 
     const fetchDetails = async () => {
         try {
-            const res = await axios.get(`http://localhost:3000/vendor/${vendorId}`, {
+            const res = await axios.get(`https://billflow.onrender.com/vendor/${vendorId}`, {
                 params: {
                     vendorId
                 },
@@ -50,7 +50,7 @@ function EditVendor({ setAddVendor, type = "page" }) {
     const handleEdit = async (e) => {
         e?.preventDefault()
         try {
-            const res = await axios.patch(`http://localhost:3000/vendor/edit/${vendorId}`, {
+            const res = await axios.patch(`https://billflow.onrender.com/vendor/edit/${vendorId}`, {
                 ...userDetails
             }, {
                 headers: { Authorization: localStorage.getItem("authToken") }

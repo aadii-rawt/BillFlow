@@ -13,7 +13,7 @@ function VendorBillsHistory({ vendor,handleNewBill }) {
     const dispatch = useDispatch()
     const getBills = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/bills/vendorBills", {
+            const res = await axios.get("https://billflow.onrender.com/bills/vendorBills", {
                 params: {
                     vendorId: vendor?._id,
                 },

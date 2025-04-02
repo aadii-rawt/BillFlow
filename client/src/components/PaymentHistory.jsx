@@ -7,7 +7,7 @@ function PaymentHistory({ vendor }) {
     const [payments, setPayments] = useState([])
     const getPayments = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/payment/vendorPayments", {
+            const res = await axios.get("https://billflow.onrender.com/payment/vendorPayments", {
                 params: {
                     vendorId: vendor?._id,
                 },
